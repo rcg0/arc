@@ -1,5 +1,5 @@
 # cache for current jar dependecy. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
-1349339773000 430430 201bfb61425d5e018e287d748c43ae5cdd7096f4 /var/autofs/nfs/albinoni/jrafael/git/arc/proyectosImportados/com.google.zxing.client.android.CaptureActivity/libs/core.jar
-1349339773000 430430 201bfb61425d5e018e287d748c43ae5cdd7096f4 /var/autofs/nfs/albinoni/jrafael/git/arc/proyectosImportados/prueba/libs/core.jar
+1349790776000 430430 201bfb61425d5e018e287d748c43ae5cdd7096f4 /home/javier/arc/prueba/libs/core.jar
+1349339773000 430430 201bfb61425d5e018e287d748c43ae5cdd7096f4 /home/javier/arc/libreria/libs/core.jar
