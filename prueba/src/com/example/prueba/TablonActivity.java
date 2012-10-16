@@ -20,13 +20,17 @@ import com.google.gson.GsonBuilder;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +43,7 @@ public class TablonActivity extends Activity {
 	Gson gson;
 	String json;
 	Tablon tablon;
+	RelativeLayout layout;
 	int numeroMensajes;//variable que cuenta el numero de mensajes para luego determinar el tamaño del array de textviews
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,7 @@ public class TablonActivity extends Activity {
         sendButton = (Button)findViewById(R.id.button1);
         tv = new TextView(this);
     	new MyAsyncTask().execute();//lanzo el hilo
-    	
+    	layout = (RelativeLayout) findViewById(R.id.layout);
         
         this.sendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -63,7 +68,8 @@ public class TablonActivity extends Activity {
         	protected void onProgressUpdate(Integer... progress) {
     // [... Update progress bar, Notification, or other UI element ...]
        	}	
-        	@Override
+        	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
+			@Override
         	protected void onPostExecute(String result) {
     // [... Report results via UI update, Dialog, or notification ...]
         		/*En principio estaba puesto que soltara un toast*/
@@ -75,13 +81,20 @@ public class TablonActivity extends Activity {
         		
         		Gson gson = new Gson();
         		Tablon tablonRecibido = gson.fromJson(result, Tablon.class);
-        		numeroMensajes = tablonRecibido.getMsg().size();
+        		Vector <Mensaje> msg = tablonRecibido.getMsg(); 
+        		numeroMensajes = msg.size();
         		vectorTv = new Vector<TextView>(numeroMensajes);
         		
         		for(int i = 0; i<numeroMensajes; i++){
-        			TextView t = vectorTv.elementAt(i);
-        			t.setText((CharSequence) tablon.getMsg().elementAt(i));
+        			TextView t = new TextView(context);
+        			t.setText(msg.elementAt(i).getMsg());
+        			t.setPadding(50, 0, 0, 0);
+        			t.setY(50*i);
+        			
+        			layout.addView(t, i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+        			
         		}
+        		
         		
 
         	}

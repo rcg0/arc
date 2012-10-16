@@ -35,7 +35,7 @@ unicamente de ejemplo, una prueba de funcionamiento*/
 
 	
 	
-	out.println("parametro: " + json);
+	out.println(json);
 
   }
 
