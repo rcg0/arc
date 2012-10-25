@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="11.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>100</x>
+      <y>90</y>
+      <w>230</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>tablon
+
+--
+id: int
+name: string
+user: Vector&lt;User&gt;
+permission: int
+visibility: int
+targetUsers: Vector&lt;User&gt;
+messages: Vector&lt;Message&gt;
+use: int
+--
+get &amp; sets correspondientes
+
+addMessageToTablon(msg);
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>920</x>
+      <y>180</y>
+      <w>320</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Message
+--
+
+soundRecord: Sound...
+videoRecord:Video...
+targetUsers: Vector&lt;User&gt;
+--
+get y sets correspondientes
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>350</x>
+      <y>90</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>permission:
+0-read permission
+1-write permission
+2-read-write permission
+
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>350</x>
+      <y>200</y>
+      <w>280</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>visibility:
+0-public
+1-private (1 user)
+2-private (user goup)
+-----------
+"-1" - superPublic (anonymousUser)
+
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>350</x>
+      <y>320</y>
+      <w>330</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>targetUsers será:
+-null cuando visibility sea 0 ó -1
+-vector de tamaño = 1 cuando visibility sea 1 
+-vector de tamaño &gt; 1 cuando visibility sea 2
+
+
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>350</x>
+      <y>420</y>
+      <w>350</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>use:
+-0 valor por defecto significa que el 
+tablón se puede usar de manera presencial 
+-1 significa que el tablón se puede usar
+de manera tanto presencial como remota.
+
+Estamos hablando de los usuarios (targetUsers)
+ya que el moderador puede verlo de manera
+remota. (habría que comprobar si 
+pepito.isModerator()==false)
+
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>0</x>
+      <y>790</y>
+      <w>320</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>User
+--
+name: string
+surname1: string
+surname2: string
+author: Vector&lt;int&gt;
+moderator: Vector&lt;int&gt;
+
+
+--
+get y sets correspondientes
+isAuthor()
+int [] isModerator()
+setModerator(int idTablon)
+int [] isAuthor()
+setAutor(int idTablon)
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>360</x>
+      <y>790</y>
+      <w>330</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>La figura del dueño del tablón se va a 
+distinguir, con un método en la clase 
+user isAuthor() que devuelve
+un array de ids de tablon los cuales
+es autor.
+setAuthor indica que ese usuario es el autor
+de dicho tablon
+
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>360</x>
+      <y>950</y>
+      <w>330</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Al igual con el autor, se  puede saber que
+un usuario es moderador de un/os tablon/es
+isModerator() devuelve un array de enteros
+que indican el identificador del tablon
+del cual ese usuario modera.
+
+setModerator indica que ese usuario es el 
+moderador de dicho tablon
+
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>10</x>
+      <y>630</y>
+      <w>320</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>AnonymousUser
+--
+id: int
+--
+get y set correpondiente</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>920</x>
+      <y>0</y>
+      <w>320</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>GeneralInfoMessage
+--
+id: int
+creator: User
+message: String
+image: BufferedImg
+visibility: int
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>130</x>
+      <y>670</y>
+      <w>50</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;120</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1060</x>
+      <y>80</y>
+      <w>50</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;100</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>930</x>
+      <y>480</y>
+      <w>320</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>dataBaseManager
+--
+--
+boolean checkUser(User user)
+tablon getTablon(int tablonId)
+message getMessage(int tablonId,
+Message msgId)
+addMessageToTablon(int tablonId,Message msg)
+
+createTablon(Tablon tablon);
+deleteTablon(int tablonId);
+modifyTablon(int idTablon,Tablon tablon);
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>1270</x>
+      <y>480</y>
+      <w>330</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Habría que pensar si es más rentable traer
+todo el tablón o ya filtramos en el servidor
+que 'tablón' es el que quiero (visibilidad 
+usuario)
+
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
