@@ -7,10 +7,50 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="153.97472"
-   height="89.014435"
-   id="svg2">
+   width="147.625"
+   height="77.96875"
+   id="svg2"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="arc-logo.svg">
+  <sodipodi:namedview
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="976"
+     id="namedview9"
+     showgrid="false"
+     inkscape:zoom="2.6512554"
+     inkscape:cx="144.18749"
+     inkscape:cy="7.2315953"
+     inkscape:window-x="-3"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     inkscape:snap-global="false"
+     showguides="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3916"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       originx="0px"
+       originy="-0.014434814px" />
+  </sodipodi:namedview>
   <defs
      id="defs4" />
   <metadata
@@ -21,19 +61,29 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
+  <rect
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
+     id="rect3784"
+     width="146.627"
+     height="76.982002"
+     x="0.49999994"
+     y="0.50118542"
+     rx="10.000001"
+     ry="10.000002" />
   <g
-     transform="translate(-37.853252,-36.246329)"
+     transform="translate(-37.582698,-37.260002)"
      id="layer1">
     <text
        x="66.123711"
        y="103.24319"
        id="text3960-1"
        xml:space="preserve"
-       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"><tspan
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       sodipodi:linespacing="125%"><tspan
          x="66.123711"
          y="103.24319"
          id="tspan3962-9"
@@ -42,6 +92,7 @@
        d="M 69.677287,792.64695 A 77.14286,77.14286 0 0 1 172.08669,690.78044"
        transform="matrix(0.48611109,0,0,0.48611109,17.527145,-284.63749)"
        id="path4002-2-7"
-       style="fill:none;stroke:#ff0000;stroke-width:10.28571415;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+       style="fill:none;stroke:#ff0000;stroke-width:10.28571224;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
