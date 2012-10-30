@@ -1,0 +1,91 @@
+CREATE_TABLE User 
+{
+id INT NOT NULL AUTO_INCREMENT,
+name VARCHAR(50),
+surname1 VARCHAR(50),
+surname2 VARCHAR(50),
+PRIMARY KEY (id)
+};
+
+CREATE_TABLE Message
+{
+id INT NOT NULL AUTO_INCREMENT,
+user_id INT NOT NULL,
+message_text BLOB,
+message_img BLOB,
+message_song BLOB,
+message_video BLOB,
+visibility VARBINARY,
+dateTime DATE,
+PRIMARY KEY (id),
+CONSTRAINT FOREIGN KEY (user_id)
+ REFERENCES User(id)
+};
+
+CREATE_TABLE Tablon
+{
+id INT NOT NULL AUTO_INCREMENT,
+name VARCHAR(50),
+visibility VARBINARY,
+space VARCHAR(50),
+PRIMARY KEY (id)
+};
+
+CREATE TABLE MessageUser
+{
+id INT NOT NULL AUTO_INCREMENT,
+user_id INT NOT NULL,
+message_id INT NOT NULL,
+PRIMARY KEY (id),
+CONSTRAINT FOREIGN KEY (user_id)
+ REFERENCES User(id),
+CONSTRAINT FOREIGN KEY (message_id)
+ REFERENCES Message(id)
+};
+
+CREATE TABLE TablonTargetUser
+{
+id INT NOT NULL AUTO_INCREMENT,
+tablon_id INT NOT NULL,
+user_id INT NOT NULL,
+PRIMARY KEY (id),
+CONSTRAINT FOREIGN KEY (tablon_id)
+ REFERENCES Tablon(id),
+CONSTRAINT FOREIGN KEY (user_id)
+ REFERENCES User(id)
+};
+
+CREATE TABLE TablonMessage
+{
+id INT NOT NULL AUTO_INCREMENT,
+tablon_id INT NOT NULL,
+message_id INT NOT NULL,
+PRIMARY KEY (id),
+CONSTRAINT FOREIGN KEY (tablon_id)
+ REFERENCES Tablon(id),
+CONSTRAINT FOREIGN KEY (message_id)
+ REFERENCES Message(id)
+};
+
+
+CREATE TABLE TablonUserModerates
+{
+id INT NOT NULL AUTO_INCREMENT,
+tablon_id INT NOT NULL,
+user_id INT NOT NULL,
+PRIMARY KEY (id),
+CONSTRAINT FOREIGN KEY (tablon_id)
+ REFERENCES Tablon(id),
+CONSTRAINT FOREIGN KEY (user_id)
+ REFERENCES User(id)
+};
+
+CREATE TABLE UserPermission
+{
+id INT NOT NULL AUTO_INCREMENT,
+user_id INT NOT NULL,
+permission VARBINARY,
+PRIMARY KEY (id),
+CONSTRAINT FOREIGN KEY (user_id)
+ REFERENCES User(id)
+};
