@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><umlet_diagram><help_text>// Uncomment the following line to change the fontsize:
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="11.3">
+  <help_text>// Uncomment the following line to change the fontsize:
 // fontsize=14
 
 
@@ -20,7 +21,17 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>10</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>40</x><y>220</y><w>350</w><h>220</h></coordinates><panel_attributes>tablon
+// This text will be stored with each diagram;  use it for notes.</help_text>
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>10</x>
+      <y>50</y>
+      <w>350</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>tablon
 --
 id: int 
 spaceId: 
@@ -32,24 +43,68 @@ targetUsers: Vector&lt;User&gt;
 messages: Vector&lt;Message&gt;
 --
 get y set correspondientes
-addMessageToTablon(msg);</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Note</type><coordinates><x>420</x><y>230</y><w>180</w><h>90</h></coordinates><panel_attributes>permission:
+addMessageToTablon(msg);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>390</x>
+      <y>60</y>
+      <w>180</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>permission:
 0-local read
 1-local write
 2-remote read
 3-remote write
 
-bg=blue</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Note</type><coordinates><x>420</x><y>350</y><w>310</w><h>120</h></coordinates><panel_attributes>visibility:
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>390</x>
+      <y>180</y>
+      <w>310</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>visibility:
 0-private (user group)
 1-private (1 user)
 2-public
 3-super-public (anonymousUser)
 
-bg=blue</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Note</type><coordinates><x>420</x><y>490</y><w>360</w><h>90</h></coordinates><panel_attributes>targetUsers será:
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>390</x>
+      <y>320</y>
+      <w>360</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>targetUsers será:
 -null cuando visibility sea 2 ó 3
 -vector de tamaño = 1 cuando visibility sea 1
 -vector de tamaño &gt; 1 cuando visibility sea 0
 
-bg=blue</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>870</x><y>670</y><w>400</w><h>190</h></coordinates><panel_attributes>dataBaseManager
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>840</x>
+      <y>500</y>
+      <w>400</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>dataBaseManager
 --
 --
 boolean checkUser(User user)
@@ -60,11 +115,33 @@ addMessageToTablon(int tablonId,Message msg)
 createTablon(Tablon tablon);
 deleteTablon(int tablonId);
 modifyTablon(int idTablon,Tablon tablon);
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Note</type><coordinates><x>1280</x><y>710</y><w>330</w><h>90</h></coordinates><panel_attributes>Habría que pensar si es más rentable traer
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>1250</x>
+      <y>540</y>
+      <w>330</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Habría que pensar si es más rentable traer
 todo el tablón o ya filtramos en el servidor
 que 'tablón' es el que quiero (visibilidad
 usuario)
-bg=blue</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>30</x><y>740</y><w>350</w><h>230</h></coordinates><panel_attributes>User
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>0</x>
+      <y>570</y>
+      <w>350</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>User
 --
 id: int 
 name: 
@@ -79,27 +156,54 @@ Vector&lt;int&gt; isAuthor()
 Vector &lt;int&gt; isModerator()
 setModerator(int idTablon)
 setAuthor(int idTablon)
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Note</type><coordinates><x>420</x><y>740</y><w>340</w><h>130</h></coordinates><panel_attributes>La figura del dueño del tablón se va a
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>390</x>
+      <y>570</y>
+      <w>340</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>La figura del dueño del tablón se va a
 distinguir, con un método en la clase
 user isAuthor() que devuelve
 un array de ids de tablon los cuales
 es autor.
 setAuthor indica que ese usuario es el autor
 de dicho tablon
-bg=blue</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Note</type><coordinates><x>420</x><y>890</y><w>340</w><h>130</h></coordinates><panel_attributes>Al igual con el autor, se puede saber que
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>390</x>
+      <y>720</y>
+      <w>340</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Al igual con el autor, se puede saber que
 un usuario es moderador de un/os tablon/es
 isModerator() devuelve un array de enteros
 que indican el identificador del tablon
 del cual ese usuario modera.
 setModerator indica que ese usuario es el
 moderador de dicho tablon
-bg=blue</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>170</x><y>940</y><w>50</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;30;80</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>30</x><y>1020</y><w>350</w><h>100</h></coordinates><panel_attributes>AnonymousUser
---
-id: int 
-name: string
---
-get y set correspondiente
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>910</x><y>230</y><w>450</w><h>190</h></coordinates><panel_attributes>Message
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>880</x>
+      <y>60</y>
+      <w>450</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Message
 --
 id: int
 creator: User
@@ -111,11 +215,36 @@ targetUsers: Vector&lt;User&gt;
 visibility: binary
 dateTime:
 --
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1100</x><y>390</y><w>50</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;30;90</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>900</x><y>480</y><w>460</w><h>130</h></coordinates><panel_attributes>GeneralInfoMessage
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1070</x>
+      <y>220</y>
+      <w>50</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;90</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>870</x>
+      <y>310</y>
+      <w>460</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>GeneralInfoMessage
 --
 id: int
 creator: User
 message: String
 Image: BufferedImg	
 --
-</panel_attributes><additional_attributes/></element></umlet_diagram>
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
