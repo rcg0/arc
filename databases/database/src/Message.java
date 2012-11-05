@@ -9,6 +9,7 @@ public class Message {
 	private int id;
 	private User creator;
 	private String msg;
+	private int format;
 	//private Byte visibility;
 	private int visibility;
 	//private Vector <User> targetUsers = new Vector<User>();
@@ -70,6 +71,17 @@ public class Message {
 	public int getVisibility (){
 		
 		return visibility;
+	}
+	
+	public void setFormat(int format){
+		
+		this.format = format;
+		
+	}
+	
+	public int getFormat(){
+		
+		return format;
 	}
 
 	public Date getDate() {

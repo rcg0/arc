@@ -6,6 +6,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
+
 import javax.sql.*;
 
 import java.sql.*;
@@ -27,8 +28,8 @@ public class dataBaseManager{
 			//conn = ds.getConnection();
 			
 			String url= "jdbc:mysql://127.0.0.1:3306/BaseDeDatos";
-			conn = DriverManager.getConnection(url,"jrafael", "hmspawnn");
-			
+			//conn = DriverManager.getConnection(url,"jrafael", "hmspawnn");
+			conn = DriverManager.getConnection(url,"root", "givyijRod9");
 		}catch(SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
                         System.out.println("SQLState: " + ex.getSQLState());
@@ -139,7 +140,7 @@ public class dataBaseManager{
 			Connection conn = openConnectionPool();
 			/*select * from TablonMessage INNER JOIN Message ON TablonMessage.message_id = Message.id INNER JOIN User ON Message.user_id = User.id WHERE TablonMessage.id = ?;*/
 			/***********************************************PARAMETRIZACIÓN*************************************************/
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM TablonMessage INNER JOIN Message ON TablonMessage.message_id = Message.id INNER JOIN User ON Message.user_id = User.id WHERE TablonMessage.id = ?;"); 
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM TablonMessage INNER JOIN Message ON TablonMessage.message_id = Message.id INNER JOIN User ON Message.user_id = User.id WHERE TablonMessage.tablon_id = ?;"); 
 			statement.setInt(1, idTablon);
 			/****************************************************************************************************************/
 
@@ -289,30 +290,220 @@ public class dataBaseManager{
 		printUser(message.getCreator());
 	}
 	
-	/*EJEMPLO DE ANTERIOR PROYECTO*/
-
-    	/**
-	 * Mete comentarios a la bbdd 
-	 * @param objeto comentario
-	 * @return nada
-	 */
-	public boolean meteComentario(String peli, String usu, String com){//Comentario comentario) {
-		boolean result=false;
-		try{
+	public boolean addUser(User user){
+		boolean result= false;
+		
+		try {
 			Connection conn = openConnectionPool();
 			Statement stmt = conn.createStatement();
-			String query= "INSERT INTO Comentarios (pelicula, usuario, comentario) VALUES ('"+peli+"', '"+usu+"', '"+com+"');";			
-//String query= "INSERT INTO Comentarios (pelicula, usuario, comentario) VALUES ('"+comentario.getPelicula()+"', '"+comentario.getUsuario()+"', '"+comentario.getComentario()+"');";
-
-/***********************************************PARAMETRIZACIÓN*************************************************/
-			PreparedStatement statement = conn.prepareStatement("INSERT INTO Comentarios (pelicula, usuario, comentario) VALUES (?, ?, ?)");
-			statement.setString(1, peli);
-			statement.setString(2, usu);
-			statement.setString(3, com);
-/****************************************************************************************************************/
-			int aux = stmt.executeUpdate(query);
+			
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO User (name, surname1, surname2) VALUES (?, ?, ?)");
+				
+			statement.setString(1, user.getName());
+			statement.setString(2, user.getSurName1());
+			statement.setString(3, user.getSurName2());
+		
+			int aux = statement.executeUpdate();
 			if(aux!=0)
 				result=true;
+		
+			closeConnectionPool(conn);
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		return result;
+	}
+	
+	public boolean deleteUser(int userId){
+		boolean result= false;
+		
+		try {
+			Connection conn = openConnectionPool();
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement statement = conn.prepareStatement("DELETE FROM User WHERE id = ?");
+			statement.setInt(1, userId);
+			
+		
+			int aux = statement.executeUpdate();
+			if(aux!=0)
+				result=true;
+		
+			closeConnectionPool(conn);
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		return result;
+	}
+	
+	public boolean setPermissionToUser(int userId, int permission, int tablonId){
+		boolean result= false;
+		
+		try {
+			Connection conn = openConnectionPool();
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO UserPermission (user_id, tablon_id, permission) VALUES (?, ?, ?)");
+				
+			statement.setInt(1, userId);
+			statement.setInt(2, tablonId);
+			statement.setInt(3, permission);
+		
+			int aux = statement.executeUpdate();
+			if(aux!=0)
+				result=true;
+		
+			closeConnectionPool(conn);
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		return result;
+	}
+	
+	public int getUserPermission(int userId, int tablonId){
+		
+		int i=-1;
+		
+		try{
+			Connection conn = openConnectionPool();
+			/***********************************************PARAMETRIZACIÓN*************************************************/
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM UserPermission WHERE user_id = ? AND tablon_id = ?"); 
+			statement.setInt(1, userId);
+			statement.setInt(2, tablonId);
+			/****************************************************************************************************************/
+
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				
+				i = rs.getInt("permission");
+					 
+			}
+
+			closeConnectionPool(conn);
+					
+			}catch(SQLException ex){
+				System.out.println("SQLException: " + ex.getMessage());
+				System.out.println("SQLState: " + ex.getSQLState());
+				System.out.println("VendorError: " + ex.getErrorCode());
+			}
+		
+		return i;
+		
+		
+	}
+	
+	public boolean createMessage(Message message){
+		boolean result= false;
+		
+		try {
+			Connection conn = openConnectionPool();
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO " +
+					"Message (user_id, message, format, visibility, dateTime) VALUES (?, ?, ?, ?, ?)");
+				
+			statement.setInt(1, message.getCreator().getId());
+			statement.setString(2, message.getMsg());
+			statement.setInt(3, message.getFormat());
+			statement.setInt(4, message.getVisibility());
+			statement.setDate(5, message.getDate());
+			
+			int aux = statement.executeUpdate();
+			if(aux!=0)
+				result=true;
+		
+			closeConnectionPool(conn);
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		return result;
+	}
+	
+	public boolean deleteMessage(int messageId){
+		boolean result= false;
+		
+		try {
+			Connection conn = openConnectionPool();
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement statement = conn.prepareStatement("DELETE FROM Message WHERE id = ?");
+			statement.setInt(1,messageId);
+			
+			
+			int aux = statement.executeUpdate();
+			if(aux!=0)
+				result=true;
+		
+			closeConnectionPool(conn);
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		return result;
+	}
+	
+	public boolean setMessageToTablon(int messageId, int tablonId){
+		
+		boolean result= false;
+		
+		try {
+			Connection conn = openConnectionPool();
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO " +
+					"TablonMessage (tablon_id, message_id) VALUES (?, ?)");
+				
+			statement.setInt(1, tablonId);
+			statement.setInt(2, messageId);
+			
+			int aux = statement.executeUpdate();
+			if(aux!=0)
+				result=true;
+		
+			closeConnectionPool(conn);
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		
+		
+		return result;
+	}
+	
+	public boolean setModeratorsToTablon(int tablonId, Vector<Integer> moderatorsId){
+		boolean result= false;
+		
+		try {
+			Connection conn = openConnectionPool();
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO TablonUserModerates (tablon_id, user_id) VALUES (?, ?)");
+			
+			for(int i=0; i<moderatorsId.size();i++){
+				statement.setInt(1, tablonId);
+				statement.setInt(2, moderatorsId.elementAt(i).intValue());
+			
+				int aux = statement.executeUpdate();
+				if(aux!=0)
+					result=true;
+		
+				}
 			
 			closeConnectionPool(conn);
 		}catch(SQLException ex){
@@ -320,9 +511,37 @@ public class dataBaseManager{
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
+		
 		return result;
 	}
-
-
+	
+	public boolean setTargetUsersToTablon(int tablonId, Vector<Integer> targetUsersId){
+		boolean result= false;
+		
+		try {
+			Connection conn = openConnectionPool();
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO TablonTargetUser (tablon_id, user_id) VALUES (?, ?)");
+			
+			for(int i=0; i<targetUsersId.size();i++){
+				statement.setInt(1, tablonId);
+				statement.setInt(2, targetUsersId.elementAt(i).intValue());
+			
+				int aux = statement.executeUpdate();
+				if(aux!=0)
+					result=true;
+		
+				}
+			
+			closeConnectionPool(conn);
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		return result;
+	}
 
 }
