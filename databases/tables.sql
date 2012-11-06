@@ -23,9 +23,9 @@ CREATE TABLE Message (
 id INT NOT NULL AUTO_INCREMENT,
 user_id INT NOT NULL,
 message BLOB,
-format INT,
-visibility INT,
-dateTime DATE,
+format BINARY,
+visibility BINARY,
+dateTime TIMESTAMP,
 PRIMARY KEY (id),
 CONSTRAINT FOREIGN KEY (user_id)
  REFERENCES User (id)
@@ -36,7 +36,7 @@ CONSTRAINT FOREIGN KEY (user_id)
 CREATE TABLE Tablon (
 id INT NOT NULL AUTO_INCREMENT,
 name VARCHAR(50),
-visibility INT,
+visibility BINARY,
 space VARCHAR(50),
 PRIMARY KEY (id)
 )ENGINE=INNODB;
@@ -93,7 +93,7 @@ CREATE TABLE UserPermission (
 id INT NOT NULL AUTO_INCREMENT,
 user_id INT NOT NULL,
 tablon_id INT NOT NULL,
-permission INT NULL,
+permission BINARY NOT NULL,
 PRIMARY KEY (id),
 CONSTRAINT FOREIGN KEY (user_id)
  REFERENCES User(id)

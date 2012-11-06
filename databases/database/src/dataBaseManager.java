@@ -29,7 +29,7 @@ public class dataBaseManager{
 			
 			String url= "jdbc:mysql://127.0.0.1:3306/BaseDeDatos";
 			//conn = DriverManager.getConnection(url,"jrafael", "hmspawnn");
-			conn = DriverManager.getConnection(url,"root", "givyijRod9");
+			conn = DriverManager.getConnection(url,"root","hmspawnn"); //"givyijRod9");
 		}catch(SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
                         System.out.println("SQLState: " + ex.getSQLState());
@@ -131,6 +131,34 @@ public class dataBaseManager{
 		return tablon;
 		
 	}
+	
+	public boolean addTablon(Tablon tablon){
+		boolean result= false;
+		
+		try {
+			Connection conn = openConnectionPool();
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO Tablon (name, visibility, space) VALUES (?, ?, ?)");
+				
+			statement.setString(1, tablon.getName());
+			statement.setInt(2, tablon.getVisibility());
+			statement.setString(3, tablon.getSpaceId());
+		
+			int aux = statement.executeUpdate();
+			if(aux!=0)
+				result=true;
+		
+			closeConnectionPool(conn);
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		return result;
+	}
+	
 
 	public Vector<Message> getMessagesFromTablon(int idTablon){
 		
@@ -151,7 +179,7 @@ public class dataBaseManager{
 				m.setId(rs.getInt("message_id"));
 				m.setMsg(rs.getString("message"));
 				m.setVisibility(rs.getInt("visibility"));
-				//m.setDate(rs.getDate("dateTime"));//peta aquí
+				m.setDate(rs.getTimestamp("dateTime"));//peta aquí
 				u.setId(rs.getInt("Message.user_id"));
 				u.setName(rs.getString("User.name"));
 				u.setSurName1(rs.getString("User.surname1"));
@@ -241,6 +269,8 @@ public class dataBaseManager{
 		return targetUsers;
 		
 	}
+	
+	
 	
 	
 	public void printTablon(Tablon tablon){
@@ -409,13 +439,13 @@ public class dataBaseManager{
 			Statement stmt = conn.createStatement();
 			
 			PreparedStatement statement = conn.prepareStatement("INSERT INTO " +
-					"Message (user_id, message, format, visibility, dateTime) VALUES (?, ?, ?, ?, ?)");
+					"Message (user_id, message, format, visibility, dateTime) VALUES (?, ?, ?, ?, NOW())");
 				
 			statement.setInt(1, message.getCreator().getId());
 			statement.setString(2, message.getMsg());
 			statement.setInt(3, message.getFormat());
 			statement.setInt(4, message.getVisibility());
-			statement.setDate(5, message.getDate());
+			//statement.setString(5, "NOW()");
 			
 			int aux = statement.executeUpdate();
 			if(aux!=0)

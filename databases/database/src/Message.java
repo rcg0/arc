@@ -13,7 +13,7 @@ public class Message {
 	//private Byte visibility;
 	private int visibility;
 	//private Vector <User> targetUsers = new Vector<User>();
-	private Date date;
+	private java.sql.Timestamp date;
 
 	public void setId(int id){
 		
@@ -84,11 +84,11 @@ public class Message {
 		return format;
 	}
 
-	public Date getDate() {
+	public java.sql.Timestamp getDate() {
 		return date;
 	}
 	
-	public void setDate(Date date2) {
+	public void setDate(java.sql.Timestamp date2) {
 		this.date = date2;
 	}
 	
