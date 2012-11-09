@@ -9,7 +9,7 @@ header#site_head{
 	border-left: 10px solid black;
 }
 
-form{
+#rest form{
 	width:240px;
 	padding:5px 0;
 	border: 2px solid #000000;
@@ -21,7 +21,7 @@ form{
 border-left: 10px solid black;
 	border-bottom: 2px solid black;
 	border-right: 2px solid black;
-	height: 750px;
+	height: 720px;
 
 }
 
@@ -48,7 +48,65 @@ section#main {
 	border-right: 2px solid black;
 }
 
+#mensajes {
+	
+  height:578px;
+  width: 550px;
+  position:absolute;
+  left: 0px;
+  top: 0px;
+  border: 1px solid black;
+  overflow: auto;
+}
+#mensaje {
 
+border:2px solid #a1a1a1;
+padding:10px 40px; 
+background:#FFFFFF;
+width:400px;
+border-radius:25px;
+-moz-border-radius:25px; /* Firefox 3.6 and earlier */
+position: relative;
+top: 50px;
+left: 30px;
+}
+
+#escribiendo_mensaje {
+  
+  
+border:2px solid #a1a1a1;
+padding:10px 40px; 
+background:#FFFFFF;
+width:200px;
+height:200px;
+border-radius:25px;
+-moz-border-radius:25px; /* Firefox 3.6 and earlier */
+position: relative;
+top: 50px;
+left: 30px;
+word-wrap:break-word;
+
+}
+
+#mensaje p {word-wrap:break-word;} 
+
+
+
+#escribir_mensajes {
+  height:579px;
+  width: 344px;
+  position:absolute;
+  left: 550px;
+  top: 0px;
+  border: 1px solid black;
+}
+
+#escribir_mensajes p {
+  
+  position:relative;
+  left: 25px;
+  top: 35px;
+}
 
 
 article#tablon_content{
@@ -79,7 +137,7 @@ nav#tablon_name {
   top:173px;
   left: 262px;
   width: 900px;
-  height: 30px
+  height: 30px;
   
   
 }
@@ -126,4 +184,159 @@ nav#left_nav li {
   height: 20px;
   border-bottom: 2px solid black;
   
+}
+
+a {
+
+  text-decoration: none;
+
+}
+
+
+a:visited{
+  color: black;
+}
+
+a:hover {
+  color: red;
+}
+
+a:active{
+  color: green;
+}
+
+#apagar {
+	width: 320px;
+	height: 70px;
+	position:absolute;
+	top: 100px;
+	right: 30px;	
+	
+}
+
+#apagar img {
+
+	position:absolute;
+	top: 10px;
+	right: 0px;	
+
+}
+
+#escribir_mensajes input {
+
+      position:absolute;
+      top: 470px;
+      right: 130px
+
+
+}
+
+#escribir_mensajes textarea {
+
+      resize: none;
+
+}
+
+
+#gestion_1 {
+
+  position: absolute;
+  width:30%;
+  height:30%;
+  
+  top:50px;
+  left:50px;
+  border-right: 2px solid #000000;
+
+}
+
+#gestion_1 input {
+  position: absolute;
+  top:40%;
+  left: 20% 
+}
+
+#gestion_1 p {
+
+  position: absolute;
+  left: 20%;
+
+}
+
+
+#gestion_2 {
+
+  position: absolute;
+  width:30%;
+  height:30%;
+  
+  top:50px;
+  left:320px;
+  border-right: 2px solid #000000;
+}
+
+#checkbox_gestion{
+
+
+position: absolute;
+  width:70%;
+  height:70%;
+  
+  top:22%;
+  left:13%;
+  border: 2px solid #000000;
+ 
+  overflow:auto;
+
+}
+
+
+#asociar{
+
+  position: absolute;
+  left : 13%;
+
+}
+
+
+#gestion_3 {
+
+  position: absolute;
+  width:30%;
+  height:30%;
+  
+  top:50px;
+  left:590px;
+
+}
+
+#gestion_4 {
+
+  position: absolute;
+  width:75%;
+  height:30%;
+  top:260px;
+  left:100px;
+  border: 2px solid #000000;
+}
+
+#gestion_4 p {
+
+   position: absolute;
+   left:5%;
+
+
+}
+
+
+
+#gestion_5 {
+
+  position: absolute;
+  width:20%;
+  height:10%;
+  border: 2px solid #000000;
+  top:80%;
+  left:41%;
+
 }

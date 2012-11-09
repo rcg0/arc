@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>ARC</title>
+	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+
+	<script>
+	
+	function handleChange(cb){
+
+	 
+	  var whois = document.getElementById('check').name;
+	  alert("Changed, new value = " + cb.checked + " " + whois); 
+	  var miDiv = document.getElementById('gestion_4');
+	  var elemento = document.createElement('p');
+	  elemento.appendChild(document.createTextNode(whois));
+	  elemento.id = 'nuevo';
+	  miDiv.appendChild(elemento);
+    
+	}
+  
+	</script>
+
+
+</head>
+<body>
+
+  <header id="site_head">
+    
+    <img src="IMG/arc-logo.png" border="0" align="left" height="78px" width="148px">
+    
+  </header>
+
+<section id="main">
+  
+  <div id="apagar">
+    <a href="#"><img id="imgApagado" src="IMG/apagado2.png"></a>
+    <h3>Javier Rafael Sánchez</h3>
+  </div>
+  
+  <header id= "header_rest">
+
+      <nav id="left_nav">
+	  <ul>
+	      <li><a href="#">Sobre ti</a></li>
+	      <li><a href="#">Tus tablones</a></li>
+	      <li><a href="#">Gestión</a></li>
+	  </ul>
+      </nav>
+  </header>
+
+  <nav id="tablon_name">
+	  <ul>
+	      <li><a href="http://www.google.es">Global</a></li>
+	      <li><a href="#">Alumnos</a></li>
+ 
+	  </ul>
+      </nav>
+
+<article id = "tablon_content">
+
+      <div id="gestion_1">
+	<p>Nombre del tablón</p>
+	<input type="text">
+
+      </div>
+      
+      <div id="gestion_2">
+	
+	<p id="asociar">Asociar moderadores</p>
+
+	  <div id="checkbox_gestion">
+	    <p><input type="checkbox" name="Jaime_m"/>Jaime</p>
+	    <p><input type="checkbox" name="Javier_m"/>Javier</p>
+	    <p><input type="checkbox" name="Nuria_m"/>Nuria</p>
+	    <p><input type="checkbox" name="Francisco Hernández Casadoddddddd_m"/>Francisco Hernández Casadoddddddd</p>
+	    <p><input type="checkbox" name="Miriam_m"/>Miriam</p>
+	    <p><input type="checkbox" name="Vilar_m"/>Vilar</p>
+	    <p><input type="checkbox" name="Alfonso_m"/>Alfonso</p>
+	    <p><input type="checkbox" name="Isabel_m"/>Isabel</p>
+	  </div>
+
+      </div>
+      
+      <div id="gestion_3">
+
+	  <p id="asociar">Asociar usuarios</p>
+
+	  <div id="checkbox_gestion">
+	    <p><input  id="check" type="checkbox" onchange="handleChange(this);" name="Jaime"/>Jaime</p>
+	    <p><input type="checkbox" onchange="handleChange(this);" name="Javier"/>Javier</p>
+	    <p><input type="checkbox" onchange="handleChange(this);" name="Nuria"/>Nuria</p>
+	    <p><input type="checkbox" onchange="handleChange(this);" name="Francisco Hernández Casadoddddddd"/>Francisco Hernández Casadoddddddd</p>
+	    <p><input type="checkbox" onchange="handleChange(this);" name="Miriam"/>Miriam</p>
+	    <p><input type="checkbox" onchange="handleChange(this);" name="Vilar"/>Vilar</p>
+	    <p><input type="checkbox" onchange="handleChange(this);" name="Alfonso"/>Alfonso</p>
+	    <p><input type="checkbox" onchange="handleChange(this);" name="Isabel"/>Isabel</p>
+	  </div>
+
+  
+      </div>
+
+      <div id="gestion_4">
+	  
+
+      </div>
+      
+      <div id="gestion_5">
+    
+      </div>
+
+</article>
+
+</section>
+
+
+</html>
+
+
+
+
