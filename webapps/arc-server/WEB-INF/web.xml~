@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-
-<web-app>
-       
+<web-app version="3.0" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee   
+        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+        
         <servlet>
         	<servlet-name>ServletAccess</servlet-name>
         	<servlet-class>arc.access</servlet-class>
@@ -70,28 +69,6 @@
 	 <servlet-mapping>
         	<servlet-name>ServletShowNewTablon</servlet-name>
 		<url-pattern>/showNewTablon</url-pattern>
-        </servlet-mapping>
-
-
-	<servlet>
-        	<servlet-name>ServletDeleteMessage</servlet-name>
-        	<servlet-class>arc.deleteMessage</servlet-class>
-        </servlet>
-	
-	 <servlet-mapping>
-        	<servlet-name>ServletDeleteMessage</servlet-name>
-		<url-pattern>/deleteMessage</url-pattern>
-        </servlet-mapping>
-
-
-	<servlet>
-        	<servlet-name>ServletSendMessage</servlet-name>
-        	<servlet-class>arc.sendMessage</servlet-class>
-        </servlet>
-	
-	 <servlet-mapping>
-        	<servlet-name>ServletSendMessage</servlet-name>
-		<url-pattern>/sendMessage</url-pattern>
         </servlet-mapping>
 	
 	

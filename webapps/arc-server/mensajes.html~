@@ -4,6 +4,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>ARC</title>
 	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+<<<<<<< HEAD
+	
+	<script>
+	  function mover_div(i){
+	    var elemento_div = document.getElementById('mensaje');
+	    elemento_div.style.top = i + "20"+"px";
+	  }
+	</script>
+=======
+>>>>>>> 7fb9bc0e43c0debb14f8d2e1025b37e3004768b2
 </head>
 <body>
 
@@ -16,7 +26,11 @@
 <section id="main">
   
   <div id="apagar">
+<<<<<<< HEAD
+    <a href="#"><img id="imgApagado" src="IMG/apagado2.png" hspace="1300px" vspace="20px"></a>
+=======
     <a href="#"><img id="imgApagado" src="IMG/apagado2.png"></a>
+>>>>>>> 7fb9bc0e43c0debb14f8d2e1025b37e3004768b2
     <h3>Javier Rafael Sánchez</h3>
   </div>
   
@@ -63,15 +77,23 @@
   
   <div id = "escribir_mensajes">
     <p>Tu mensaje:</p>
+<<<<<<< HEAD
+    
+=======
       
       <form method="post" action="#">
+>>>>>>> 7fb9bc0e43c0debb14f8d2e1025b37e3004768b2
       <textarea autofocus type="text" id="escribiendo_mensaje" name="mensaje">
       </textarea>
       <img id="foto" src="IMG/foto.png" hspace="50px" vspace="100px">
       <img id = "video" src="IMG/video.png" hspace="0px" vspace="100px">
       <img id = "audio" src="IMG/audio.png" hspace="40px" vspace="100px">
+<<<<<<< HEAD
+    
+=======
       <input type="submit" value="Entrar" /> 
       </form>
+>>>>>>> 7fb9bc0e43c0debb14f8d2e1025b37e3004768b2
   </div>
 </article>
 
