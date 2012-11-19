@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><umlet_diagram><help_text>
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="11.3">
+  <help_text>
 // Uncomment the following line to change the fontsize:
 // fontsize=14
 
@@ -21,64 +22,235 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>10</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>250</x><y>300</y><w>320</w><h>100</h></coordinates><panel_attributes>MessageUser
---
-user_id
-message_id
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>260</x><y>90</y><w>320</w><h>100</h></coordinates><panel_attributes>User
+// This text will be stored with each diagram;  use it for notes.</help_text>
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>140</x>
+      <y>180</y>
+      <w>320</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>User
 --
 user_id
 name
 surname1
 surname2
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>640</x><y>90</y><w>320</w><h>150</h></coordinates><panel_attributes>Message
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>520</x>
+      <y>180</y>
+      <w>320</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Message
 --
 message_id
-id_user
+user_id
+tablon_id
 message
 format
 visibility
 dateTime
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1060</x><y>100</y><w>320</w><h>100</h></coordinates><panel_attributes>Tablon
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>940</x>
+      <y>190</y>
+      <w>320</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Tablon
 --
 tablon_id
 name
 visibility
 space
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>250</x><y>460</y><w>320</w><h>100</h></coordinates><panel_attributes>TablonTargetUser
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>930</x>
+      <y>410</y>
+      <w>320</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>TablonTargetUser
 --
 tablon_id
 user_id
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>940</x><y>360</y><w>320</w><h>100</h></coordinates><panel_attributes>TablonUserModerates
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>930</x>
+      <y>530</y>
+      <w>320</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>TablonUserModerates
 --
 tablon_id
 user_id
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>250</x><y>610</y><w>320</w><h>100</h></coordinates><panel_attributes>TablonMessage
---
-tablon_id
-message_id
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>940</x><y>490</y><w>320</w><h>100</h></coordinates><panel_attributes>UserPermission
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>130</x>
+      <y>380</y>
+      <w>320</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>UserPermission
 --
 id_user
 permission
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.Database</type><coordinates><x>120</x><y>0</y><w>120</w><h>40</h></coordinates><panel_attributes>Database</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.EER_Entity</type><coordinates><x>320</x><y>770</y><w>180</w><h>120</h></coordinates><panel_attributes>User</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.EER_Entity</type><coordinates><x>320</x><y>1020</y><w>620</w><h>30</h></coordinates><panel_attributes>Tablon</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>470</x><y>810</y><w>360</w><h>70</h></coordinates><panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Database</type>
+    <coordinates>
+      <x>0</x>
+      <y>90</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Database</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.EER_Entity</type>
+    <coordinates>
+      <x>200</x>
+      <y>860</y>
+      <w>180</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>User</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.EER_Entity</type>
+    <coordinates>
+      <x>200</x>
+      <y>1110</y>
+      <w>620</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Tablon</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>350</x>
+      <y>900</y>
+      <w>360</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-
 m1=1..n
 m2=0..n
-writes &gt;</panel_attributes><additional_attributes>30;50;340;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>270</x><y>860</y><w>130</w><h>180</h></coordinates><panel_attributes>lt=-
+writes &gt;</panel_attributes>
+    <additional_attributes>30;50;340;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>150</x>
+      <y>950</y>
+      <w>130</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=-
 m1=1..n
 m2=0..n
-is author&gt;</panel_attributes><additional_attributes>70;30;70;160</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>780</x><y>850</y><w>142</w><h>190</h></coordinates><panel_attributes>lt=-
+is author&gt;</panel_attributes>
+    <additional_attributes>70;30;70;160</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>660</x>
+      <y>940</y>
+      <w>142</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=-
 m1=0..n
 m2=0..1
-consists of&gt;</panel_attributes><additional_attributes>80;30;80;170</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>360</x><y>860</y><w>144</w><h>180</h></coordinates><panel_attributes>lt=-
+consists of&gt;</panel_attributes>
+    <additional_attributes>80;30;80;170</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>240</x>
+      <y>950</y>
+      <w>144</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=-
 m1=1..n
 m2=0..n
-moderates&gt;</panel_attributes><additional_attributes>80;30;80;160</additional_attributes></element><element><type>com.umlet.element.custom.EER_Entity</type><coordinates><x>810</x><y>770</y><w>100</w><h>110</h></coordinates><panel_attributes>##Message
-bg=orange</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Note</type><coordinates><x>940</x><y>810</y><w>180</w><h>80</h></coordinates><panel_attributes>Es una entidad débil, 
+moderates&gt;</panel_attributes>
+    <additional_attributes>80;30;80;160</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.EER_Entity</type>
+    <coordinates>
+      <x>690</x>
+      <y>860</y>
+      <w>100</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>##Message
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>820</x>
+      <y>900</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Es una entidad débil, 
 ya que necesita
  de un Tablon
  para existir
-bg=blue</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>470</x><y>760</y><w>360</w><h>70</h></coordinates><panel_attributes>lt=-
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>350</x>
+      <y>850</y>
+      <w>360</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-
 m1=1..n
 m2=0..n
-moderates&gt;</panel_attributes><additional_attributes>30;50;340;50</additional_attributes></element></umlet_diagram>
+moderates&gt;</panel_attributes>
+    <additional_attributes>30;50;340;50</additional_attributes>
+  </element>
+</diagram>
