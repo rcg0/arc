@@ -4,7 +4,7 @@
        
         <servlet>
         	<servlet-name>ServletAccess</servlet-name>
-        	<servlet-class>arc.access</servlet-class>
+        	<servlet-class>arc.Access</servlet-class>
         </servlet>
         
         <servlet-mapping>
@@ -16,7 +16,7 @@
 	
 	<servlet>
         	<servlet-name>ServletGetProfileData</servlet-name>
-        	<servlet-class>arc.profile</servlet-class>
+        	<servlet-class>arc.Profile</servlet-class>
         </servlet>
         
         <servlet-mapping>
@@ -27,7 +27,7 @@
 	
 	<servlet>
         	<servlet-name>ServletLogout</servlet-name>
-        	<servlet-class>arc.logout</servlet-class>
+        	<servlet-class>arc.Logout</servlet-class>
         </servlet>
         
         <servlet-mapping>
@@ -40,7 +40,7 @@
 	
 	<servlet>
         	<servlet-name>ServletGetTablones</servlet-name>
-        	<servlet-class>arc.getTablones</servlet-class>
+        	<servlet-class>arc.GetTablones</servlet-class>
         </servlet>
 	
 	 <servlet-mapping>
@@ -53,7 +53,7 @@
 	
 	<servlet>
         	<servlet-name>ServletShowModifyTablones</servlet-name>
-        	<servlet-class>arc.showModifyTablones</servlet-class>
+        	<servlet-class>arc.ShowModifyTablones</servlet-class>
         </servlet>
 	
 	 <servlet-mapping>
@@ -64,7 +64,7 @@
 	
 	<servlet>
         	<servlet-name>ServletShowNewTablon</servlet-name>
-        	<servlet-class>arc.showNewTablon</servlet-class>
+        	<servlet-class>arc.ShowNewTablon</servlet-class>
         </servlet>
 	
 	 <servlet-mapping>
@@ -75,7 +75,7 @@
 
 	<servlet>
         	<servlet-name>ServletDeleteMessage</servlet-name>
-        	<servlet-class>arc.deleteMessage</servlet-class>
+        	<servlet-class>arc.DeleteMessage</servlet-class>
         </servlet>
 	
 	 <servlet-mapping>
@@ -86,7 +86,7 @@
 
 	<servlet>
         	<servlet-name>ServletSendMessage</servlet-name>
-        	<servlet-class>arc.sendMessage</servlet-class>
+        	<servlet-class>arc.SendMessage</servlet-class>
         </servlet>
 	
 	 <servlet-mapping>

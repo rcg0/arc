@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>ARC</title>
+	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="messages.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="mis-tablones.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body>
+
+
+<div id= wrapper> 
+
+<header id="site_head">
+  <img id="logo" src="IMG/arc-logo.png">
+  <div id="logout">
+    <a href="#"><img id="imgApagado" src="IMG/apagado2.png"></a>
+    <p>User</p>
+  </div>
+   
+   <nav id="main_nav">
+      <ul>
+	<li><a href="#">Perfil</a></li>
+	<li><a href="#">Mis tablones</a></li>
+	<li><a href="#">Mensajes</a></li>
+      </ul>
+   </nav>
+</header>
+
+
+<!-- a partir de aqui es lo que varía de una sección a otra -->
+
+   <nav id="tablon_name">
+      <ul>
+	<li><a href="#">Tablon global</a></li>
+	<li><a href="#">Alumnos</a></li>
+	<li><a href="#">Profesores</a></li>
+      </ul>
+   </nav>
+   
+   <section id="left">
+	
+	<div class="mensaje">
+	  <h2>Nombre de tablón:</h2>
+	  <p>Tablon Global</p>
+	</div>
+	<p></p>
+	<div class="mensaje">
+	  <h2>Creador:</h2>
+	  <p>Juan Benítez</p>
+	</div>
+	<p></p>
+	<div class="mensaje">
+	  <h2>Moderadores asociados:</h2>
+	  <p>Juan Benítez</p>
+	  <p>Pepito Grillo</p>
+	</div>
+	<p></p>
+	<div class="mensaje">
+	  <h2>Usuarios asociados:</h2>
+	  <p>Todos</p>
+	</div>
+	<p></p>
+	<div class="mensaje">
+	  <h2>Permisos asociados a usuario:</h2>
+	  <p> Todos -> Escritura y lectura local</p>
+	</div>
+
+  </section>
+
+  <section id ="right" >
+   
+      
+
+      <input id="eliminar" type="button" value="Eliminar tablón" />
+
+      <form method="post" action="#">
+      
+      <input type="text" class="mensaje" placeholder="Nombre de tablón"/>
+      <p></p>
+      <input class ="mensaje" type="list" placeholder="Asociar moderadores"/>
+      <p></p>
+      <input class ="mensaje" type="list" placeholder="Asociar usuarios"/>
+      <p></p>
+      <input class ="mensaje" type="list" placeholder="Asociar permiso a usuario"/>
+      
+      
+      
+      <input id="modificar" type="button" value="Modificar tablón" />
+      <input id="nuevo" type="button" value="Nuevo tablón" />
+            
+      </form>
+      
+
+
+  </section>
+
+
+</div>
+</html>
