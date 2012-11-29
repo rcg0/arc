@@ -2,6 +2,8 @@ window.onload = makeRequest;
    
 var xhr; 
 var url="getTablonNames";
+var tablonid; //importante, esta variable es un array de ids de tablon, la voy a utilizar para ponerlos en el href de las etiquetas a del menú
+
 function createXMLHttpRequest(){
   if(window.XMLHttpRequest){
      xhr= new XMLHttpRequest();
@@ -32,23 +34,47 @@ function showContents(){
     pos = text.indexOf("]");
     var tablonId = text.substring(0,pos+1);
     var tablonNames= text.substring(pos+1,text.length);
-    tablonIdx = tablonId.replace("[","");
-    tablonIdxx = tablonIdx.replace("]","");
-    var tablonid = tablonIdxx.split(",")
-    
-    //alert(tablonId);
-    //document.write(tablonNames);
-    //document.getElementById("").innerHTML=xhr.responseText;
-    //creo los nodos
-    //var text = "prueba"; //document.createTextNode(tablonNames);
-    var newText = document.createTextNode(tablonid[1]);
-    var newLi = document.createElement("li");
-    newLi.appendChild(newText);
-    var newUl = document.createElement("ul");
-    newUl.appendChild(newLi);
-    var nav = document.getElementById("tablon_name");
-    //añado los nodos correspondientes
-    nav.appendChild(newUl);
+    tablonIdx = tablonId.replace("[","").replace("]","");
+    tablonid = tablonIdx.split(",");
+
+
+    for(var i=0;i<tablonNames.length;i++){//tengo que quitar las "" y eso a cada elemento
+      var tablonNames = tablonNames.replace("[","").replace("]","").replace("\"","").replace("\"","");
+    }    
+
+    var tablones = tablonNames.split(",");
+    if(tablones == undefined){//es undefined si tiene un elemento
+
+      tablones= tablonNames;
+
+    }
+    creaMenu(tablones);   
     
     }
+  }
+
+
+  function creaMenu(nombreTablones){
+      var i;
+      var newLi;
+      var newA;
+      var newUl;
+      var nav = document.getElementById("tablon_name");
+
+      for(i =0; i<nombreTablones.length; i++){
+        text = document.createTextNode(nombreTablones[0]);
+        newA = document.createElement("a");
+        newA.href="getTablon?id="+tablonid[i];
+        if(i==0){//se marcará la primera por defecto
+        newA.className="current";
+        }
+        newA.appendChild(text);
+        
+        newLi = document.createElement("li");
+        newLi.appendChild(newA);
+        newUl = document.createElement("ul");
+        newUl.appendChild(newLi);
+        nav.appendChild(newUl);
+      }
+
   }
