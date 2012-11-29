@@ -27,7 +27,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 		user= (User)session.getAttribute("user");
 
 		if(user!=null){
-      		/*	tablones=(Vector<Tablon>)session.getAttribute("tablones");
+      			tablones=(Vector<Tablon>)session.getAttribute("tablones");
 			if(tablones!=null){
 			    
 				if(request.getParameter("tablonId")==null || request.getParameter("tablonId").compareTo("0")==0){//o he pinchado en el primer tablón o he entrado por primera vez
@@ -44,8 +44,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 				}
 			    
 			}
-			//necesito todos los usuarios para mostrarlo en el jsp
-			*/
+			/*necesito todos los usuarios para mostrarlo en el jsp*/
 			users = user.getAllUsers();
 			request.setAttribute("allUsers",users);
   

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>ARC</title>
+	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+<<<<<<< HEAD
+	
+	<script>
+	  function mover_div(i){
+	    var elemento_div = document.getElementById('mensaje');
+	    elemento_div.style.top = i + "20"+"px";
+	  }
+	</script>
+=======
+>>>>>>> 7fb9bc0e43c0debb14f8d2e1025b37e3004768b2
+</head>
+<body>
+
+  <header id="site_head">
+    
+    <img src="IMG/arc-logo.png" border="0" align="left" height="78px" width="148px">
+    
+  </header>
+
+<section id="main">
+  
+  <div id="apagar">
+<<<<<<< HEAD
+    <a href="#"><img id="imgApagado" src="IMG/apagado2.png" hspace="1300px" vspace="20px"></a>
+=======
+    <a href="#"><img id="imgApagado" src="IMG/apagado2.png"></a>
+>>>>>>> 7fb9bc0e43c0debb14f8d2e1025b37e3004768b2
+    <h3>Javier Rafael Sánchez</h3>
+  </div>
+  
+  <header id= "header_rest">
+
+      <nav id="left_nav">
+	  <ul>
+	      <li><a href="#">Sobre ti</a></li>
+	      <li><a href="#">Tus tablones</a></li>
+	      <li><a href="#">Gestión</a></li>
+	  </ul>
+      </nav>
+  </header>
+
+  <nav id="tablon_name">
+	  <ul>
+	      <li><a href="http://www.google.es">Global</a></li>
+	      <li><a href="#">Alumnos</a></li>
+ 
+	  </ul>
+      </nav>
+
+<article id = "tablon_content">
+  <div id = "mensajes">
+    
+    <div id="mensaje"><p>The border-radius property allows you to add rounded corners to elements. pararparararararararararararararararararar</p><img src="IMG/delete.jpg" hspace="400px" ></div>
+    <p></p>    
+    
+    <div id="mensaje"><p>The border-radius property allows you to add rounded corners to elements. pararparararararararararararararararararar</p><img src="IMG/delete.jpg" hspace="400px" ></div>
+    <p></p>    
+    <div id="mensaje"><p>The border-radius property allows you to add rounded corners to elements. pararparararararararararararararararararar</p><img src="IMG/delete.jpg" hspace="400px" ></div>
+    <p></p>    
+    <div id="mensaje"><p>The border-radius property allows you to add rounded corners to elements. pararparararararararararararararararararar</p><img src="IMG/delete.jpg" hspace="400px" ></div>
+    <p></p>    
+    <div id="mensaje"><p>The border-radius property allows you to add rounded corners to elements. pararparararararararararararararararararar</p><img src="IMG/delete.jpg" hspace="400px" ></div>
+    <p></p>    
+    <div id="mensaje"><p>The border-radius property allows you to add rounded corners to elements. pararparararararararararararararararararar</p><img src="IMG/delete.jpg" hspace="400px" ></div>
+    <p></p>    
+    <div id="mensaje"><p>The border-radius property allows you to add rounded corners to elements. pararparararararararararararararararararar</p><img src="IMG/delete.jpg" hspace="400px" ></div>
+    <p></p>    
+    
+    
+  </div>
+  
+  <div id = "escribir_mensajes">
+    <p>Tu mensaje:</p>
+<<<<<<< HEAD
+    
+=======
+      
+      <form method="post" action="#">
+>>>>>>> 7fb9bc0e43c0debb14f8d2e1025b37e3004768b2
+      <textarea autofocus type="text" id="escribiendo_mensaje" name="mensaje">
+      </textarea>
+      <img id="foto" src="IMG/foto.png" hspace="50px" vspace="100px">
+      <img id = "video" src="IMG/video.png" hspace="0px" vspace="100px">
+      <img id = "audio" src="IMG/audio.png" hspace="40px" vspace="100px">
+<<<<<<< HEAD
+    
+=======
+      <input type="submit" value="Entrar" /> 
+      </form>
+>>>>>>> 7fb9bc0e43c0debb14f8d2e1025b37e3004768b2
+  </div>
+</article>
+
+
+
+</section>
+
+
+</html>

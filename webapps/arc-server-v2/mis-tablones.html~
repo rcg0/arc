@@ -1,0 +1,117 @@
+<%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.Vector" %>
+<%@ page import="arc.User" %>
+<%@ page import="arc.Tablon" %>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>ARC</title>
+	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="messages.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="mis-tablones.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body>
+
+
+<div id= wrapper> 
+
+<header id="site_head">
+  <img id="logo" src="IMG/arc-logo.png">
+  <div id="logout">
+    <a href="#"><a href="logout"><img id="imgApagado" src="IMG/apagado2.png"></a>
+    
+<% User user = (User)session.getAttribute("user"); %>
+
+    <p><%= user.getName()%></p>
+  </div>
+   
+   <nav id="main_nav">
+      <ul>
+	<li><a href="profile">Perfil</a></li>
+	<li><a href="showModifyTablones" class = "current">Mis tablones</a></li>
+	<li><a href="getTablones">Mensajes</a></li>
+      </ul>
+   </nav>
+</header>
+
+<!-- a partir de aqui es lo que varía de una sección a otra -->
+<% Vector<Tablon> tablones = (Vector<Tablon>)session.getAttribute("tablones"); 
+   Integer tablon=(Integer)request.getAttribute("tablon"); //variable que me identifica que tablon mostrar
+   
+%>
+
+
+   <nav id="tablon_name">
+      <ul>
+	<% for(int i=0;i<tablones.size(); i++){ %>
+	      <li>
+		  <a href="getTablones?tablonId=<%=i%>" <%if(tablon==i){%>class="current"<%}%>>
+		    <%=tablones.elementAt(i).getName()%>
+		  </a>
+	      </li>
+	 	<%}%>
+      </ul>
+   </nav>
+   
+   <section id="left">
+	
+	<div class="mensaje">
+	  <h2>Nombre de tablón:</h2>
+	  <p>Tablon Global</p>
+	</div>
+	<p></p>
+	<div class="mensaje">
+	  <h2>Creador:</h2>
+	  <p>Juan Benítez</p>
+	</div>
+	<p></p>
+	<div class="mensaje">
+	  <h2>Moderadores asociados:</h2>
+	  <p>Juan Benítez</p>
+	  <p>Pepito Grillo</p>
+	</div>
+	<p></p>
+	<div class="mensaje">
+	  <h2>Usuarios asociados:</h2>
+	  <p>Todos</p>
+	</div>
+	<p></p>
+	<div class="mensaje">
+	  <h2>Permisos asociados a usuario:</h2>
+	  <p> Todos -> Escritura y lectura local</p>
+	</div>
+
+  </section>
+
+  <section id ="right" >
+   
+      
+
+      <input id="eliminar" type="button" value="Eliminar tablón" />
+
+      <form method="post" action="#">
+      
+      <input type="text" class="mensaje" placeholder="Nombre de tablón"/>
+      <p></p>
+      <input class ="mensaje" type="list" placeholder="Asociar moderadores"/>
+      <p></p>
+      <input class ="mensaje" type="list" placeholder="Asociar usuarios"/>
+      <p></p>
+      <input class ="mensaje" type="list" placeholder="Asociar permiso a usuario"/>
+      
+      
+      
+      <input id="modificar" type="button" value="Modificar tablón" />
+      <input id="nuevo" type="button" value="Nuevo tablón" />
+            
+      </form>
+      
+
+
+  </section>
+
+
+</div>
+</html>

@@ -1,0 +1,680 @@
+<<<<<<< HEAD
+
+header#site_head{
+	
+	height: 78px;
+	padding-left: 31px;
+	padding-top: 0px;
+	background:#FFFFFF;
+	border-bottom: 3px solid black;
+	border-left: 10px solid black;
+}
+
+#rest form{
+    position:relative;
+    top:25%;
+    left:40%;
+	width:240px;
+	padding:5px 0;
+	border: 2px solid #000000;
+	background:#FFFFFF;
+}
+
+legend#accede {
+    position:relative;
+    top:25%;
+    left:40%;
+}
+
+#rest {
+
+border-left: 10px solid black;
+	border-bottom: 2px solid black;
+	border-right: 2px solid black;
+	height: 720px;
+    width: initial;
+}
+
+
+article#login {
+
+	width: 100%;
+	height: 100%;	
+
+}
+
+section#main {
+
+	
+	padding-left: 75px;
+	padding-bottom: 50%;
+
+	height:120px;
+	border-left: 10px solid black;
+	border-bottom: 2px solid black;
+	border-right: 2px solid black;
+}
+
+#mensajes {
+	
+  height:578px;
+  width: 550px;
+  position:absolute;
+  left: 0px;
+  top: 0px;
+  border: 1px solid black;
+  overflow: auto;
+}
+.mensaje {
+
+border:2px solid #a1a1a1;
+padding:10px 40px; 
+background:#FFFFFF;
+width:400px;
+border-radius:25px;
+-moz-border-radius:25px; /* Firefox 3.6 and earlier */
+position: relative;
+top: 50px;
+left: 30px;
+}
+
+#escribiendo_mensaje {
+  
+  
+border:2px solid #a1a1a1;
+padding:10px 40px; 
+background:#FFFFFF;
+width:200px;
+height:200px;
+border-radius:25px;
+-moz-border-radius:25px; /* Firefox 3.6 and earlier */
+position: relative;
+top: 50px;
+left: 30px;
+word-wrap:break-word;
+
+}
+
+#mensaje p {word-wrap:break-word;} 
+
+
+
+#escribir_mensajes {
+  height:579px;
+  width: 344px;
+  position:absolute;
+  left: 550px;
+  top: 0px;
+  border: 1px solid black;
+}
+
+#escribir_mensajes p {
+  
+  position:relative;
+  left: 25px;
+  top: 35px;
+}
+
+
+article#tablon_content{
+  position:absolute;
+  
+  left: 262px;
+  top: 222px;
+  height: 580px;
+  width: 844px;
+  padding-left: 50px;
+  border-left: 6px solid black;
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+  border-top: 2px solid black;
+   
+}
+
+nav#left_nav {
+  position:absolute;
+  left: 60px;
+  top: 220px;
+}
+
+nav#tablon_name {
+  
+  position: absolute;
+  
+  top:153px;
+  left: 262px;
+  width: 900px;
+  height: 50px;
+
+  overflow: auto; 
+}
+
+
+
+nav#tablon_name li {
+  display: inline;
+}
+
+
+nav ul {
+ /*Estilos para la Lista desordenada UL*/
+    text-align: left;
+    width: 100%;
+    background: #252525;
+    margin: 0px;
+    padding: 0px 0px 0px 20px;
+    border: 3px solid #000;
+    list-style: none;
+    position: relative;
+    float:left;
+    box-sizing: border-box;/*propiedad css3*/
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-radius: 5px;
+   -moz-border-radius: 5px;
+   -webkit-border-radius: 5px;
+}
+
+
+nav li {
+
+  padding: 0px 20px 5px 5px;
+  height: 20px;
+}
+
+nav a {
+
+    color: #efefef;
+    text-decoration: none;
+}
+
+
+
+
+nav  a:hover {
+  color: #d74d4d;
+}
+
+.current {
+  color: #e27f7f;
+}
+
+
+#apagar {
+	width: 320px;
+	height: 70px;
+	position:absolute;
+	top: 100px;
+	right: 30px;	
+	
+}
+
+#apagar img {
+
+	position:absolute;
+	top: 10px;
+	right: 0px;	
+
+}
+
+#escribir_mensajes input {
+
+      position:absolute;
+      top: 470px;
+      right: 130px
+
+
+}
+
+#escribir_mensajes textarea {
+
+      resize: none;
+
+}
+
+
+#gestion_1 {
+
+  position: absolute;
+  width:30%;
+  height:30%;
+  
+  top:50px;
+  left:50px;
+  border-right: 2px solid #000000;
+
+}
+
+#gestion_1 input {
+  position: absolute;
+  top:30%;
+  left: 20% 
+}
+
+#gestion_1 p {
+
+  position: absolute;
+  left: 20%;
+
+}
+
+
+#gestion_2 {
+
+  position: absolute;
+  width:30%;
+  height:30%;
+  
+  top:50px;
+  left:320px;
+  border-right: 2px solid #000000;
+}
+
+#checkbox_gestion{
+
+
+position: absolute;
+  width:70%;
+  height:70%;
+  
+  top:22%;
+  left:13%;
+  border: 2px solid #000000;
+ 
+  overflow:auto;
+
+}
+
+
+#asociar{
+
+  position: absolute;
+  left : 13%;
+
+}
+
+
+#gestion_3 {
+
+  position: absolute;
+  width:30%;
+  height:30%;
+  
+  top:50px;
+  left:590px;
+
+}
+
+#gestion_4 {
+
+  position: absolute;
+  width:75%;
+  height:30%;
+  top:260px;
+  left:100px;
+  border: 2px solid #000000;
+}
+
+#gestion_4 p {
+
+   position: absolute;
+   left:5%;
+
+
+}
+
+
+
+#gestion_5 {
+
+  position: absolute;
+  width:20%;
+  height:10%;
+  border: 2px solid #000000;
+  top:80%;
+  left:41%;
+
+=======
+
+header#site_head{
+	
+	height: 78px;
+	padding-left: 31px;
+	padding-top: 0px;
+	background:#FFFFFF;
+	border-bottom: 3px solid black;
+	border-left: 10px solid black;
+}
+
+#rest form{
+	width:240px;
+	padding:5px 0;
+	border: 2px solid #000000;
+	background:#FFFFFF;
+}
+
+#rest {
+
+border-left: 10px solid black;
+	border-bottom: 2px solid black;
+	border-right: 2px solid black;
+	height: 720px;
+
+}
+
+
+article#login {
+
+	
+	width: 960px;
+	margin: 0 auto;
+	padding-top: 150px;
+	padding-left: 520px;
+
+}
+
+section#main {
+
+	
+	padding-left: 75px;
+	padding-bottom: 50%;
+
+	height:120px;
+	border-left: 10px solid black;
+	border-bottom: 2px solid black;
+	border-right: 2px solid black;
+}
+
+#mensajes {
+	
+  height:578px;
+  width: 550px;
+  position:absolute;
+  left: 0px;
+  top: 0px;
+  border: 1px solid black;
+  overflow: auto;
+}
+#mensaje {
+
+border:2px solid #a1a1a1;
+padding:10px 40px; 
+background:#FFFFFF;
+width:400px;
+border-radius:25px;
+-moz-border-radius:25px; /* Firefox 3.6 and earlier */
+position: relative;
+top: 50px;
+left: 30px;
+}
+
+#escribiendo_mensaje {
+  
+  
+border:2px solid #a1a1a1;
+padding:10px 40px; 
+background:#FFFFFF;
+width:200px;
+height:200px;
+border-radius:25px;
+-moz-border-radius:25px; /* Firefox 3.6 and earlier */
+position: relative;
+top: 50px;
+left: 30px;
+word-wrap:break-word;
+
+}
+
+#mensaje p {word-wrap:break-word;} 
+
+
+
+#escribir_mensajes {
+  height:579px;
+  width: 344px;
+  position:absolute;
+  left: 550px;
+  top: 0px;
+  border: 1px solid black;
+}
+
+#escribir_mensajes p {
+  
+  position:relative;
+  left: 25px;
+  top: 35px;
+}
+
+
+article#tablon_content{
+  position:absolute;
+  
+  left: 262px;
+  top: 222px;
+  height: 580px;
+  width: 844px;
+  padding-left: 50px;
+  border-left: 6px solid black;
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+  border-top: 2px solid black;
+   
+}
+
+nav#left_nav {
+  position:absolute;
+  
+  top: 220px;
+}
+
+nav#tablon_name {
+  
+  position: absolute;
+  
+  top:173px;
+  left: 262px;
+  width: 900px;
+  height: 30px;
+  
+  
+}
+
+nav#tablon_name ul {
+  list-style: none;
+  padding: 0px;
+  display: block;
+  clear: right;
+  
+  padding-left: 4px;
+  height: 24px;
+  border-left: 6px solid black;
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+  border-top: 2px solid black;
+}
+
+nav#tablon_name li {
+
+  display: inline;
+  padding: 0px 20px 5px 10px;
+  height: 25px;
+  border-right: 2px solid #000000;
+}
+
+nav#left_nav ul {
+  list-style: none;
+  padding: 0px;
+  display: block;
+  clear: right;
+
+  padding-left: 4px;
+  height: 80px;
+  border-left: 6px solid black;
+  border-bottom: 1px solid black;
+  border-right: 2px solid black;
+  border-top: 2px solid black;
+}
+
+nav#left_nav li {
+
+  padding: 0px 20px 5px 5px;
+  height: 20px;
+  border-bottom: 2px solid black;
+  
+}
+
+a {
+
+  text-decoration: none;
+
+}
+
+
+a:visited{
+  color: black;
+}
+
+a:hover {
+  color: red;
+}
+
+a:active{
+  color: green;
+}
+
+#apagar {
+	width: 320px;
+	height: 70px;
+	position:absolute;
+	top: 100px;
+	right: 30px;	
+	
+}
+
+#apagar img {
+
+	position:absolute;
+	top: 10px;
+	right: 0px;	
+
+}
+
+#escribir_mensajes input {
+
+      position:absolute;
+      top: 470px;
+      right: 130px
+
+
+}
+
+#escribir_mensajes textarea {
+
+      resize: none;
+
+}
+
+
+#gestion_1 {
+
+  position: absolute;
+  width:30%;
+  height:30%;
+  
+  top:50px;
+  left:50px;
+  border-right: 2px solid #000000;
+
+}
+
+#gestion_1 input {
+  position: absolute;
+  top:40%;
+  left: 20% 
+}
+
+#gestion_1 p {
+
+  position: absolute;
+  left: 20%;
+
+}
+
+
+#gestion_2 {
+
+  position: absolute;
+  width:30%;
+  height:30%;
+  
+  top:50px;
+  left:320px;
+  border-right: 2px solid #000000;
+}
+
+#checkbox_gestion{
+
+
+position: absolute;
+  width:70%;
+  height:70%;
+  
+  top:22%;
+  left:13%;
+  border: 2px solid #000000;
+ 
+  overflow:auto;
+
+}
+
+
+#asociar{
+
+  position: absolute;
+  left : 13%;
+
+}
+
+
+#gestion_3 {
+
+  position: absolute;
+  width:30%;
+  height:30%;
+  
+  top:50px;
+  left:590px;
+
+}
+
+#gestion_4 {
+
+  position: absolute;
+  width:75%;
+  height:30%;
+  top:260px;
+  left:100px;
+  border: 2px solid #000000;
+}
+
+#gestion_4 p {
+
+   position: absolute;
+   left:5%;
+
+
+}
+
+
+
+#gestion_5 {
+
+  position: absolute;
+  width:20%;
+  height:10%;
+  border: 2px solid #000000;
+  top:80%;
+  left:41%;
+
+>>>>>>> 7fb9bc0e43c0debb14f8d2e1025b37e3004768b2
+}

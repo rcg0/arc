@@ -179,23 +179,30 @@ public class DataBaseManager{
 
 		for(int i = 0; i<tablonId.size(); i++){
 
-		      if(i!=0){//la primera vez no hay AND que valga :)
+		      if(i!=0){//la primera vez no hay OR que valga :)
 
-			  query= query+"AND";
+			  query= query+" OR";
 
 		      }
-		      query= query+"id = "+tablonId.elementAt(i);
+		      query= query+" id = "+tablonId.elementAt(i);
 		}
 		query= query+";";
+		System.out.println(query);
+
+
 
 		try{
 			Connection conn = openConnectionPool();
 			PreparedStatement statement = conn.prepareStatement(query);
-			
 			ResultSet rs = statement.executeQuery();
-			if (rs.next()) {
+
+			int vez = 0;
+			while (rs.next()) {
+
 				String anadir = new String(rs.getString("name"));
+				System.out.println(vez+" "+anadir);
 				names.addElement(anadir);
+				vez++;
 				
 			}
 

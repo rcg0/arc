@@ -173,7 +173,9 @@ public class Tablon {
 	public Vector<String> getTablonNames(Vector<Integer> tablonId){
 
 	    DataBaseManager manager = new DataBaseManager();
-	    manager.getTablonNames(tablonId);
+	    manager.deleteTablon(this.getId());
+  
+	    
 
 	}
 

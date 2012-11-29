@@ -11,10 +11,14 @@ import javax.sql.*;
 
 import java.sql.*;
 import javax.sql.*;
-import java.util.*;
+import java.util.Vector;
 import java.lang.String;
 
+/*
+  /**tengo que crear una función que haga esto.
+	 * mysql> select * from TablonUserModerates INNER JOIN Tablon ON TablonUserModerates.tablon_id = Tablon.id;
 
+*/
 
 public class DataBaseManager{
 
@@ -181,12 +185,12 @@ public class DataBaseManager{
 
 		      if(i!=0){//la primera vez no hay AND que valga :)
 
-			  query.concat("AND");
+			  query.append("AND");
 
 		      }
-		      query.concat("id = "+tablonId.elementAt(i));
+		      query.append("id = "+tablonId.elementAt(i));
 		}
-		query.concat(";");
+		query.append(";");
 
 		try{
 			Connection conn = openConnectionPool();

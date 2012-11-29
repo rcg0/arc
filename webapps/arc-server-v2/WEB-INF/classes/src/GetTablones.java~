@@ -31,10 +31,11 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 						  //Vector<Message> msg = tablones.elementAt(0).getSomeMsg(100);
 						 //DataBaseManager manager = new DataBaseManager(); 
 						 //Vector<Message> msg = manager.getMessagesFromTablon(t.getId());
+						 if(tablones.contains(Tablon)){
 						  if(tablones.elementAt(0) != null){
 						    tablones.elementAt(0).getSomeMsg(50);//limit=50
 						  }
-						 
+						 }
 						 request.setAttribute("tablon",0);
 						  
 					}else{

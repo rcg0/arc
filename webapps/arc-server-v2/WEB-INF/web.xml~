@@ -94,35 +94,6 @@
 		<url-pattern>/sendMessage</url-pattern>
         </servlet-mapping>
 	
-	<servlet>
-        	<servlet-name>ServletDeleteTablon</servlet-name>
-        	<servlet-class>arc.DeleteTablon</servlet-class>
-        </servlet>
-	
-	 <servlet-mapping>
-        	<servlet-name>ServletDeleteTablon</servlet-name>
-		<url-pattern>/deleteTablon</url-pattern>
-        </servlet-mapping>
-	
-	<servlet>
-        	<servlet-name>ServletGetTablonNames</servlet-name>
-        	<servlet-class>arc.GetTablonNames</servlet-class>
-        </servlet>
-	
-	 <servlet-mapping>
-        	<servlet-name>ServletGetTablonNames</servlet-name>
-		<url-pattern>/getTablonNames</url-pattern>
-        </servlet-mapping>
-	
-	<servlet>
-        	<servlet-name>ServletGetTablon</servlet-name>
-        	<servlet-class>arc.GetTablon</servlet-class>
-        </servlet>
-	
-	 <servlet-mapping>
-        	<servlet-name>ServletGetTablon</servlet-name>
-		<url-pattern>/getTablon</url-pattern>
-        </servlet-mapping>
 	
 	<!--Define the default session timeout for your application, in minutes. From a servlet or JSP page, you can modify the timeout for a particular session dynamically by using HttpSession.getMaxInactiveInterval().
 -->

@@ -10,7 +10,7 @@
 	<title>ARC</title>
 	
 
-	<link src="script01.js" type="text/javascript" language="Javascript" />
+	<script src="js/script01.js" type="text/javascript" language="Javascript"> </script>
 	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<link href="messages.css" rel="stylesheet" type="text/css" media="screen" />
 	<link href="mis-tablones.css" rel="stylesheet" type="text/css" media="screen" />
@@ -51,15 +51,12 @@
    </nav>
 </header>
 
-<!-- a partir de aqui es lo que varía de una sección a otra -->
-
-
+<!-- a partir de aqui es lo que varía d
+e una sección a otra -->
 
 
    <nav id="tablon_name">
-      <ul>
-
-      </ul>
+      
    </nav>
 
 

@@ -35,8 +35,6 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 		session.setAttribute("user",dataBaseUser);
 
 		/*Voy a necesitar saber que tablones modera este usuario en las demás páginas, así que lo averiguo y obtengo sus 'soft tablones'*/
-
-		/*
 		Vector<Tablon> tablones = new Vector<Tablon>();//vector de tablones que incluyen todo salvo los mensajes ya que si no no escalaría
     
 		
@@ -47,7 +45,6 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 				tablones.addElement(tablon.getSoftTablonInformation(tablonId.elementAt(i).intValue()));
 		}
 		session.setAttribute("tablones",tablones);//guardo el soft tablon (sin mensajes :) que sino no escala)
-		*/
 
 	}
 

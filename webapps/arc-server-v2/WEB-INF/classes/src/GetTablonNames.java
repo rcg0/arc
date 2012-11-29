@@ -21,7 +21,6 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	String next="/error.html";
 	Tablon tablon = null;
 	PrintWriter out = response.getWriter();
-	Map<Vector, Vector> mapa;
 
 	if(session != null){
 		user= (User)session.getAttribute("user");
@@ -33,14 +32,10 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 			Vector<String> tablonNames =  tablon.getTablonNames(tablonId);
 			//lo paso a Json y lo envío
 			Gson gson = new Gson();
- 			mapa.put("id",tablonId);
- 			mapa.put("name",tablonNames);
-
-
 
 			//flush it to the page
-			out.println(gson.toJson(mapa));
-			
+			out.println(gson.toJson(tablonId));
+			out.println(gson.toJson(tablonNames));
 
 		}
 

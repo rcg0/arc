@@ -1,0 +1,47 @@
+
+
+input#modificar, input#eliminar, input#nuevo{
+
+   background-color: #454343;
+   color: white;
+   
+   -box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   border-radius: 30px;
+   -moz-border-radius: 30px;
+   -webkit-border-radius: 30px;
+
+
+}
+
+
+input#eliminar{
+   
+   width: 50%;
+   height: 30px;
+
+   position:relative;
+   left: 26%;
+   top: 5px;
+}
+
+
+
+input#modificar{
+
+
+
+   width: 45%;
+   position:relative;
+   top: 440px;
+   left: 26%;
+
+}
+
+input#nuevo{
+   width: 45%;
+   position:relative;
+   left: -19%;
+   top: 480px;
+}
