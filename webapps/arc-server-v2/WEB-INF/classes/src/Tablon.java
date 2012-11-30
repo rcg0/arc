@@ -177,4 +177,12 @@ public class Tablon {
 
 	}
 
+	public Tablon getTablonDDBB(int id){
+		Tablon tablon = null;
+		DataBaseManager manager = new DataBaseManager();
+		tablon = manager.getTablon(id);
+		
+		return tablon;
+	}
+
 }

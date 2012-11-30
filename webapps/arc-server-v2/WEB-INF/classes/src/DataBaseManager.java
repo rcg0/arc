@@ -87,17 +87,20 @@ public class DataBaseManager{
 		return databaseUser;
 	}
 	
-	/*Obtiene el tablón según su descriptor, muestra los mensajes asociados*/
+
+
+	/*Obtiene el tablón según su descriptor o su id, muestra los mensajes asociados*/
 	
-	public Tablon getTablon(String descriptor){
+	public Tablon getTablon(int id){
 		
 		Tablon tablon = null;
 		
 		try{
 			Connection conn = openConnectionPool();
 			/***********************************************PARAMETRIZACIÓN*************************************************/
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Tablon WHERE space=?"); //AND surname1 = ? AND surname2 = ?");
-			statement.setString(1, descriptor);
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Tablon WHERE id=?"); //AND surname1 = ? AND surname2 = ?");
+			statement.setInt(1, id);
+
 			/****************************************************************************************************************/
 
 			ResultSet rs = statement.executeQuery();
