@@ -27,10 +27,24 @@
   </div>
    
    <nav id="main_nav">
-      <ul>
-	<li><a href="profile" class = "current">Perfil</a></li>
-	<li><a href="showModifyTablones">Mis tablones</a></li>
-	<li><a href="getTablones" >Mensajes</a></li>
+      <ul class= "menu">
+	         <li><a href="profile" class = "current">Perfil</a></li>
+	         <li><a href="showModifyTablones">Mis tablones</a>
+
+              <ul>
+                  <li><a href="profile">Nuevo tablon</a>
+                  </li>
+                  <li><a href="profile">Tablon2</a>
+                  </li>
+                 
+              </ul>
+            </li>
+	          <li><a href="getTablones" >Mensajes</a>
+                <ul>
+                  <li><a href="profile">Tablon2</a>
+                  </li>
+                </ul>
+            </li>
       </ul>
    </nav>
 </header>

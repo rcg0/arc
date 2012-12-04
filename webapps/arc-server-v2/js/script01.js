@@ -11,7 +11,7 @@ function makeDoubleDelegate(function1, function2) {
 
 
 window.onload = makeDoubleDelegate(window.onload, obtainTablonIdAndNames);
-window.onload = makeDoubleDelegate(window.onload, obtainTablon);
+//window.onload = makeDoubleDelegate(window.onload, obtainTablon);
 
 
 /*variables globales*/
@@ -80,7 +80,8 @@ function showContents(){
       var newLi;
       var newA;
       var newUl;
-      var nav = document.getElementById("tablon_name");
+      var nav = document.getElementById("main_nav");
+      var li = document.getElementById("sublista");
       var newUl = document.createElement("ul");
 
       for(i =0; i<nombreTablones.length; i++){
@@ -94,7 +95,7 @@ function showContents(){
         newLi = document.createElement("li");
         newLi.appendChild(newA);
         newUl.appendChild(newLi);
-        nav.appendChild(newUl);
+        li.appendChild(newUl);
       }
 
   }

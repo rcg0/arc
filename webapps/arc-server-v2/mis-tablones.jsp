@@ -10,7 +10,7 @@
 	<title>ARC</title>
 	
 
-	<script src="js/script01.js" type="text/javascript" language="Javascript"> </script>
+<!--	<script src="js/script01.js" type="text/javascript" language="Javascript"> </script> -->
 	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<link href="messages.css" rel="stylesheet" type="text/css" media="screen" />
 	<link href="mis-tablones.css" rel="stylesheet" type="text/css" media="screen" />
@@ -43,10 +43,27 @@
 %>
 
    <nav id="main_nav">
-      <ul>
+    <ul class="menu">
 	<li><a href="profile">Perfil</a></li>
-	<li><a href="showModifyTablones" class="current" >Mis tablones</a></li>
-	<li><a href="getTablones">Mensajes</a></li>
+	<li id="sublista"><a href="showModifyTablones" class="current" >Mis tablones</a>
+			<ul>
+		
+	
+				<li><a href="profile">Tablon1</a>
+				</li>
+				<li><a href="profile">Tablon2</a>
+				</li>
+				<li><a href="profile">Tablon3</a>
+				</li>
+			</ul>
+
+	</li>
+	<li><a href="getTablones">Mensajes</a>
+ 				<ul>
+                  <li><a href="profile">Tablon2</a>
+                  </li>
+                </ul>
+	</li>
       </ul>
    </nav>
 </header>
@@ -56,7 +73,8 @@ e una sección a otra -->
 
 
    <nav id="tablon_name">
-      
+   
+   
    </nav>
 
 
