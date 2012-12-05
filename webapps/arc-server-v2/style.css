@@ -18,7 +18,7 @@ img#logo{
 }
 
 
-/*PRUEBA CON CLASS menu*/
+/*reseteo los parámetros del menú*/
 
 .menu,
 .menu ul,
@@ -31,12 +31,14 @@ img#logo{
 }
 
 /* Menu */
-.menu { 
+.menu {
+
+
   height: 40px;
   width: 90%;
   float:right;
   background: #4c4e5a;
-  top:-10%;
+  
 
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -82,13 +84,13 @@ img#logo{
 
 .menu li:hover > a { color: #DF0101; }
 
-/* Sub Menu */
+/* Sub menu */
 
 .menu ul {
   position: absolute;
   top: 40px;
   left: 0;
-
+  z-index:1;/*para que no se pinte siempre encima*/
   opacity: 0;
   
   background: #1f2024;

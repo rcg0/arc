@@ -10,6 +10,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>ARC</title>
+  <script src="js/script01.js" type="text/javascript" language="Javascript"> </script>
 	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
 </head>
 <body>
@@ -29,20 +30,17 @@
    <nav id="main_nav">
       <ul class= "menu">
 	         <li><a href="profile" class = "current">Perfil</a></li>
-	         <li><a href="showModifyTablones">Mis tablones</a>
+	         <li><a href="#">Mis tablones</a>
 
-              <ul>
-                  <li><a href="profile">Nuevo tablon</a>
+              <ul id="submenu_tablones">
+                  <li><a href="showModifyTablones">Nuevo tablon</a>
                   </li>
-                  <li><a href="profile">Tablon2</a>
-                  </li>
-                 
+                  
               </ul>
             </li>
-	          <li><a href="getTablones" >Mensajes</a>
-                <ul>
-                  <li><a href="profile">Tablon2</a>
-                  </li>
+	          <li><a href="#" >Mensajes</a>
+                <ul id="submenu_mensajes">
+                  
                 </ul>
             </li>
       </ul>

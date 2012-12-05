@@ -22,30 +22,11 @@ var tablones = new Array(); //array de tablones.
 
 
 function obtainTablonIdAndNames(){
+
+
   createAJAXRequest("getTablonNames",showContents, false);
 }
 
-
-function createXMLHttpRequest(){
-
-
-  if(window.XMLHttpRequest){
-     xhr= new XMLHttpRequest();
-  }
-  else{
-         xhr =new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  if(xhr){ 
-    var timestamp = Math.random(); // Aleatorio por Math()
-    xhr.onreadystatechange=showContents;
-    xhr.open("GET",url+"?time="+timestamp, false); //true (asynchronous) or false (synchronous)
-    xhr.send(null);
-  }
-}
-
-function makeRequest(){
-  createXMLHttpRequest();  
-}
   
 function showContents(){
 
@@ -69,33 +50,29 @@ function showContents(){
       tablones= tablonNames;
 
     }
-    creaMenu(tablones);   
-    
+    creaMenu(tablones,"submenu_tablones");//el array de nombre de tablones y el id del ul donde quiero meterlo
+    creaMenu(tablones,"submenu_mensajes");
     }
   }
 
 
-  function creaMenu(nombreTablones){
+  function creaMenu(nombreTablones, submenu){
       var i;
       var newLi;
       var newA;
-      var newUl;
-      var nav = document.getElementById("main_nav");
-      var li = document.getElementById("sublista");
-      var newUl = document.createElement("ul");
+      var ul = document.getElementById(submenu);
+
 
       for(i =0; i<nombreTablones.length; i++){
         text = document.createTextNode(nombreTablones[i]);
         newA = document.createElement("a");
         newA.href="getTablon?tablonId="+tablonid[i];
-        if(i==0){//se marcará la primera por defecto
-        newA.className="current";
-        }
+        newA.setAttribute("onclick", "javascript:obtainTablon("+tablonid[i]+")");
         newA.appendChild(text);  
         newLi = document.createElement("li");
         newLi.appendChild(newA);
-        newUl.appendChild(newLi);
-        li.appendChild(newUl);
+        ul.appendChild(newLi);
+        
       }
 
   }
@@ -133,6 +110,7 @@ function showContents(){
     if (xhr.readyState==4 && xhr.status==200){
       alert(xhr.responseText);
       tablones.push(JSON.parse(xhr.responseText));
+      //createAJAXRequest("mis-tablones.jsp",x, true);
     }
     
   }
