@@ -116,6 +116,7 @@ public class DataBaseManager{
 				tablon.setAllTargetUser(getTablonTargetUsers(idTablon));
 				tablon.setAllUsers(getTablonModerateUsers(idTablon));
 			}
+			closeConnectionPool(conn);
 
 			
 		}catch(SQLException ex){
@@ -159,6 +160,7 @@ public class DataBaseManager{
 				tablon.setAllTargetUser(getTablonTargetUsers(idTablon));
 				tablon.setAllUsers(getTablonModerateUsers(idTablon));
 			}
+			closeConnectionPool(conn);
 
 			
 		}catch(SQLException ex){
@@ -208,6 +210,7 @@ public class DataBaseManager{
 				vez++;
 				
 			}
+			closeConnectionPool(conn);
 
 			
 		}catch(SQLException ex){

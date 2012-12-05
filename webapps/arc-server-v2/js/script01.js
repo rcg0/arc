@@ -17,14 +17,15 @@ window.onload = makeDoubleDelegate(window.onload, obtainTablonIdAndNames);
 /*variables globales*/
 var xhr;
 //var url="getTablonNames";
-var tablonid; //importante, esta variable es un array de ids de tablon, la voy a utilizar para ponerlos en el href de las etiquetas a del menú
+var tablonid= null; //importante, esta variable es un array de ids de tablon, la voy a utilizar para ponerlos en el href de las etiquetas a del menú
 var tablones = new Array(); //array de tablones.
 
 
 function obtainTablonIdAndNames(){
-
-
+  //alert(window.tablonid);
+  if(window.tablonid==null){
   createAJAXRequest("getTablonNames",showContents, false);
+  }
 }
 
   
@@ -50,13 +51,13 @@ function showContents(){
       tablones= tablonNames;
 
     }
-    creaMenu(tablones,"submenu_tablones");//el array de nombre de tablones y el id del ul donde quiero meterlo
-    creaMenu(tablones,"submenu_mensajes");
+    creaMenu(tablones,"submenu_tablones","showModifyTablones");//el array de nombre de tablones y el id del ul donde quiero meterlo y la url a donde voy
+    creaMenu(tablones,"submenu_mensajes", "getTablones");
     }
   }
 
 
-  function creaMenu(nombreTablones, submenu){
+  function creaMenu(nombreTablones, submenu, url){
       var i;
       var newLi;
       var newA;
@@ -66,8 +67,8 @@ function showContents(){
       for(i =0; i<nombreTablones.length; i++){
         text = document.createTextNode(nombreTablones[i]);
         newA = document.createElement("a");
-        newA.href="getTablon?tablonId="+tablonid[i];
-        newA.setAttribute("onclick", "javascript:obtainTablon("+tablonid[i]+")");
+        newA.href=url+"?tablonId="+tablonid[i];
+        //newA.setAttribute("onclick", "javascript:obtainTablon("+tablonid[i]+")");
         newA.appendChild(text);  
         newLi = document.createElement("li");
         newLi.appendChild(newA);

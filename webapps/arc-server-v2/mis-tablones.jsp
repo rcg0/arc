@@ -40,6 +40,8 @@
   Vector<User> moderators = null;
   Vector<User> users = null;
 
+  Tablon tablon = (Tablon)request.getAttribute("tablon");
+ 
 %>
 
    <nav id="main_nav">
@@ -48,7 +50,7 @@
 	<li id="sublista"><a href="showModifyTablones" class="current" >Mis tablones</a>
 			<ul id="submenu_tablones">
 		
-				<li><a href="profile">Nuevo tablon</a>
+				<li><a href="showModifyTablones">Nuevo tablón</a>
 				</li>
 				
 			</ul>
@@ -77,37 +79,52 @@ e una sección a otra -->
 
 	<div class="mensaje">
 	  <h2>Nombre de tablón:</h2>
-	  <p></p>
+	  <%if(tablon!=null){%>
+	  <p><%=tablon.getName()%></p>
+	  <%}%>
 	</div>
 	<p></p>
 	<p></p>
 	<div class="mensaje">
 	  <h2>Moderadores asociados:</h2>
 
-	  
-	      <p>
+	    <%if(tablon!=null){%>
+		<%moderators = tablon.getUsers(); %>
+	    <%for(int i = 0; i<moderators.size(); i++){%>
+	      <p><%=moderators.elementAt(i).getName()%>
+		 <%=moderators.elementAt(i).getSurName1()%>
+		 <%=moderators.elementAt(i).getSurName2()%>
               </p>
-
+	    <%}%>
+	    <%}%>
 	</div>
 	<p></p>
 	<div class="mensaje">
 	  <h2>Usuarios asociados:</h2>
-	  
-	  
-	      <p>
-		 
-		 
+ 	    <%if(tablon!=null){%>
+	   <%users = tablon.getTargetUsers(); %>
+	    <%for(int i = 0; i<users.size(); i++){%>
+	      <p><%=users.elementAt(i).getName()%>
+		 <%=users.elementAt(i).getSurName1()%>
+		 <%=users.elementAt(i).getSurName2()%>
 		
               </p>
-
-
+	    <%}%>
+		<%}%>
 	</div>
 	<p></p>
 	<div class="mensaje">
 	  <h2>Permisos asociados a usuario:</h2>
-	  
-	      <p>
-              </p>
+ 	    <%if(tablon!=null){%>
+
+	   <%for(int i = 0; i<users.size(); i++){%>
+	      <p><%=users.elementAt(i).getName()%>
+		 <%=users.elementAt(i).getSurName1()%>
+		 <%=users.elementAt(i).getSurName2()%>
+		 ->
+		 <%=users.elementAt(i).getPermission()%>
+	  <%}%></p>
+	  <%}%>
 	</div>
 
 
