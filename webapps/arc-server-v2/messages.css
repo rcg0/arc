@@ -90,7 +90,16 @@ left: 40px;
 
 .mensaje p {word-wrap:break-word;} 
 
-/*
+
+img#moreMessages {
+
+  position:relative;
+  float:right;
+  right:15%;
+  top:2%;
+}
+
+
 
 img#delete{
 
@@ -98,7 +107,7 @@ position: relative;
 left:100%;
 
 }
-
+/*
 
 img#privado{
 

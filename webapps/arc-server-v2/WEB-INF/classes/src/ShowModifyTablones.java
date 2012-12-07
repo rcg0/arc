@@ -20,7 +20,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	User user;
 	//Vector<Tablon> tablones;
 	Vector<User> users;
-	Tablon tablon=new Tablon();
+	Tablon tablon;
 
 	if(session!=null){
       
@@ -31,6 +31,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 			
 			String attribute = request.getParameter("tablonId");
 			if(attribute != null){
+				tablon=new Tablon();
 				tablon = tablon.getSoftTablonInformation(Integer.parseInt(attribute));
 			
 				request.setAttribute("tablon", tablon);

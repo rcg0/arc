@@ -16,12 +16,26 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	User user;
 	Vector<Tablon> tablones;
 	String next="/error.html";
-
+	Tablon tablon;
 
 	if(session != null){
 		user= (User)session.getAttribute("user");
 
 		if(user!=null){
+      			
+			String attribute = request.getParameter("tablonId");
+			if(attribute!=null){
+				tablon= new Tablon();
+				tablon.setId(Integer.parseInt(attribute));
+				tablon.getSomeMsg(2);
+				
+				System.out.println("id de tablon incrustado: "+ tablon.getId());
+
+				request.setAttribute("tablon", tablon);
+			}
+
+
+
       			/*tablones=(Vector<Tablon>)session.getAttribute("tablones");
 				if(tablones!=null){
 

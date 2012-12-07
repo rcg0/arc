@@ -155,7 +155,7 @@ public class Tablon {
 		return tablon;
 	}
 
-	public void deleteMessageFromTablon(int messageId){
+	public void deleteMessageFromTablon(String messageId){
 
 	  DataBaseManager manager = new DataBaseManager();
 	  manager.deleteMessage(messageId);
@@ -184,5 +184,16 @@ public class Tablon {
 		
 		return tablon;
 	}
+
+	public Vector<Message> getBeforeMessages(int messageId,int limit){
+
+		DataBaseManager manager = new DataBaseManager();
+
+		return manager.getBeforeMessages(messageId,limit);
+
+
+	}
+
+
 
 }

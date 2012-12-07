@@ -32,15 +32,15 @@
    <nav id="main_nav">
       <ul class="menu">
 	       <li><a href="profile">Perfil</a></li>
-         <li><a href="showModifyTablones" >Mis tablones</a>
+         <li><a href="#" >Mis tablones</a>
               <ul id="submenu_tablones">
-                  <li><a href="profile">Nuevo tablon</a>
+                  <li><a href="showModifyTablones">Nuevo tablon</a>
                   </li>
                   
               </ul>
 
          </li>
-	       <li><a href="getTablones" class="current">Mensajes</a>
+	       <li><a href="#" class="current">Mensajes</a>
 
                 <ul id="submenu_mensajes">
                 </ul>
@@ -49,24 +49,35 @@
    </nav>
 </header>
 
-
-
 <!-- a partir de aqui es lo que varía de una sección a otra -->
+
+<%Tablon tablon = (Tablon)request.getAttribute("tablon");
+
+if(tablon== null){
+System.out.println("tablon es null");
+}
+Vector<Message> msgs = tablon.getAllMsg();
+
+%>
+
 
    
    <section id="left">
+	 <img id= "moreMessages" src="IMG/moreIcon.png" onClick="getMoreMessages()">
 	
 	
-	
+<%if(msgs != null){%>
+	 <% for(int j=msgs.size()-1;j>=0; j--){ %>
 
-	
-	 <div class="mensaje">
-    <p></p>
-	  <p></p>
-	<a href = "deleteMessage?messageId="><img src="IMG/delete.jpg"></a>
+<%System.out.println("msgs.size()="+msgs.size());%>
+
+	 <div id="<%=msgs.elementAt(j).getId()%>" class="mensaje"><p><b><%=msgs.elementAt(j).getCreator().getName()  + " " +  msgs.elementAt(j).getCreator().getSurName1()  + " " +  msgs.elementAt(j).getCreator().getSurName2()%></b>:
+	  <p><%=msgs.elementAt(j).getMsg()%></p>
+	<a ><img id="delete" src="IMG/delete.jpg" onClick="removeMessage(<%=msgs.elementAt(j).getId()%>)"></a>
 	</div>
 <p></p>
-
+<%}%>
+<%}%>
 	
 
   </section>

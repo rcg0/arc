@@ -16,24 +16,21 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
       
 
 	HttpSession session = request.getSession(false);
-	String next = "/error.html";
+	
+	Tablon tablon= new Tablon();
 
 	if(session!=null){
       
 		User user= (User)session.getAttribute("user");
-		Vector<Tablon> tablones = (Vector<Tablon>)session.getAttribute("tablones");
-		int tablon = Integer.parseInt(request.getParameter("tablonId"));//identificador en el jsp, no equivale a id de bbdd, 0,1...    
+	
+		
 
 		if(user!=null){
-		
-			tablones.elementAt(tablon).deleteMessageFromTablon(Integer.parseInt(request.getParameter("messageId")));
-			
-			next = "/getTablones?tablonId="+tablon; //destino
+			System.out.println("el parametro: "+request.getParameter("messageId"));
+			tablon.deleteMessageFromTablon(request.getParameter("messageId"));
 		}
 	}
-	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(next);
-	dispatcher.forward(request,response);
-
+	
   }
 
   public void doPost(HttpServletRequest request,

@@ -96,7 +96,7 @@ function showContents(){
        xhr =new ActiveXObject("Microsoft.XMLHTTP");
     }
     if(xhr){ 
-      var timestamp = Math.random(); // Aleatorio por Math()
+      //var timestamp = Math.random(); // Aleatorio por Math()
       xhr.onreadystatechange=callback;
       xhr.open("GET", url, mode);
 
@@ -114,4 +114,92 @@ function showContents(){
       //createAJAXRequest("mis-tablones.jsp",x, true);
     }
     
+  }
+
+
+
+
+  function getMoreMessages(){//el messageId lo obtengo del menor id de los div que ha mostrado el html
+    
+    var divs = document.getElementById("left").getElementsByTagName("div");//todos los divs de la section left
+    var url="getMessages?messageId="+divs[0].id;
+    createAJAXRequest(url, printMessages, true);
+
+  }
+
+  function printMessages(){
+      var Tablon;
+
+
+      if (xhr.readyState==4 && xhr.status==200){
+
+        
+        tablon =  JSON.parse(xhr.responseText);
+       
+
+        for(var i=0; i<tablon.msg.length; i++){
+
+          createDivMessage(tablon.msg[i]);
+
+        }
+      }
+
+  }
+
+
+  function createDivMessage(msg){
+
+    var father = document.getElementById("left");
+
+    var espacio = document.createElement("p");
+    father.insertBefore(espacio, father.firstChild);
+
+    var text=document.createTextNode(msg.msg);
+    var autor = document.createTextNode(msg.creator.name);
+    var nuevoDiv = document.createElement("div");
+    
+
+    var p = document.createElement("p");
+    var p2 = document.createElement("p");
+    var b = document.createElement("b");
+    b.appendChild(autor);
+    p2.appendChild(text);
+    var a = document.createElement("a");
+    var img = document.createElement("img");
+    img.src = "IMG/delete.jpg";
+    img.setAttribute("onClick","removeMessage("+msg.id+")");
+
+    //img.onClick = "removeMessage("+msg.id+")";
+    a.appendChild(img);
+    nuevoDiv.appendChild(p);
+    nuevoDiv.appendChild(p2);
+    nuevoDiv.appendChild(a);
+    father.insertBefore(nuevoDiv, father.firstChild);//insertamos antes que el primer nodo
+    nuevoDiv.id=msg.id;
+    nuevoDiv.className="mensaje";
+
+
+    //alert(" id: "+ msg.id+ " mensaje: "+ msg.msg + " autor: " + msg.creator.name);
+
+
+  }
+  
+
+  var messageID;
+
+  function removeMessage(messageId){
+    messageID = messageId;
+    var url="deleteMessage?messageId="+messageId;
+    createAJAXRequest(url, removeDivMessage, true);
+    
+
+    //alert(url);
+  }
+
+  function removeDivMessage(){
+
+      var x = document.getElementById(messageID);
+      //alert("se ejecuta");
+      x.parentNode.removeChild(x);
+
   }

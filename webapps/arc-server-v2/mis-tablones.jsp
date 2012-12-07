@@ -56,7 +56,7 @@
 			</ul>
 
 	</li>
-	<li><a href="getTablones">Mensajes</a>
+	<li><a href="#">Mensajes</a>
  				<ul id="submenu_mensajes">
                   
                 </ul>

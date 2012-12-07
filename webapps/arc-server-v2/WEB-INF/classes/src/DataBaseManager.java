@@ -244,6 +244,7 @@ public class DataBaseManager{
 				result=true;
 		
 			closeConnectionPool(conn);
+			
 		}catch(SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
@@ -298,6 +299,87 @@ public class DataBaseManager{
 		
 	}
 	
+	/*Obtiene un tablon_id que corresponde a un message_id*/
+
+	public int getTablonIdFromMessageId(int message_id){
+
+		int tablon_id=-1;
+
+		try{
+			Connection conn = openConnectionPool();
+
+			PreparedStatement statement = conn.prepareStatement("SELECT tablon_id FROM Message WHERE id = ?;"); 
+			statement.setInt(1,message_id);
+
+			ResultSet rs = statement.executeQuery();
+			if(rs.next()){
+				tablon_id = rs.getInt("tablon_id");
+			}
+
+			closeConnectionPool(conn);
+			
+			}catch(SQLException ex){
+				System.out.println("SQLException: " + ex.getMessage());
+				System.out.println("SQLState: " + ex.getSQLState());
+				System.out.println("VendorError: " + ex.getErrorCode());
+			}
+
+		return tablon_id;
+
+	}
+
+
+	/*Obtiene los mensajes anteriores a un message_id dado*/
+
+	public Vector<Message> getBeforeMessages(int messageId, int limit){
+
+		int tablonId = getTablonIdFromMessageId(messageId);
+
+		Vector <Message> msg = new Vector<Message>();
+		try{
+			Connection conn = openConnectionPool();
+
+
+			/*select * from TablonMessage INNER JOIN Message ON TablonMessage.message_id = Message.id INNER JOIN User ON Message.user_id = User.id WHERE TablonMessage.id = ?;*/
+			/***********************************************PARAMETRIZACIÓN*************************************************/
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Message INNER JOIN User ON Message.user_id=User.id WHERE tablon_id = ? AND Message.id < ? ORDER BY dateTime DESC limit ?;"); 
+			
+			statement.setInt(1, tablonId);
+			statement.setInt(2, messageId);
+			statement.setInt(3, limit);
+				/****************************************************************************************************************/
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				Message m = new Message();
+				User u = new User();
+				m.setId(rs.getInt("id"));
+
+				//System.out.println(rs.getString("Message.message"));
+				m.setMsg(rs.getString("Message.message"));
+				//System.out.println("visibility:"+rs.getInt("visibility"));
+				m.setVisibility(rs.getInt("visibility"));
+				//m.setDate(rs.getTimestamp("dateTime"));//peta aquí
+				u.setId(rs.getInt("Message.user_id"));
+				u.setName(rs.getString("User.name"));
+				//System.out.println(rs.getString("User.name"));
+				u.setSurName1(rs.getString("User.surname1"));
+				u.setSurName2(rs.getString("User.surname2"));
+				m.setCreator(u);
+				msg.addElement(m);
+			}	
+
+			closeConnectionPool(conn);
+				
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+
+		return msg;
+
+	}
+
 
 	/*Obtiene los 'limit últimos mensajes del tablón' y los asocia al tablon*/
 
@@ -309,6 +391,7 @@ public class DataBaseManager{
 			/*select * from TablonMessage INNER JOIN Message ON TablonMessage.message_id = Message.id INNER JOIN User ON Message.user_id = User.id WHERE TablonMessage.id = ?;*/
 			/***********************************************PARAMETRIZACIÓN*************************************************/
 			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Message INNER JOIN User ON Message.user_id=User.id WHERE tablon_id = ? ORDER BY dateTime DESC limit ?;"); 
+			System.out.println("el id del tablon :"+tablon.getId());
 			statement.setInt(1, tablon.getId());
 			statement.setInt(2, limit);
 			/****************************************************************************************************************/
@@ -318,11 +401,16 @@ public class DataBaseManager{
 				Message m = new Message();
 				User u = new User();
 				m.setId(rs.getInt("id"));
-				m.setMsg(rs.getString("message"));
+
+				System.out.println(rs.getString("Message.message"));
+				m.setMsg(rs.getString("Message.message"));
+				System.out.println("visibility:"+rs.getInt("visibility"));
 				m.setVisibility(rs.getInt("visibility"));
 				//m.setDate(rs.getTimestamp("dateTime"));//peta aquí
 				u.setId(rs.getInt("Message.user_id"));
 				u.setName(rs.getString("User.name"));
+				System.out.println(rs.getString("User.name"));
+
 				u.setSurName1(rs.getString("User.surname1"));
 				u.setSurName2(rs.getString("User.surname2"));
 				m.setCreator(u);
@@ -728,7 +816,7 @@ public class DataBaseManager{
 		return result;
 	}
 	
-	public boolean deleteMessage(int messageId){
+	public boolean deleteMessage(String messageId){
 		boolean result= false;
 		
 		try {
@@ -736,8 +824,8 @@ public class DataBaseManager{
 			Statement stmt = conn.createStatement();
 			
 			PreparedStatement statement = conn.prepareStatement("DELETE FROM Message WHERE id = ?");
-			statement.setInt(1,messageId);
-			
+			statement.setString(1,messageId);
+			System.out.println("DELETE FROM Message WHERE id ="+messageId);
 			
 			int aux = statement.executeUpdate();
 			if(aux!=0)
