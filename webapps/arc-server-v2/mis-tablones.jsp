@@ -78,6 +78,15 @@ e una sección a otra -->
    <section id="left">
 
 	<div class="mensaje">
+	  <h2>Identificador del tablón:</h2>
+	  <%if(tablon!=null){%>
+	  <p><%=tablon.getId()%></p>
+	  <%}%>
+	</div>
+	<p></p>
+	<p></p>
+
+	<div class="mensaje">
 	  <h2>Nombre de tablón:</h2>
 	  <%if(tablon!=null){%>
 	  <p><%=tablon.getName()%></p>

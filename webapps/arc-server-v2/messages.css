@@ -101,7 +101,7 @@ img#moreMessages {
 
 
 
-img#delete{
+.delete{
 
 position: relative;
 left:100%;
@@ -250,3 +250,12 @@ section#right label:hover{
         -khtml-opacity: 1.0;
 }
 
+/*color de letra blanco*/
+.blanco {
+
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: #f3f3f3;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.6);
+  margin-left:7%;
+}

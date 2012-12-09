@@ -390,7 +390,7 @@ public class DataBaseManager{
 			Connection conn = openConnectionPool();
 			/*select * from TablonMessage INNER JOIN Message ON TablonMessage.message_id = Message.id INNER JOIN User ON Message.user_id = User.id WHERE TablonMessage.id = ?;*/
 			/***********************************************PARAMETRIZACIÓN*************************************************/
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Message INNER JOIN User ON Message.user_id=User.id WHERE tablon_id = ? ORDER BY dateTime DESC limit ?;"); 
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Message INNER JOIN User ON Message.user_id=User.id INNER JOIN Tablon ON Message.tablon_id = Tablon.id WHERE tablon_id = ? ORDER BY dateTime DESC limit ?;"); 
 			System.out.println("el id del tablon :"+tablon.getId());
 			statement.setInt(1, tablon.getId());
 			statement.setInt(2, limit);
@@ -415,8 +415,12 @@ public class DataBaseManager{
 				u.setSurName2(rs.getString("User.surname2"));
 				m.setCreator(u);
 				msg.addElement(m);
+				tablon.setName(rs.getString("Tablon.name"));
+
+
 			}
 			tablon.setAllMsg(msg);
+			
 
 			closeConnectionPool(conn);
 					

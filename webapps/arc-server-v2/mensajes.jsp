@@ -51,10 +51,11 @@
 
 <!-- a partir de aqui es lo que varía de una sección a otra -->
 
-<%Tablon tablon = (Tablon)request.getAttribute("tablon");
+<%
+Tablon tablon = (Tablon)request.getAttribute("tablon");
 
 if(tablon== null){
-System.out.println("tablon es null");
+  System.out.println("tablon es null");
 }
 Vector<Message> msgs = tablon.getAllMsg();
 
@@ -63,8 +64,13 @@ Vector<Message> msgs = tablon.getAllMsg();
 
    
    <section id="left">
-	 <img id= "moreMessages" src="IMG/moreIcon.png" onClick="getMoreMessages()">
-	
+
+   
+	 <p class="blanco"><b>Identificador:</b> <%= tablon.getId()%> <b>Nombre de tablón:</b> <%= tablon.getName()%></p>
+  
+  
+   <img id= "moreMessages" src="IMG/moreIcon.png" onClick="getMoreMessages()">
+	 
 	
 <%if(msgs != null){%>
 	 <% for(int j=msgs.size()-1;j>=0; j--){ %>
@@ -73,7 +79,7 @@ Vector<Message> msgs = tablon.getAllMsg();
 
 	 <div id="<%=msgs.elementAt(j).getId()%>" class="mensaje"><p><b><%=msgs.elementAt(j).getCreator().getName()  + " " +  msgs.elementAt(j).getCreator().getSurName1()  + " " +  msgs.elementAt(j).getCreator().getSurName2()%></b>:
 	  <p><%=msgs.elementAt(j).getMsg()%></p>
-	<a ><img id="delete" src="IMG/delete.jpg" onClick="removeMessage(<%=msgs.elementAt(j).getId()%>)"></a>
+	<a ><img class="delete" src="IMG/delete.jpg" onClick="removeMessage(<%=msgs.elementAt(j).getId()%>)"></a>
 	</div>
 <p></p>
 <%}%>
@@ -84,25 +90,26 @@ Vector<Message> msgs = tablon.getAllMsg();
 
   <section id ="right" >
      
-      <form method="post" action="sendMessage">
-      <input type = "radio" id="privado" name="visibility" value="1" checked> <!-- yo por hidden le mandaría los demás datos -->
-      <label id="label_privado" for="privado"><span></span></label>
-      <input type = "radio" id="publico" name="visibility" value="2">
-      <label id="label_publico" for="publico"><span></span></label>
-      <input type = "radio" id="grupo" name="visibility" value="0">
-      <label id="label_grupo" for="grupo"><span></span></label>
+      <form method="post" action="javascript:sendMessage()">
+
+        <input type = "radio" id="privado" name="visibility" value="1" checked>
+          <label id="label_privado" for="privado"><span></span></label>
+        <input type = "radio" id="publico" name="visibility" value="2">
+          <label id="label_publico" for="publico"><span></span></label>
+        <input type = "radio" id="grupo" name="visibility" value="0">
+          <label id="label_grupo" for="grupo"><span></span></label>
    
-      <input id="enviar" type="image" src ="IMG/enviar.png"/> 
-      <textarea autofocus type="text" id="escribiendo_mensaje" name="mensaje">
-      </textarea>
-      <div id="multimedia">
-      <input type = "radio" id="foto"  name="format" value="1">
-      <label id="label_foto" for="foto"><span></span></label>
-      <input type = "radio" id="video"  name="format" value="2">
-      <label id="label_video" for="video"><span></span></label>
-      <input type = "radio" id="audio"  name="format" value="3">
-      <label id="label_audio" for="audio"><span></span></label>
-      </div>
+        <input id="enviar" type="image" src ="IMG/enviar.png"/> 
+          <textarea autofocus type="text" id="escribiendo_mensaje" name="mensaje">
+        </textarea>
+        <div id="multimedia">
+          <input type = "radio" id="foto"  name="format" value="1">
+            <label id="label_foto" for="foto"><span></span></label>
+          <input type = "radio" id="video"  name="format" value="2">
+            <label id="label_video" for="video"><span></span></label>
+          <input type = "radio" id="audio"  name="format" value="3">
+            <label id="label_audio" for="audio"><span></span></label>
+        </div>
       </form>
 
   </section>

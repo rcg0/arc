@@ -32,6 +32,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 				System.out.println("id de tablon incrustado: "+ tablon.getId());
 
 				request.setAttribute("tablon", tablon);
+				
 			}
 
 

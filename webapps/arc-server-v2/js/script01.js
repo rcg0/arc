@@ -145,17 +145,29 @@ function showContents(){
       }
 
   }
+  
 
+    function insertAfter(e,i){ //i -> nodo a insertar, e->nodo tras el que se va a insertar
+        if(e.nextSibling){ 
+            e.parentNode.insertBefore(i,e.nextSibling); 
+        } else { 
+            e.parentNode.appendChild(i); 
+        }
+    }
 
   function createDivMessage(msg){
 
     var father = document.getElementById("left");
+    var firstNode = document.getElementById("moreMessages");
 
     var espacio = document.createElement("p");
-    father.insertBefore(espacio, father.firstChild);
+    
+    insertAfter(firstNode, espacio);//inserta un espacio
 
+    //father.insertBefore(espacio, father.firstChild);
+    
     var text=document.createTextNode(msg.msg);
-    var autor = document.createTextNode(msg.creator.name);
+    var autor = document.createTextNode(msg.creator.name + " " + msg.creator.surname1 + " " + msg.creator.surname2 );
     var nuevoDiv = document.createElement("div");
     
 
@@ -164,22 +176,25 @@ function showContents(){
     var b = document.createElement("b");
     b.appendChild(autor);
     p2.appendChild(text);
+    p.appendChild(b);
     var a = document.createElement("a");
     var img = document.createElement("img");
     img.src = "IMG/delete.jpg";
     img.setAttribute("onClick","removeMessage("+msg.id+")");
+    img.className = "delete";
 
     //img.onClick = "removeMessage("+msg.id+")";
     a.appendChild(img);
     nuevoDiv.appendChild(p);
     nuevoDiv.appendChild(p2);
     nuevoDiv.appendChild(a);
-    father.insertBefore(nuevoDiv, father.firstChild);//insertamos antes que el primer nodo
+    //father.insertBefore(nuevoDiv, firstNode);//tengo que insertar antes del segundo nodo, la imagen es el primer nodo!
     nuevoDiv.id=msg.id;
     nuevoDiv.className="mensaje";
 
-
+    insertAfter(espacio,nuevoDiv);
     //alert(" id: "+ msg.id+ " mensaje: "+ msg.msg + " autor: " + msg.creator.name);
+    insertAfter(nuevoDiv, espacio);//inserta un espacio
 
 
   }
@@ -201,5 +216,33 @@ function showContents(){
       var x = document.getElementById(messageID);
       //alert("se ejecuta");
       x.parentNode.removeChild(x);
+
+  }
+
+
+  function sendMessage() {
+
+    var privado = document.getElementById("privado");
+    var publico = document.getElementById("publico");
+    var grupo = document.getElementById("grupo");
+    var mensaje = document.getElementById("escribiendo_mensaje");
+
+    if(privado.checked){
+     alert(privado.value);
+    }
+    else if(publico.checked){
+      alert(publico.value);
+
+    }
+    else if(grupo.checked){
+      alert(grupo.value);
+
+    }
+
+    alert(mensaje.value);
+
+    /*enviar*/
+
+    /*pintar*/
 
   }
