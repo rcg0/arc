@@ -141,7 +141,6 @@ public class Tablon {
 	}
 
 	public void sendMessage(Message message){
-	      
 		DataBaseManager manager = new DataBaseManager();
 		manager.createMessage(message, this.getId());
 	}

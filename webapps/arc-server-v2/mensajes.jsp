@@ -1,4 +1,6 @@
-﻿<%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
+﻿<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
 <%@ page import="java.util.Vector" %>
 <%@ page import="arc.User" %>
 <%@ page import="arc.Tablon" %>
@@ -40,7 +42,7 @@
               </ul>
 
          </li>
-	       <li><a href="#" class="current">Mensajes</a>
+	       <li ><a class="current" href="#" >Mensajes</a>
 
                 <ul id="submenu_mensajes">
                 </ul>
@@ -66,7 +68,7 @@ Vector<Message> msgs = tablon.getAllMsg();
    <section id="left">
 
    
-	 <p class="blanco"><b>Identificador:</b> <%= tablon.getId()%> <b>Nombre de tablón:</b> <%= tablon.getName()%></p>
+	 <p class="blanco"><b>Identificador:</b> <a id="tablonId"> <%= tablon.getId()%> </a><b>Nombre de tablón:</b><%= tablon.getName()%></p>
   
   
    <img id= "moreMessages" src="IMG/moreIcon.png" onClick="getMoreMessages()">
@@ -90,7 +92,8 @@ Vector<Message> msgs = tablon.getAllMsg();
 
   <section id ="right" >
      
-      <form method="post" action="javascript:sendMessage()">
+     <form id="form_envio" method="post" onSubmit="sendMessage()" >
+        <input name="tablonId" type="hidden" value=""> 
 
         <input type = "radio" id="privado" name="visibility" value="1" checked>
           <label id="label_privado" for="privado"><span></span></label>
@@ -103,14 +106,14 @@ Vector<Message> msgs = tablon.getAllMsg();
           <textarea autofocus type="text" id="escribiendo_mensaje" name="mensaje">
         </textarea>
         <div id="multimedia">
-          <input type = "radio" id="foto"  name="format" value="1">
+          <input type = "radio" id="foto"  name="format" value="1" checked>
             <label id="label_foto" for="foto"><span></span></label>
           <input type = "radio" id="video"  name="format" value="2">
             <label id="label_video" for="video"><span></span></label>
           <input type = "radio" id="audio"  name="format" value="3">
             <label id="label_audio" for="audio"><span></span></label>
         </div>
-      </form>
+      </form> 
 
   </section>
 

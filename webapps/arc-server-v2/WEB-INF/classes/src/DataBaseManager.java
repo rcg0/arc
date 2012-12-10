@@ -404,6 +404,19 @@ public class DataBaseManager{
 
 				System.out.println(rs.getString("Message.message"));
 				m.setMsg(rs.getString("Message.message"));
+
+/********************************/
+try{
+String string = new String(rs.getString("Message.message").getBytes(), "UTF-8");
+System.out.println("EL STRING TIENE PROBLEMAS ? :  " + string);
+}
+catch(Exception ioe){
+
+}
+
+/**********************************/
+
+
 				System.out.println("visibility:"+rs.getInt("visibility"));
 				m.setVisibility(rs.getInt("visibility"));
 				//m.setDate(rs.getTimestamp("dateTime"));//peta aquí

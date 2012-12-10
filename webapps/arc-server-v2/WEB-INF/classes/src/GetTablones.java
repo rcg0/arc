@@ -28,7 +28,9 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 				tablon= new Tablon();
 				tablon.setId(Integer.parseInt(attribute));
 				tablon.getSomeMsg(2);
-				
+				/*debug*/
+				//tablon.getAllMessages().elementAt(0);
+				/******/
 				System.out.println("id de tablon incrustado: "+ tablon.getId());
 
 				request.setAttribute("tablon", tablon);

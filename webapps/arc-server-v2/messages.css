@@ -93,6 +93,7 @@ left: 40px;
 
 img#moreMessages {
 
+  cursor:pointer;
   position:relative;
   float:right;
   right:15%;
@@ -103,6 +104,7 @@ img#moreMessages {
 
 .delete{
 
+cursor:pointer;
 position: relative;
 left:100%;
 

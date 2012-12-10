@@ -222,10 +222,11 @@ function showContents(){
 
   function sendMessage() {
 
-    var privado = document.getElementById("privado");
+    /*var privado = document.getElementById("privado");
     var publico = document.getElementById("publico");
     var grupo = document.getElementById("grupo");
     var mensaje = document.getElementById("escribiendo_mensaje");
+    var form = document.getElementById("form_evio");
 
     if(privado.checked){
      alert(privado.value);
@@ -241,8 +242,25 @@ function showContents(){
 
     alert(mensaje.value);
 
-    /*enviar*/
+    var tablon = document.getElementById("tablonId").text;
+    var url = "sendMessage?tablonId="+tablon;
+    //enviar
 
-    /*pintar*/
+    alert("url:"+ url);
+    //createAJAXRequest(sendMessage,pintaNuevoMensaje,true);
+*/    
 
+
+    var form = document.getElementById("form_envio");
+
+
+    var tablon = document.getElementById("tablonId").text;
+    form.tablonId.value = tablon;
+    //alert(tablon);
+    form.action = "sendMessage";
+    form.submit();
+    
+    //alert();
+    
   }
+  
