@@ -11,6 +11,8 @@
 	
 
 	<script src="js/script01.js" type="text/javascript" language="Javascript"> </script> 
+	<script src="js/searchUsers.js" type="text/javascript" language="Javascript"> </script> 
+
 	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<link href="messages.css" rel="stylesheet" type="text/css" media="screen" />
 	<link href="mis-tablones.css" rel="stylesheet" type="text/css" media="screen" />
@@ -35,8 +37,7 @@
   </div>
    
 <% 
-  //para el formulario, cojo todos los usuarios de la base de datos.
-  Vector<User> allUsers =(Vector<User>)request.getAttribute("allUsers");
+  
   Vector<User> moderators = null;
   Vector<User> users = null;
 
@@ -144,6 +145,7 @@ e una sección a otra -->
 
 
       <form method = "post" action= "deleteTablon">
+
       <input id="eliminar" type="submit" value="Eliminar tablón"/>
       </form>
 
@@ -153,22 +155,27 @@ e una sección a otra -->
       <input type="text" value=""/>
       <p></p>
       <h2>Asociar moderadores: </h2>
-      <%for(int i=0;i < allUsers.size(); i++){%>
-	<select  multiple="multiple" name="moderators">
-	 <option value="<%=allUsers.elementAt(i).getName() + " " +allUsers.elementAt(i).getSurName1() + " " +allUsers.elementAt(i).getSurName2()%>">
-	  <%=allUsers.elementAt(i).getName() + " " +allUsers.elementAt(i).getSurName1() + " "+allUsers.elementAt(i).getSurName2()%></option>
+
+
+	  <input autofocus type="text" id="patron" name="patron" onKeyDown ="sendPatron()" required>
+     	</input>
+
+
+	  <select  name="moderators">
+	 	<option value="pepito">Javier Rafael Sánchez
+	  	</option>
+		
 	<p></p>
-      <%}%>
 
       <h2>Asociar usuarios: </h2>
-      <%for(int i=0;i < allUsers.size(); i++){%>
-	<select multiple="multiple" name="targetUsers">
-	 <option value="<%=allUsers.elementAt(i).getName() + " " +allUsers.elementAt(i).getSurName1() + " " +allUsers.elementAt(i).getSurName2()%>">
-	  <%=allUsers.elementAt(i).getName() + " " +allUsers.elementAt(i).getSurName1() + " "+allUsers.elementAt(i).getSurName2()%></option>
-	<p></p>
-      <%}%>
 
-      <h2>Asociar permiso a usuario: </h2>
+	<select name="targetUsers">
+	 <option value="">
+	  </option>
+	<p></p>
+      
+
+    <!--  <h2>Asociar permiso a usuario: </h2>
 
 
 
@@ -176,6 +183,8 @@ e una sección a otra -->
       <input id="modificar" type="button" value="Modificar tablón" />
 
       <input id="nuevo" type="button" value="Nuevo tablón" />
+
+  -->
             
       </form>
       

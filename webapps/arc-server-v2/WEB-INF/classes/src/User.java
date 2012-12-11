@@ -121,6 +121,15 @@ public class User {
 		return dataBaseUser;
 	}
 
+	public Vector<User> getUsersStartsWith(String name){
+
+		Vector<User> users = null; 
+		DataBaseManager manager = new DataBaseManager();
+		users = manager.getUserStartsWith(name);
+
+		return users;
+	}
+
 
       public Vector<User> getAllUsers(){
 

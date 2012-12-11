@@ -87,6 +87,47 @@ public class DataBaseManager{
 		return databaseUser;
 	}
 	
+	/*
+	*Método que recoge a usuarios con nombres o apellidos que empiecen por @param String name
+	*Devuelve el array con los usuarios encontrados.
+	*/
+	public Vector<User> getUserStartsWith(String name) {
+
+		Vector<User> users=new Vector<User>();
+		User databaseUser = null;
+
+		try{
+			Connection conn = openConnectionPool();
+			System.out.println(name+"%");
+
+			/***********************************************PARAMETRIZACIÓN*************************************************/
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM User WHERE name LIKE ? OR surname1 LIKE ? OR surname2 LIKE ?;");
+			statement.setString(1, name+"%");
+			statement.setString(2, name+"%");
+			statement.setString(3, name+"%");
+			/****************************************************************************************************************/
+
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				databaseUser = new User();
+				databaseUser.setId(rs.getInt("id"));
+				databaseUser.setName(rs.getString("name"));
+				databaseUser.setSurName1(rs.getString("surname1"));
+				databaseUser.setSurName2(rs.getString("surname2"));
+				databaseUser.setAllModerators(getIdTablonModerateUsers(databaseUser.getId()));
+				users.addElement(databaseUser);
+			}
+
+			closeConnectionPool(conn);
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		
+		return users;
+	}
 
 
 	/*Obtiene el tablón según su descriptor o su id, muestra los mensajes asociados*/

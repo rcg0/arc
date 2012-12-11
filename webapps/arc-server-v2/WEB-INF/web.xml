@@ -135,6 +135,18 @@
 		<url-pattern>/getMessages</url-pattern>
         </servlet-mapping>
 	
+
+       <servlet>
+        	<servlet-name>ServletGetUsers</servlet-name>
+        	<servlet-class>arc.GetUsers</servlet-class>
+        </servlet>
+	
+	 <servlet-mapping>
+        	<servlet-name>ServletGetUsers</servlet-name>
+		<url-pattern>/getUsers</url-pattern>
+        </servlet-mapping>
+
+
 	<!--Define the default session timeout for your application, in minutes. From a servlet or JSP page, you can modify the timeout for a particular session dynamically by using HttpSession.getMaxInactiveInterval().
 -->
 	<session-config>
