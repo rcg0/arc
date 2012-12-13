@@ -108,7 +108,7 @@ public class DataBaseManager{
 			/****************************************************************************************************************/
 
 			ResultSet rs = statement.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				databaseUser = new User();
 				databaseUser.setId(rs.getInt("id"));
 				databaseUser.setName(rs.getString("name"));
@@ -116,6 +116,9 @@ public class DataBaseManager{
 				databaseUser.setSurName2(rs.getString("surname2"));
 				databaseUser.setAllModerators(getIdTablonModerateUsers(databaseUser.getId()));
 				users.addElement(databaseUser);
+
+
+				System.out.println("Nombre:" + databaseUser.getName());
 			}
 
 			closeConnectionPool(conn);
@@ -956,6 +959,15 @@ catch(Exception ioe){
 		}
 		
 		return result;
+	}
+
+
+
+	public String sanitizer(String cadena){
+	
+		return cadena.replaceAll( "<[^>]*>|[<>\'\"]"," ");
+
+
 	}
 
 }

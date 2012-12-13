@@ -17,19 +17,27 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 
 	HttpSession session = request.getSession(false);
 	String next = "/error.html";
+	Tablon tablon;
 
 	if(session!=null){
       
 		User user= (User)session.getAttribute("user");
-		Vector<Tablon> tablones = (Vector<Tablon>)session.getAttribute("tablones");
-		int tablon = Integer.parseInt(request.getParameter("tablonId"));//identificador en el jsp, no equivale a id de bbdd, 0,1...    
+		//Vector<Tablon> tablones = (Vector<Tablon>)session.getAttribute("tablones");
+		tablon = new Tablon();
+
+		int tablonId = Integer.parseInt(request.getParameter("tablonId"));//identificador en el jsp, no equivale a id de bbdd, 0,1...    
+		tablon.setId(tablonId);
 
 		if(user!=null){
-		
-			tablones.elementAt(tablon).deleteTablon();//lo elimino en la base de datos
-			tablones.remove(tablon);
+			System.out.println("tablon id para eliminar:" + tablonId);
+
+			//tablon.elementAt(tablonId).deleteTablon();//lo elimino en la base de datos
+			//tablones.remove(tablon);
 			//request.setAttribute("tablon",-1);
-			next = "/mis-tablones.jsp"; //destino
+
+			tablon.deleteTablon();
+			//next = "/mis-tablones.jsp"; //destino
+			next= "/showModifyTablones";
 		}
 	}
 	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(next);

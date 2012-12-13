@@ -110,6 +110,8 @@ function showContents(){
 
     if (xhr.readyState==4 && xhr.status==200){
       alert(xhr.responseText);
+
+      
       tablones.push(JSON.parse(xhr.responseText));
       //createAJAXRequest("mis-tablones.jsp",x, true);
     }
@@ -222,34 +224,6 @@ function showContents(){
 
   function sendMessage() {
 
-    /*var privado = document.getElementById("privado");
-    var publico = document.getElementById("publico");
-    var grupo = document.getElementById("grupo");
-    var mensaje = document.getElementById("escribiendo_mensaje");
-    var form = document.getElementById("form_evio");
-
-    if(privado.checked){
-     alert(privado.value);
-    }
-    else if(publico.checked){
-      alert(publico.value);
-
-    }
-    else if(grupo.checked){
-      alert(grupo.value);
-
-    }
-
-    alert(mensaje.value);
-
-    var tablon = document.getElementById("tablonId").text;
-    var url = "sendMessage?tablonId="+tablon;
-    //enviar
-
-    alert("url:"+ url);
-    //createAJAXRequest(sendMessage,pintaNuevoMensaje,true);
-*/    
-
 
     var form = document.getElementById("form_envio");
 
@@ -264,3 +238,17 @@ function showContents(){
     
   }
   
+
+function removeTablon(){
+
+    var form = document.getElementById("form_delete");
+
+    var tablon = document.getElementById("messageTablonId");
+
+    var id = tablon.textContent;
+    
+    form.action = "deleteTablon?tablonId="+id;
+
+    form.submit();
+
+  }

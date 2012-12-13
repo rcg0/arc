@@ -78,10 +78,10 @@ e una sección a otra -->
 
    <section id="left">
 
-	<div class="mensaje">
+	<div  class="mensaje">
 	  <h2>Identificador del tablón:</h2>
 	  <%if(tablon!=null){%>
-	  <p><%=tablon.getId()%></p>
+	  <p id= "messageTablonId"><%=tablon.getId()%></p>
 	  <%}%>
 	</div>
 	<p></p>
@@ -143,12 +143,12 @@ e una sección a otra -->
   <section id ="right" >
     
 
+<%if(tablon != null){%>
+      <form id="form_delete" method = "post">
 
-      <form method = "post" action= "deleteTablon">
-
-      <input id="eliminar" type="submit" value="Eliminar tablón"/>
+      	<input id="eliminar" type="submit" value="Eliminar tablón" onclick="removeTablon()"/>
       </form>
-
+<%}%>
 
       <form method="post" action="#">
       <h2>Nombre del tablón:</h2>
@@ -157,21 +157,27 @@ e una sección a otra -->
       <h2>Asociar moderadores: </h2>
 
 
-	  <input autofocus type="text" id="patron" name="patron" onKeyDown ="sendPatron()" required>
+	  <input autofocus type="text" id="patron" name="patron" required>
      	</input>
 
-
-	  <select  name="moderators">
-	 	<option value="pepito">Javier Rafael Sánchez
-	  	</option>
+     	<input id= "busqueda1" type="button" value ="Buscar" onClick = "sendPatron(this)"> 
+     	<p></p>
+	  <select multiple id="selectModerators" name="moderators">
+	 		<option>Todos los usuarios</option>
+	  </select>
 		
 	<p></p>
 
-      <h2>Asociar usuarios: </h2>
+    <h2>Asociar usuarios: </h2>
+    <p></p>
+    <input autofocus type="text" id="patron" name="patron" required     	</input>
 
-	<select name="targetUsers">
-	 <option value="">
-	  </option>
+     <input id= "busqueda2" type="button" value ="Buscar" onClick = "sendPatron(this)"> 
+     	<p></p>
+
+	<select multiple id="selectUsers" name="targetUsers">
+		<option>Todos los usuarios</option>
+
 	<p></p>
       
 
