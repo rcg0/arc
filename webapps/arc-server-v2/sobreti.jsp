@@ -27,8 +27,7 @@
     <p><%= user.getName()%></p>
   </div>
    
-   <nav id="main_nav">
-      <ul class= "menu">
+  <ul class= "menu">
 	         <li><a href="profile" class = "current">Perfil</a></li>
 	         <li><a href="#">Mis tablones</a>
 
@@ -43,8 +42,8 @@
                   
                 </ul>
             </li>
-      </ul>
-   </nav>
+   </ul>
+
 </header>
 
 

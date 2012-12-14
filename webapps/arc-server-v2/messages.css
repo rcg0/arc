@@ -1,32 +1,7 @@
 
-
-
-nav#tablon_name{
-  position:relative;
-  top: 0%;
-  height: 3%;
-  float: top;   
-}
-
-nav#tablon_name ul{
-    width: 100%;
-    text-align: left;
-    background: #708090;
-    margin: 0px;
-    padding: 0px 0px 0px 20px;
-    border: 2px solid #000;
-    list-style: none;
-    box-sizing: border-box;/*propiedad css3*/
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    border-radius: 10px;
-   -moz-border-radius: 5px;
-   -webkit-border-radius: 5px;
-  
-}
-
-
 section#left {
+  position:relative;
+  top: -5%;
   float: left;
   width: 50%;
   height: 100%;
@@ -42,6 +17,8 @@ section#left {
 }
 
 section#right {
+  position:relative;
+  top: -5%;
   float: right;
   width: 50%;
   height: 100%;
@@ -78,19 +55,24 @@ word-wrap:break-word;
 .mensaje {
 
 border:2px solid #a0a0a0;
-padding:0px 40px; 
+padding:0px 40px 0px 20px; 
 background:#FFFFFF;
 width:50%;
 border-radius:25px;
 -moz-border-radius:25px; /* Firefox 3.6 and earlier */
 position: relative;
-top: 50px;
+top: 20px;
 left: 40px;
 }
 
-.mensaje p {word-wrap:break-word;} 
+.mensaje p {
 
+  word-wrap: break-word;
+  margin: 10px 0px 5px 10px;
 
+} 
+
+/*
 img#moreMessages {
 
   cursor:pointer;
@@ -99,7 +81,37 @@ img#moreMessages {
   right:15%;
   top:2%;
 }
+*/
 
+#moreMessages{
+
+
+  border:0;
+  position:relative;
+  left:25%;
+  color: #2E2E2E;
+  font-size: 15px;
+
+  padding: 10px 2% 10px 10px;
+
+  -moz-border-radius: 30px;
+  -webkit-border-radius: 30px;
+  
+  -moz-box-shadow: 0px 4px 0 #AAAAAF;
+  -webkit-box-shadow: 0px 4px 0 #AAAAAF;
+
+}
+
+
+#moreMessages: active{
+
+  position:relative;
+  top:3px;
+
+  -moz-box-shadow:0px 2px 0 #AAAAAF;
+  -webkit-box-shadow:0px 2px 0 #AAAAAF;
+
+}
 
 
 .delete{
@@ -109,57 +121,7 @@ position: relative;
 left:100%;
 
 }
-/*
 
-img#privado{
-
-  width: 7%;
-  position:relative;
-  top: 20px;
-  left: 10%;
-  
-}
-
-
-
-img#grupo{
-
-  width: 7%;
-  position:relative;
-  top: 20px;
-  left: 12%;
-
-}
-
-img#publico{
-
-  width: 7%;
-  position:relative;
-  top: 20px;
-  left: 35%;
-}
-
-
-
-
-
-img#video{
-  width: 13%;
-  float: left;
-}
-
-img#audio{
-  width: 13%;
-  float: right;
-}
-
-
-img#foto{
-  width: 13%;
-  position: relative;
-  left: 30%;
-}
-*/
 
 #multimedia{
   

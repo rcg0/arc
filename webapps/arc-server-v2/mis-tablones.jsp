@@ -45,7 +45,6 @@
  
 %>
 
-   <nav id="main_nav">
     <ul class="menu">
 	<li><a href="profile">Perfil</a></li>
 	<li id="sublista"><a href="showModifyTablones" class="current" >Mis tablones</a>
@@ -63,40 +62,32 @@
                 </ul>
 	</li>
       </ul>
-   </nav>
 </header>
 
 <!-- a partir de aqui es lo que varía d
 e una sección a otra -->
 
 
-   <nav id="tablon_name">
-   
-   
-   </nav>
-
-
    <section id="left">
 
 	<div  class="mensaje">
-	  <h2>Identificador del tablón:</h2>
-	  <%if(tablon!=null){%>
-	  <p id= "messageTablonId"><%=tablon.getId()%></p>
-	  <%}%>
+	  <p><b>Identificador del tablón:</b><%if(tablon!=null){%>
+	  <a id= "messageTablonId"><%=tablon.getId()%></a><%}%></p>
+	  
 	</div>
 	<p></p>
 	<p></p>
 
 	<div class="mensaje">
-	  <h2>Nombre de tablón:</h2>
+	  <p><b>Nombre de tablón:</b>
 	  <%if(tablon!=null){%>
-	  <p><%=tablon.getName()%></p>
+	  <%=tablon.getName()%></p>
 	  <%}%>
 	</div>
 	<p></p>
 	<p></p>
 	<div class="mensaje">
-	  <h2>Moderadores asociados:</h2>
+	  <p><b>Moderadores asociados:</p></b>
 
 	    <%if(tablon!=null){%>
 		<%moderators = tablon.getUsers(); %>
@@ -110,7 +101,7 @@ e una sección a otra -->
 	</div>
 	<p></p>
 	<div class="mensaje">
-	  <h2>Usuarios asociados:</h2>
+	  <p><b>Usuarios asociados:</p></b>
  	    <%if(tablon!=null){%>
 	   <%users = tablon.getTargetUsers(); %>
 	    <%for(int i = 0; i<users.size(); i++){%>
@@ -124,7 +115,7 @@ e una sección a otra -->
 	</div>
 	<p></p>
 	<div class="mensaje">
-	  <h2>Permisos asociados a usuario:</h2>
+	  <p><b>Permisos asociados a usuario:</p></b>
  	    <%if(tablon!=null){%>
 
 	   <%for(int i = 0; i<users.size(); i++){%>
@@ -151,10 +142,10 @@ e una sección a otra -->
 <%}%>
 
       <form method="post" action="#">
-      <h2>Nombre del tablón:</h2>
+      <p><b>Nombre del tablón:</p></b>
       <input type="text" value=""/>
       <p></p>
-      <h2>Asociar moderadores: </h2>
+      <p><b>Asociar moderadores: </p></b>
 
 
 	  <input autofocus type="text" id="patron" name="patron" required>
@@ -168,7 +159,7 @@ e una sección a otra -->
 		
 	<p></p>
 
-    <h2>Asociar usuarios: </h2>
+   	<p><b>Asociar usuarios:</p></b>
     <p></p>
     <input autofocus type="text" id="patron" name="patron" required     	</input>
 

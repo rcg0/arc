@@ -30,8 +30,6 @@
     <p><%= user.getName()%></p>
   </div>
 
-   
-   <nav id="main_nav">
       <ul class="menu">
 	       <li><a href="profile">Perfil</a></li>
          <li><a href="#" >Mis tablones</a>
@@ -48,7 +46,6 @@
                 </ul>
          </li>
       </ul>
-   </nav>
 </header>
 
 <!-- a partir de aqui es lo que varía de una sección a otra -->
@@ -71,7 +68,7 @@ Vector<Message> msgs = tablon.getAllMsg();
 	 <p class="blanco"><b>Identificador:</b> <a id="tablonId"> <%= tablon.getId()%> </a><b>Nombre de tablón:</b><%= tablon.getName()%></p>
   
   
-   <img id= "moreMessages" src="IMG/moreIcon.png" onClick="getMoreMessages()">
+   <button id= "moreMessages" onClick="getMoreMessages()" > Más mensajes </button>
 	 
 	
 <%if(msgs != null){%>
@@ -81,7 +78,7 @@ Vector<Message> msgs = tablon.getAllMsg();
 
 	 <div id="<%=msgs.elementAt(j).getId()%>" class="mensaje"><p><b><%=msgs.elementAt(j).getCreator().getName()  + " " +  msgs.elementAt(j).getCreator().getSurName1()  + " " +  msgs.elementAt(j).getCreator().getSurName2()%></b>:
 	  <p><%=msgs.elementAt(j).getMsg()%></p>
-	<a ><img class="delete" src="IMG/delete.jpg" onClick="removeMessage(<%=msgs.elementAt(j).getId()%>)"></a>
+	<img class="delete" src="IMG/delete.jpg" onClick="removeMessage(<%=msgs.elementAt(j).getId()%>)">
 	</div>
 <p></p>
 <%}%>
