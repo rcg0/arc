@@ -12,6 +12,8 @@
 
 	<script src="js/script01.js" type="text/javascript" language="Javascript"> </script> 
 	<script src="js/searchUsers.js" type="text/javascript" language="Javascript"> </script> 
+	<script src="js/asociarModeradores.js" type="text/javascript" language="Javascript"> </script> 
+
 
 	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<link href="messages.css" rel="stylesheet" type="text/css" media="screen" />
@@ -157,7 +159,9 @@ e una sección a otra -->
 	 		<option>Todos los usuarios</option>
 	  </select>
 		
+		<input id= "asociar_moderadores" type="button" value ="Asociar moderadores" onClick = "select_moderators">
 	<p></p>
+
 
    	<p><b>Asociar usuarios:</p></b>
     <p></p>
@@ -170,6 +174,14 @@ e una sección a otra -->
 		<option>Todos los usuarios</option>
 
 	<p></p>
+	
+	<input id= "asociar_usuarios" type="button" value ="Asociar usuarios" onClick = "select_users()">
+
+
+
+	<p></p>
+	<input id= "save_data" type="button" value ="Guardar datos" onClick = "save_data()">
+
       
 
     <!--  <h2>Asociar permiso a usuario: </h2>

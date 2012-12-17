@@ -92,14 +92,19 @@ Vector<Message> msgs = tablon.getAllMsg();
      <form id="form_envio" method="post" onSubmit="sendMessage()" >
         <input name="tablonId" type="hidden" value=""> 
 
-        <input type = "radio" id="privado" name="visibility" value="1" checked>
+        <input type = "radio" id="privado" name="visibility" value="1" onchange= "setOpaque(this.id)" checked>
+
           <label id="label_privado" for="privado"><span></span></label>
-        <input type = "radio" id="publico" name="visibility" value="2">
+
+        <input type = "radio" id="publico" name="visibility" value="2" onchange= "setOpaque(this.id)">
+
           <label id="label_publico" for="publico"><span></span></label>
-        <input type = "radio" id="grupo" name="visibility" value="0">
+
+        <input type = "radio" id="grupo" name="visibility" value="0" onchange= "setOpaque(this.id)">
+
           <label id="label_grupo" for="grupo"><span></span></label>
    
-        <input id="enviar" type="image" src ="IMG/enviar.png"/> 
+        <input id="enviar" type="image" src ="IMG/enviar.png"/>      
           <textarea autofocus type="text" id="escribiendo_mensaje" name="mensaje">
         </textarea>
         <div id="multimedia">

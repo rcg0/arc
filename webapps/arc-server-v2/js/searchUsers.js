@@ -21,8 +21,8 @@ function sendPatron(boton){
 	
 
 	
-	//alert('Usted presionó el boton "' + boton.id + '"')
-  //alert(patron);
+  alert('Usted presionó el boton "' + boton.id + '"')
+  alert(patron);
 }
 
 
@@ -30,19 +30,19 @@ function showUserResults(){
 
 	  if (xhr.readyState==4 && xhr.status==200){
 	  		var text = xhr.responseText;
-			
-			newUsers = JSON.parse(xhr.responseText);
-			alert(newUsers[0].id);
+			users = JSON.parse(xhr.responseText);
+			//newUsers = JSON.parse(xhr.responseText);
+			//alert(newUsers[0].id);
 			//comprobar que sólo se almacenen en users los que no existan ya
 			//checkUserDoesNotExist();
-			printUsersIhave();
+			//printUsersIhave();
 			
 			printModerators();
 	  }
 
 
 }
-
+/*
 function checkUserDoesNotExist(){
 
 	
@@ -70,7 +70,7 @@ function printUsersIhave(){
 	}
 
 }
-
+*/
 function printModerators(){
 
 
@@ -98,6 +98,7 @@ function printModerators(){
 	for(var i =0; i<users.length; i++){
 		var newOption = document.createElement("option");
 		var newModerator = document.createTextNode(users[i].name + " " +users[i].surname1 + " " +users[i].surname2);
+		newOption.setAttribute("value",users[i].id);
 		newOption.appendChild(newModerator);
 		select.appendChild(newOption);
 	}

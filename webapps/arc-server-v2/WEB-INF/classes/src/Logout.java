@@ -18,6 +18,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	HttpSession session = request.getSession(false);
 
 	String next = "/error.html";
+
 		if(session!=null){
 			User user= (User)session.getAttribute("user");
 			session.removeAttribute("user");
@@ -25,8 +26,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 			next = "/login.html"; //JSP destino
 		}
 
-	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(next);
-	dispatcher.forward(request,response);
+	response.sendRedirect("login.html");
 	      		
 
   }

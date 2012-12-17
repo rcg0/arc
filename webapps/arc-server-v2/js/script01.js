@@ -252,3 +252,13 @@ function removeTablon(){
     form.submit();
 
   }
+
+
+  /*asigna clase opaca al elemento*/
+
+  function setOpaque (i) {
+
+    e = document.getElementById(i);
+    e.setAttribute("className","opaque");
+    //alert("he clicao");
+  }
