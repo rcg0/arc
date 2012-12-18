@@ -143,7 +143,7 @@ e una sección a otra -->
       </form>
 <%}%>
 
-      <form method="post" action="#">
+  <form id="form_mis_tablones" method="post" action="#">
       <p><b>Nombre del tablón:</p></b>
       <input type="text" value=""/>
       <p></p>
@@ -180,6 +180,7 @@ e una sección a otra -->
 
 
 	<p></p>
+	
 	<input id= "save_data" type="button" value ="Guardar datos" onClick = "save_data()">
 
       

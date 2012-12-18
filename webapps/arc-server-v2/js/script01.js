@@ -256,9 +256,14 @@ function removeTablon(){
 
   /*asigna clase opaca al elemento*/
 
-  function setOpaque (i) {
+  function setOpaque (id) {
 
-    e = document.getElementById(i);
-    e.setAttribute("className","opaque");
-    //alert("he clicao");
+    /*primero reseteo */
+    document.getElementById("label_privado").className ="notopaque";
+    document.getElementById("label_publico").className ="notopaque";
+    document.getElementById("label_grupo").className ="notopaque";
+    /*cojo la referencial al label y le cambio la clase a opaca*/
+    e = document.getElementById(id);
+    e.className= "opaque";
+    
   }

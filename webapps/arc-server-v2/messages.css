@@ -153,10 +153,6 @@ label#label_foto{
   width: 16%;
   left: 30%;
 
-    filter:alpha(opacity=50);
-        -moz-opacity: 0.5;
-        opacity: 0.5;
-        -khtml-opacity: 0.5;
 }
 
 label#label_video{
@@ -167,10 +163,7 @@ label#label_video{
   width: 16%;
   float: left;
 
-    filter:alpha(opacity=50);
-        -moz-opacity: 0.5;
-        opacity: 0.5;
-        -khtml-opacity: 0.5;
+
 }
 label#label_audio{
   display: inline-block;
@@ -180,10 +173,7 @@ label#label_audio{
   cursor:pointer;
   float: right;
 
-    filter:alpha(opacity=50);
-        -moz-opacity: 0.5;
-        opacity: 0.5;
-        -khtml-opacity: 0.5;
+
 }
 
 label#label_publico{
@@ -193,10 +183,6 @@ label#label_publico{
   background: url(IMG/globe.png) no-repeat;
   cursor:pointer;
 
-    filter:alpha(opacity=50);
-        -moz-opacity: 0.5;
-        opacity: 0.5;
-        -khtml-opacity: 0.5;
 }
 
 label#label_privado{
@@ -206,11 +192,14 @@ label#label_privado{
   background: url(IMG/agent.png) no-repeat;
   cursor:pointer;
 
+/*
+  filter:alpha(opacity=100);
+  -moz-opacity: 1.0;
+  opacity: 1.0;
+  -khtml-opacity: 1.0;
+  */
 
-    filter:alpha(opacity=100);
-    -moz-opacity: 1.0;
-    opacity: 1.0;
-    -khtml-opacity: 1.0;
+
 }
 
 label#label_grupo{
@@ -220,10 +209,6 @@ label#label_grupo{
   background: url(IMG/multi-agents.png)  no-repeat;
   cursor:pointer;
 
-    filter:alpha(opacity=50);
-        -moz-opacity: 0.5;
-        opacity: 0.5;
-        -khtml-opacity: 0.5;
 }
 
 
@@ -238,6 +223,29 @@ section#right label:hover{
   -khtml-opacity: 1.0;
 }
 
+/*
+section#right label:active{
+
+
+  filter:alpha(opacity=100);
+  -moz-opacity: 1.0;
+  opacity: 1.0;
+  -khtml-opacity: 1.0;
+}
+*/
+
+
+
+/*color de letra blanco*/
+.blanco {
+
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: #f3f3f3;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.6);
+  margin-left:7%;
+}
+
 /*clase que dice que la opacidad va a ser total*/
   
 .opaque {
@@ -249,12 +257,16 @@ section#right label:hover{
 
 }
 
-/*color de letra blanco*/
-.blanco {
 
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  color: #f3f3f3;
-  text-shadow: 1px 1px 1px rgba(0,0,0,.6);
-  margin-left:7%;
+/*clase que dice que la opacidad va a ser parcial*/
+
+.notopaque {
+
+
+  filter:alpha(opacity=50);
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  -khtml-opacity: 0.5;
+
+
 }

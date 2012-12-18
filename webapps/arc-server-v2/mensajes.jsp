@@ -92,28 +92,28 @@ Vector<Message> msgs = tablon.getAllMsg();
      <form id="form_envio" method="post" onSubmit="sendMessage()" >
         <input name="tablonId" type="hidden" value=""> 
 
-        <input type = "radio" id="privado" name="visibility" value="1" onchange= "setOpaque(this.id)" checked>
+        <input type = "radio" id="privado" name="visibility" value="1"  checked>
 
-          <label id="label_privado" for="privado"><span></span></label>
+          <label id="label_privado" for="privado" class = "opaque" onclick="setOpaque(this.id)"><span></span></label>
 
-        <input type = "radio" id="publico" name="visibility" value="2" onchange= "setOpaque(this.id)">
+        <input type = "radio" id="publico" name="visibility" value="2" >
 
-          <label id="label_publico" for="publico"><span></span></label>
+          <label id="label_publico" for="publico"  class = "notopaque" onclick="setOpaque(this.id)"><span></span></label>
 
-        <input type = "radio" id="grupo" name="visibility" value="0" onchange= "setOpaque(this.id)">
+        <input type = "radio" id="grupo" name="visibility" value="0" >
 
-          <label id="label_grupo" for="grupo"><span></span></label>
+          <label id="label_grupo" for="grupo" class = "notopaque" onclick="setOpaque(this.id)"><span></span></label>
    
         <input id="enviar" type="image" src ="IMG/enviar.png"/>      
           <textarea autofocus type="text" id="escribiendo_mensaje" name="mensaje">
         </textarea>
         <div id="multimedia">
           <input type = "radio" id="foto"  name="format" value="1" checked>
-            <label id="label_foto" for="foto"><span></span></label>
+            <label id="label_foto" for="foto" class = "notopaque"><span></span></label>
           <input type = "radio" id="video"  name="format" value="2">
-            <label id="label_video" for="video"><span></span></label>
-          <input type = "radio" id="audio"  name="format" value="3">
-            <label id="label_audio" for="audio"><span></span></label>
+            <label id="label_video" for="video" class = "notopaque"><span></span></label>
+          <input type = "radio" id="audio"  name="format"  value="3">
+            <label id="label_audio" for="audio" class = "notopaque"><span></span></label>
         </div>
       </form> 
 
