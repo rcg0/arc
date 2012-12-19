@@ -95,6 +95,21 @@ function printModerators(){
 
 	//alert(selectElement);
 
+	//elimino todos los hijos si existen para volver a pintarlos!
+	var allOptions = select.getElementsByTagName("option");
+	//alert(allOptions.length);
+	
+	if(allOptions.length != 0){
+
+		//alert(allOptions.length);
+		var cte = allOptions.length;//necesito hacer constante esta variable antes de entrar en el loop porque cambia dinámicamente :)
+		//alert("la variable contante es:" + cte);
+		for(var z = 0; z < cte; z++){//ejecuto cte veces -> eliminar el primer nodo
+			select.removeChild(allOptions[0]);
+		}
+
+	}
+
 	for(var i =0; i<users.length; i++){
 		var newOption = document.createElement("option");
 		var newModerator = document.createTextNode(users[i].name + " " +users[i].surname1 + " " +users[i].surname2);

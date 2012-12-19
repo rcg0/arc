@@ -156,10 +156,10 @@ e una sección a otra -->
      	<input id= "busqueda1" type="button" value ="Buscar" onClick = "sendPatron(this)"> 
      	<p></p>
 	  <select multiple id="selectModerators" name="moderators">
-	 		<option>Todos los usuarios</option>
+	 		<!--<option>Todos los usuarios</option>-->
 	  </select>
 		
-		<input id= "asociar_moderadores" type="button" value ="Asociar moderadores" onClick = "select_moderators">
+		<input id= "asociar_moderadores" type="button" value ="Asociar moderadores" onClick = "select_moderators()">
 	<p></p>
 
 
@@ -171,7 +171,7 @@ e una sección a otra -->
      	<p></p>
 
 	<select multiple id="selectUsers" name="targetUsers">
-		<option>Todos los usuarios</option>
+		<!--<option>Todos los usuarios</option>-->
 
 	<p></p>
 	
@@ -179,9 +179,10 @@ e una sección a otra -->
 
 
 
+
 	<p></p>
 	
-	<input id= "save_data" type="button" value ="Guardar datos" onClick = "save_data()">
+	
 
       
 
@@ -197,6 +198,8 @@ e una sección a otra -->
   -->
             
       </form>
+      <p></p>
+      <input id= "save_data" type="button" value ="Guardar datos" onClick = "save_data()">
       
 
 

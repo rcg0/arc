@@ -12,7 +12,7 @@ function loopSelect(){
   for (i=0; i<e.options.length; i++) {
     if (e.options[i].selected) {
       selectedArray[count] = e.options[i].value;
-      //alert(e.options[i].value);
+      alert(e.options[i].value);
       count++;
       
     }
@@ -27,6 +27,7 @@ function select_moderators(){
 
     var selectedArray = new Array();
     selectedArray = loopSelect();
+    alert("Moderadores asociados, no olvide guardar los datos.");
 }
 
 
@@ -39,12 +40,12 @@ function select_users(){
 	
   selectedArray = loopSelect();
 
-  alert(selectedArray[0]);
+  //alert(selectedArray[0]);
 
   usersSelected = returnUser(selectedArray);
   
-  alert(usersSelected[0].name);
-
+  //alert(usersSelected[0].name);
+  //alert(usersSelected[1].name);
   //  alert(usersSelected);
 
   asociarPermisoAUsuario(usersSelected);
@@ -56,12 +57,15 @@ function select_users(){
 function returnUser(id){
 
   var result = new Array();
+  
 
-  for(var i = 0; i < users.length; i++ ){
-    for(var j=0; j<id.length; j++){
 
-      if (users[i].id == id){
-        result[i] = users[j];
+  for(var j=0; j<id.length; j++){
+    for(var i = 0; i < users.length; i++ ){
+    
+      if (users[i].id == id[j]){
+        result[j] = users[i];
+        alert(j++);
       }
     }
   }
@@ -71,10 +75,24 @@ function returnUser(id){
 /*crea los checkbox referente a cada usuario seleccionado*/
 function asociarPermisoAUsuario(usersSelected){
 
-  var e = document.getElementById("form_mis_tablones");
+  var form = document.getElementById("form_mis_tablones");
+  var e;
   var nombre;
   var text;
   var input;
+
+  //alert(document.getElementById("paraeliminar"));
+
+  if(document.getElementById("paraeliminar") != null){//si existe
+
+    form.removeChild(document.getElementById("paraeliminar"));
+  }
+
+/*creo un div dinámicamente, estoy me favorece mucho a la hora de eliminar después todos sus nodos para reescribirlos*/
+  e = document.createElement("div");
+  e.id = "paraeliminar";
+  form.appendChild(e);
+ 
 
  /*creo un salto de linea*/
     var p = document.createElement("p");   
@@ -83,13 +101,18 @@ function asociarPermisoAUsuario(usersSelected){
 
   /*crea la cadena:  Asociar permiso a usuario:*/
   var p = document.createElement("p"); 
+  var b = document.createElement("b");
+  b.name= "eliminar";
+  var asociarCadena = document.createTextNode("Asociar permiso a usuario:");
+  b.appendChild(asociarCadena);
+  e.appendChild(b);
 
-  e.appendChild(document.createTextNode("Asociar permiso a usuario:"));
 
   for(var i = 0; i<usersSelected.length; i++){
 
     /*creo un salto de linea*/
     var p = document.createElement("p");   
+    p.name = "eliminar";
     e.appendChild(p);
     /**/
 
@@ -102,7 +125,34 @@ function asociarPermisoAUsuario(usersSelected){
     //input.name = ;
     //input.value = ;
 
+      /*creo un salto de linea*/
+    var p = document.createElement("p");   
+    e.appendChild(p);
+    /**/
+
     e.appendChild(document.createTextNode("Lectura local"));
+    e.appendChild(input);
+
+
+    input = document.createElement('input' );
+    input.type = "checkbox";
+
+    e.appendChild(document.createTextNode("Escritura local"));
+    e.appendChild(input);
+
+
+    input = document.createElement('input' );
+    input.type = "checkbox";
+
+    e.appendChild(document.createTextNode("Lectura remota"));
+    e.appendChild(input);
+
+
+    input = document.createElement('input' );
+    input.type = "checkbox";
+
+    e.appendChild(document.createTextNode("Escritura remota"));
+    e.appendChild(input);
 
     
     //alert("undefined?  : " + usersSelected[i].name);
@@ -110,10 +160,7 @@ function asociarPermisoAUsuario(usersSelected){
     //checkbox.id = "id";
 
 
-    /*creo un salto de linea*/
-    var p = document.createElement("p");   
-    e.appendChild(p);
-    /**/
+  
 
     e.appendChild(input);
   }
