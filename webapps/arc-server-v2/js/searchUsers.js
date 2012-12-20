@@ -42,35 +42,7 @@ function showUserResults(){
 
 
 }
-/*
-function checkUserDoesNotExist(){
 
-	
-	for(var i = 0; i<users.length; i++){
-		for(var j=0; j< newUsers.length; j++){
-
-			if(users[i].id == newUsers[j].id){
-				alert("el usuario es el mismo, no lo meto en la estructura");
-			}
-			else{
-				users.push(newUsers[j]);//si el usuario no es el mismo lo meto en la estructura user que es la que posteriormente voy a pintar
-			}
-		}
-
-	}
-
-
-}
-
-function printUsersIhave(){
-
-	for(var i=0; i<users.length; i++){
-		//alert(users[i]);
-
-	}
-
-}
-*/
 function printModerators(){
 
 
@@ -117,6 +89,18 @@ function printModerators(){
 		newOption.appendChild(newModerator);
 		select.appendChild(newOption);
 	}
+
+}
+
+
+
+function save_data() {
+
+	var id = document.getElementById("messageTablonId").text;
+	var tablon_name = document.getElementById("tablon_name").value;
+	//moderators are in variable moderators
+	alert(moderators);
+
 
 }
 

@@ -1,10 +1,10 @@
 
 
 /*Coge todas las opciones seleccionadas (ids de usuarios) del select*/
-function loopSelect(){
+function loopSelect(select){
 
 
-  var e = document.getElementById("selectUsers");//El selectUsers hay que parametrizarlo
+  var e = document.getElementById(select);//El selectUsers hay que parametrizarlo
   var selectedArray = new Array();
   var count = 0;
   var i;
@@ -22,23 +22,25 @@ function loopSelect(){
 
 }
 
+var moderatorsSelected = new Array();
 
 function select_moderators(){
 
     var selectedArray = new Array();
-    selectedArray = loopSelect();
+    selectedArray = loopSelect("selectModerators");
+    moderatorsSelected= selectedArray;
+    //alert(selectedArray[0]);
     alert("Moderadores asociados, no olvide guardar los datos.");
 }
 
 
-
+var usersSelected = new Array();
 
 function select_users(){
 
 	var selectedArray = new Array();
-  var usersSelected = new Array();
 	
-  selectedArray = loopSelect();
+  selectedArray = loopSelect("selectUsers");
 
   //alert(selectedArray[0]);
 
@@ -120,15 +122,17 @@ function asociarPermisoAUsuario(usersSelected){
     nombre = document.createTextNode(usersSelected[i].name + " " + usersSelected[i].surname1 + " " +  usersSelected[i].surname2);
     e.appendChild(nombre);
 
-    input = document.createElement('input' );
-    input.type = "checkbox";
-    //input.name = ;
-    //input.value = ;
-
+ 
       /*creo un salto de linea*/
     var p = document.createElement("p");   
     e.appendChild(p);
     /**/
+
+    input = document.createElement('input' );
+    input.type = "checkbox";
+    input.name = usersSelected[i].id;
+    input.value = "1";
+
 
     e.appendChild(document.createTextNode("Lectura local"));
     e.appendChild(input);
@@ -136,6 +140,8 @@ function asociarPermisoAUsuario(usersSelected){
 
     input = document.createElement('input' );
     input.type = "checkbox";
+    input.name = usersSelected[i].id;
+    input.value = "2";
 
     e.appendChild(document.createTextNode("Escritura local"));
     e.appendChild(input);
@@ -143,6 +149,8 @@ function asociarPermisoAUsuario(usersSelected){
 
     input = document.createElement('input' );
     input.type = "checkbox";
+    input.name = usersSelected[i].id;
+    input.value = "4";
 
     e.appendChild(document.createTextNode("Lectura remota"));
     e.appendChild(input);
@@ -150,6 +158,8 @@ function asociarPermisoAUsuario(usersSelected){
 
     input = document.createElement('input' );
     input.type = "checkbox";
+    input.name = usersSelected[i].id;
+    input.value = "8";
 
     e.appendChild(document.createTextNode("Escritura remota"));
     e.appendChild(input);
@@ -168,3 +178,43 @@ function asociarPermisoAUsuario(usersSelected){
 }
 
 
+
+function save_data() {
+
+  var id = document.getElementById("messageTablonId").text;
+  var tablon_name = document.getElementById("tablon_name").value;
+  //moderators are in variable "moderatorsSelected"
+
+  //users are in variable "usersSelected"
+  var k = document.getElementById("form_mis_tablones");
+  
+  //var permission =
+  var numberOfCheckbox = 0;
+
+  var permisoBinary=0;
+  var hash = new Array();// [id user, permiso]
+  var hashArray = new Array(); // [hash[0], hash[1], ...]
+
+  for(var i=0; i<k.elements.length; i++){
+
+    if(k.elements[i].type == "checkbox"){
+      numberOfCheckbox++;
+      if(k.elements[i].checked){
+        //alert("numberOfCheckbox/4: "+Math.floor(numberOfCheckbox/4));
+        permisoBinary = permisoBinary | k.elements[i].value;
+        alert("el permiso en binario es: "+permisoBinary);
+        alert("se ha dado el permiso : "+k.elements[i].value + "al usuario: "+usersSelected[Math.floor(numberOfCheckbox/4)].name);// 1/4 = 0 2/4 = 0 3/4 = 0 5/4 = 1 :)z  
+        
+      }
+
+      
+    }
+
+
+  }
+
+
+
+
+  //alert(k);
+}

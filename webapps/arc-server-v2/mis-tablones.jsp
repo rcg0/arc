@@ -143,9 +143,10 @@ e una sección a otra -->
       </form>
 <%}%>
 
+
   <form id="form_mis_tablones" method="post" action="#">
       <p><b>Nombre del tablón:</p></b>
-      <input type="text" value=""/>
+      <input id= "tablon_name" type="text" value=""/>
       <p></p>
       <p><b>Asociar moderadores: </p></b>
 
@@ -195,14 +196,13 @@ e una sección a otra -->
 
       <input id="nuevo" type="button" value="Nuevo tablón" />
 
-  -->
+  -->     
             
       </form>
       <p></p>
-      <input id= "save_data" type="button" value ="Guardar datos" onClick = "save_data()">
+
+ <input id= "save_data" type="button" value ="Guardar datos" onClick = "save_data()">
       
-
-
   </section>
 
 
