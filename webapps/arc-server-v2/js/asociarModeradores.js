@@ -202,17 +202,31 @@ function save_data() {
       if(k.elements[i].checked){
         //alert("numberOfCheckbox/4: "+Math.floor(numberOfCheckbox/4));
         permisoBinary = permisoBinary | k.elements[i].value;
-        alert("el permiso en binario es: "+permisoBinary);
-        alert("se ha dado el permiso : "+k.elements[i].value + "al usuario: "+usersSelected[Math.floor(numberOfCheckbox/4)].name);// 1/4 = 0 2/4 = 0 3/4 = 0 5/4 = 1 :)z  
+        //alert("el permiso en binario es: "+permisoBinary);
+        //alert("se ha dado el permiso : "+k.elements[i].value + "al usuario: "+usersSelected[Math.floor(numberOfCheckbox/4)].name);// 1/4 = 0 2/4 = 0 3/4 = 0 5/4 = 1 :)z  
         
-      }
-
-      
+        if(numberOfCheckbox % 4 == 0){//hay que comprobar el caso en el que están todos los checkbox pulsados ya que se puede ir a una posición incorrecta del array.
+          numberOfCheckbox = numberOfCheckbox - 0.01;
+          hash = [usersSelected[Math.floor(numberOfCheckbox/4)].id , permisoBinary];
+        }
+        hashArray.push(hash);
+      } 
     }
-
-
   }
 
+
+
+  var url = "sendTablonInformation?tablon_id="+id +"?tablon_name="+tablon_name+"?";
+  
+  for(var k = 0; k < hashArray.length; k++ ){
+
+    alert(hashArray[k][0]); 
+
+  }
+  
+    
+ 
+  //createAJAXRequest(url, "recargar", false);
 
 
 
