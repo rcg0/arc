@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+   
+
+    <TextView
+        android1:id="@+id/textView1"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_alignParentTop="true"
+        android1:text="Bienvenido a la plataforma ARC"
+        android1:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android1:id="@+id/textView2"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_below="@+id/textView1"
+        android1:layout_marginLeft="17dp"
+        android1:layout_marginTop="40dp"
+        android1:text="Alias" />
+
+    <EditText
+        android1:id="@+id/editText1"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignBaseline="@+id/textView2"
+        android1:layout_alignBottom="@+id/textView2"
+        android1:layout_marginLeft="17dp"
+        android1:layout_toRightOf="@+id/textView2"
+        android1:ems="10" />
+
+    <TextView
+        android1:id="@+id/textView3"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignBaseline="@+id/editText1"
+        android1:layout_alignBottom="@+id/editText1"
+        android1:layout_marginLeft="15dp"
+        android1:layout_toRightOf="@+id/editText1"
+        android1:text="Sexo" />
+
+    <CheckBox
+        android1:id="@+id/checkBox1"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_above="@+id/textView3"
+        android1:layout_marginLeft="24dp"
+        android1:layout_toRightOf="@+id/textView3"
+        android1:text="Masculino" />
+
+    <CheckBox
+        android1:id="@+id/checkBox2"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignLeft="@+id/checkBox1"
+        android1:layout_alignTop="@+id/textView3"
+        android1:text="Femenino" />
+
+    <TextView
+        android1:id="@+id/textView4"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_centerVertical="true"
+        android1:layout_toLeftOf="@+id/editText1"
+        android1:text="Edad" />
+
+    <TextView
+        android1:id="@+id/textView5"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignBaseline="@+id/textView4"
+        android1:layout_alignBottom="@+id/textView4"
+        android1:layout_toLeftOf="@+id/checkBox2"
+        android1:text="Profesión" />
+
+    <Spinner
+        android1:id="@+id/Spinner01"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignLeft="@+id/textView3"
+        android1:layout_alignParentRight="true"
+        android1:layout_alignTop="@+id/spinner1"
+        android1:entries="@array/arrayTrabajos" />
+
+    <Spinner
+        android1:id="@+id/spinner1"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_below="@+id/textView4"
+        android1:layout_toLeftOf="@+id/textView5"
+        android1:entries="@array/arrayEdades" />
+
+    <Button
+        android1:id="@+id/button1"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentBottom="true"
+        android1:layout_centerHorizontal="true"
+        android1:text="Entrar" />
+
+</RelativeLayout>
