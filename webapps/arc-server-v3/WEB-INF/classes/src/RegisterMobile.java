@@ -6,7 +6,7 @@ import javax.servlet.http.*;
 
 import java.lang.String.*;
 
-public class LoginMobile extends HttpServlet {
+public class RegisterMobile extends HttpServlet {
   /**
 	 * 
 	 */
@@ -17,18 +17,26 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	HttpSession session = request.getSession(false);
 
 	User user = new User();
-	System.out.println(request.getParameter("alias"));
 	user.setNick(request.getParameter("alias"));
 
 /*la cosa aquí es que no esté repetido el alias en la base de datos*/
 	if(user.existsSameNick()){
 		session=request.getSession();
-		out.println("ok");
+		out.println("El nick ya existe, prueba con otro.");
 	}else{
-		out.println("No existe, debe registrarse para entrar");
-	}
 
-	
+		System.out.println(request.getParameter("alias"));
+		System.out.println(request.getParameter("age"));
+		System.out.println(request.getParameter("work"));
+		System.out.println(request.getParameter("genre"));
+		
+		user.setAge(request.getParameter("age"));
+		user.setWork(request.getParameter("work"));
+		user.setGenre(request.getParameter("genre"));
+		user.saveRegister();
+		out.println("ok");
+
+	}
 
   }
 

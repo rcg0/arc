@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -45,8 +46,8 @@ public class RegistroActivity extends Activity {
 		
 		alias = (EditText)findViewById(R.id.editText1);
 		buttonEntrar = (Button)findViewById(R.id.button1);
-		generoMasculino = (CheckBox)findViewById(R.id.checkBox1);
-		generoFemenino = (CheckBox)findViewById(R.id.checkBox2);
+		generoFemenino = (CheckBox)findViewById(R.id.checkBox1);
+		generoMasculino = (CheckBox)findViewById(R.id.checkBox2);
 		edad = (Spinner)findViewById(R.id.spinner1);
 		trabajo = (Spinner)findViewById(R.id.Spinner01);
 	
@@ -75,6 +76,13 @@ public class RegistroActivity extends Activity {
     		int duration = Toast.LENGTH_SHORT;
     		Toast toast = Toast.makeText(context, result, duration);
     		toast.show();
+    		
+    		/*If the server says ok We access to the camera*/
+    		if(result.equals("ok")){
+    			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+        		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+        		startActivityForResult(intent, 0);
+    		}
 
     	}
 
@@ -86,7 +94,7 @@ protected String doInBackground(String... parameter) {
 	// 	Return the value to be passed to onPostExecute
 
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v2/registroMobile");
+			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/registerMobile");
 
 			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 			//Añadimos todos los parámetros que queramos enviar
@@ -95,13 +103,13 @@ protected String doInBackground(String... parameter) {
 			
 			/*case genre*/
 			if(generoMasculino.isSelected()){
-				l.add(new BasicNameValuePair("genero", "Masculino"));
+				l.add(new BasicNameValuePair("genre", "Masculino"));
 			}else{
-				l.add(new BasicNameValuePair("genero", "Femenino"));
+				l.add(new BasicNameValuePair("genre", "Femenino"));
 			}
 			
-			l.add(new BasicNameValuePair("edad", edad.getSelectedItem().toString()));
-			l.add(new BasicNameValuePair("trabajo", trabajo.getSelectedItem().toString()));
+			l.add(new BasicNameValuePair("age", edad.getSelectedItem().toString()));
+			l.add(new BasicNameValuePair("work", trabajo.getSelectedItem().toString()));
 	    			
 			HttpResponse response = null;
 			HttpEntity resEntity = null;
@@ -143,4 +151,32 @@ protected String doInBackground(String... parameter) {
 		return true;
 	}
 
+	/*Obtener los resultados desde la misma actividad*/
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		   if (requestCode == 0) {
+		      if (resultCode == RESULT_OK) {
+		         String contents = intent.getStringExtra("SCAN_RESULT");
+		         String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+		         
+		         
+		         Context context = getApplicationContext();
+		    	 int duration = Toast.LENGTH_SHORT;
+		    	 Toast toast = Toast.makeText(context, contents, duration);
+		    	 toast.show();
+		         /*textView.setText(contents);*/
+		         //textView.append(format);
+		         // Handle successful scan
+		         
+		         /*para pruebas del tablón*/
+
+		         /*intent2= new Intent(this, TablonActivity.class);
+		         startActivity(intent2);*/
+		         
+		      } else if (resultCode == RESULT_CANCELED) {
+		         // Handle cancel
+		      }
+		   }
+		}
+	
+	
 }

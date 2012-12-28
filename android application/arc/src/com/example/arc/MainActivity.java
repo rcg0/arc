@@ -82,25 +82,14 @@ public class MainActivity extends Activity {
         		Toast toast = Toast.makeText(context, result, duration);
         		toast.show();
         		
-        		
-        		/*Gson gson = new Gson();
-        		Tablon tablonRecibido = gson.fromJson(result, Tablon.class);
-        		Vector <Mensaje> msg = tablonRecibido.getMsg(); 
-        		numeroMensajes = msg.size();
-        		vectorTv = new Vector<TextView>(numeroMensajes);
-        		
-        		for(int i = 0; i<numeroMensajes; i++){
-        			TextView t = new TextView(context);
-        			t.setText(msg.elementAt(i).getMsg());
-        			t.setPadding(50, 0, 0, 0);
-        			t.setY(50*i);
-        			
-        			layout.addView(t, i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
-        			
+        		/*If the server says ok We access to the camera*/
+        		if(result.equals("ok")){
+        			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+            		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            		startActivityForResult(intent, 0);
         		}
-        		*/
         		
-
+        		
         	}
 
     protected String doInBackground(String... parameter) {
@@ -111,14 +100,11 @@ public class MainActivity extends Activity {
     	// 	Return the value to be passed to onPostExecute
 
     			HttpClient httpclient = new DefaultHttpClient();
-    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v2/loginMobile");
+    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/loginMobile");
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
-    			//En este caso usuario y contraseña
-    			//String test = editAlias.getText().toString();
     			l.add(new BasicNameValuePair("alias",editAlias.getText().toString()));
-    			//l.add(new BasicNameValuePair(“password”, password));
         		
     	    			
     			HttpResponse response = null;
@@ -156,5 +142,32 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
+	
+	/*Obtener los resultados desde la misma actividad*/
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		   if (requestCode == 0) {
+		      if (resultCode == RESULT_OK) {
+		         String contents = intent.getStringExtra("SCAN_RESULT");
+		         String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+		         
+		         
+		         Context context = getApplicationContext();
+		    	 int duration = Toast.LENGTH_SHORT;
+		    	 Toast toast = Toast.makeText(context, contents, duration);
+		    	 toast.show();
+		         /*textView.setText(contents);*/
+		         //textView.append(format);
+		         // Handle successful scan
+		         
+		         /*para pruebas del tablón*/
+
+		         /*intent2= new Intent(this, TablonActivity.class);
+		         startActivity(intent2);*/
+		         
+		      } else if (resultCode == RESULT_CANCELED) {
+		         // Handle cancel
+		      }
+		   }
+		}
 
 }

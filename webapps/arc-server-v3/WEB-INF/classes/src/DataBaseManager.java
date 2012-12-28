@@ -1002,9 +1002,32 @@ catch(Exception ioe){
 		
 		return result;
 
-
 	}
 
+		/*mobile register, without name, and surnames*/
+		public void saveRegister(User user){
+
+		try {
+			Connection conn = openConnectionPool();
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO User (	genre, age, work, nick) VALUES (?, ?, ?, ?)");
+				
+			statement.setString(1, user.getGenre());
+			statement.setString(2, user.getAge());
+			statement.setString(3, user.getWork());
+			statement.setString(4, user.getNick());
+		
+			int aux = statement.executeUpdate();
+		
+			closeConnectionPool(conn);
+
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+	}
 
 /**/
 }

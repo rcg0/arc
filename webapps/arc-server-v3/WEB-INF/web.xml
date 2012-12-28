@@ -175,6 +175,16 @@
         </servlet-mapping>
     
 
+          <servlet>
+            <servlet-name>ServletRegisterMobile</servlet-name>
+            <servlet-class>arc.RegisterMobile</servlet-class>
+        </servlet>
+        
+        <servlet-mapping>
+            <servlet-name>ServletRegisterMobile</servlet-name>
+            <url-pattern>/registerMobile</url-pattern>
+        </servlet-mapping>
+
 
 	<!--Define the default session timeout for your application, in minutes. From a servlet or JSP page, you can modify the timeout for a particular session dynamically by using HttpSession.getMaxInactiveInterval().
 -->

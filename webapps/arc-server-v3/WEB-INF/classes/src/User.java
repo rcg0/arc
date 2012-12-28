@@ -11,6 +11,9 @@ public class User {
   private String surname2;
   private Vector<Integer> author = new Vector<Integer>();
   private Vector<Integer> moderator = new Vector<Integer>();
+  private String genre;
+  private String age;
+  private String work;
   //private byte permission;
   private int permission;
   
@@ -66,6 +69,39 @@ public class User {
   public String getSurName2(){
 		
 	return surname2;
+		
+  }
+
+  public void setGenre(String genre){
+		
+	this.genre=genre;
+  }
+
+  public String getGenre(){
+		
+	return genre;
+		
+  }
+
+ public void setAge(String age){
+		
+	this.age=age;
+  }
+
+  public String getAge(){
+		
+	return age;
+		
+  }
+
+ public void setWork(String work){
+		
+	this.work=work;
+  }
+
+  public String getWork(){
+		
+	return work;
 		
   }
 
@@ -160,5 +196,15 @@ public class User {
       	return result;
 
       }
+
+	  public void saveRegister(){
+
+	  	DataBaseManager manager = new DataBaseManager();
+
+	  	manager.saveRegister(this);
+
+
+      }
+
 
 } 
