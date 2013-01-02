@@ -1029,5 +1029,70 @@ catch(Exception ioe){
 		}
 	}
 
+	public void setRateDDBB(Tablon tablon){
+	
+		float oldRate=0;
+		float newRate=0;
+		/*leo rate*/
+		oldRate = Float.parseFloat(readRateDDBB(tablon));
+		System.out.println("oldRate:" +oldRate);
+		/*calculo nueva rate*/
+		newRate = (Float.parseFloat(tablon.getRate()) + oldRate) / 2;
+
+		/*actualizo nueva rate.*/
+		updateRate(tablon, newRate);
+	}
+
+	public void updateRate(Tablon tablon, float newRate){
+
+		try {
+			Connection conn = openConnectionPool();
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement statement = conn.prepareStatement("UPDATE Tablon SET rate = ? where id = ?");
+				
+			statement.setString(1, newRate+"");
+			statement.setInt(2, tablon.getId());
+			int aux = statement.executeUpdate();
+		
+			closeConnectionPool(conn);
+
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+	}
+
+
+	public String readRateDDBB(Tablon tablon){
+
+		String oldRate = "";
+
+		try{
+			Connection conn = openConnectionPool();
+		
+			/***********************************************PARAMETRIZACIÓN*************************************************/
+			PreparedStatement statement = conn.prepareStatement("SELECT rate FROM Tablon WHERE id  = ?;");
+			statement.setInt(1, tablon.getId());
+			/****************************************************************************************************************/
+
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				
+				oldRate = rs.getString("rate");
+				
+			}
+
+			closeConnectionPool(conn);
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		
+		return oldRate;			
+	}
 /**/
 }

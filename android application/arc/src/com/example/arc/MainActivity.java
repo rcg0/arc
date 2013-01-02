@@ -33,6 +33,7 @@ public class MainActivity extends Activity {
 	Button buttonAccede;
 	TextView textAlias;
 	EditText editAlias;
+	Intent intent2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -161,8 +162,8 @@ public class MainActivity extends Activity {
 		         
 		         /*para pruebas del tablón*/
 
-		         /*intent2= new Intent(this, TablonActivity.class);
-		         startActivity(intent2);*/
+		         intent2= new Intent(MainActivity.this, TablonActivity.class);
+		         startActivity(intent2);
 		         
 		      } else if (resultCode == RESULT_CANCELED) {
 		         // Handle cancel

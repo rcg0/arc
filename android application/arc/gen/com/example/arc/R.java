@@ -75,9 +75,10 @@ public final class R {
         public static final int help_contents=0x7f080030;
         public static final int history_detail=0x7f080034;
         public static final int history_title=0x7f080033;
+        public static final int imageButton1=0x7f08003f;
         public static final int image_view=0x7f08002f;
         public static final int launch_product_query=0x7f080004;
-        public static final int menu_settings=0x7f08003f;
+        public static final int menu_settings=0x7f080041;
         public static final int meta_text_view=0x7f080028;
         public static final int meta_text_view_label=0x7f080027;
         public static final int page_number_view=0x7f080038;
@@ -85,6 +86,7 @@ public final class R {
         public static final int query_button=0x7f080036;
         public static final int query_text_view=0x7f080035;
         public static final int quit=0x7f080005;
+        public static final int ratingBar1=0x7f080040;
         public static final int restart_preview=0x7f080006;
         public static final int result_button_view=0x7f08002b;
         public static final int result_list_view=0x7f080037;
@@ -125,6 +127,7 @@ public final class R {
         public static final int search_book_contents_header=0x7f030008;
         public static final int search_book_contents_list_item=0x7f030009;
         public static final int share=0x7f03000a;
+        public static final int tablon_activity=0x7f03000b;
     }
     public static final class menu {
         public static final int activity_main=0x7f0b0000;

@@ -186,6 +186,19 @@
         </servlet-mapping>
 
 
+
+          <servlet>
+            <servlet-name>ServletSendRateMobile</servlet-name>
+            <servlet-class>arc.SendRateMobile</servlet-class>
+        </servlet>
+        
+        <servlet-mapping>
+            <servlet-name>ServletSendRateMobile</servlet-name>
+            <url-pattern>/sendRateMobile</url-pattern>
+        </servlet-mapping>
+
+
+
 	<!--Define the default session timeout for your application, in minutes. From a servlet or JSP page, you can modify the timeout for a particular session dynamically by using HttpSession.getMaxInactiveInterval().
 -->
 	<session-config>

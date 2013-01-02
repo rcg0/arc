@@ -13,6 +13,7 @@ public class Tablon {
 	private int visibility;
 	private Vector <User> targetUsers = new Vector<User>();
 	private Vector <Message> msg = new Vector<Message>();
+	private String rate;
 
 	public void setId(int id){
 		
@@ -45,6 +46,17 @@ public class Tablon {
 	public String getName(){
 		
 		return name;
+	}
+
+	public void setRate(String rate){
+		
+		this.rate=rate;
+		
+	}
+	
+	public String getRate(){
+		
+		return rate;
 	}
 	
 	public void setAllUsers(Vector<User> users){
@@ -191,6 +203,13 @@ public class Tablon {
 
 		return manager.getBeforeMessages(messageId,limit);
 
+
+	}
+
+	public void setRateDDBB(){
+
+		DataBaseManager manager = new DataBaseManager();		
+		manager.setRateDDBB(this);
 
 	}
 
