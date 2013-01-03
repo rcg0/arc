@@ -20,13 +20,18 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +42,8 @@ public class TablonActivity extends Activity {
 	ImageButton imageButton;
 	Button buttonComentarios;
 	Button buttonPuntua;
-	
+	LinearLayout layout;
+	ScrollView sv;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tablon_activity);
@@ -46,15 +52,15 @@ public class TablonActivity extends Activity {
 		buttonComentarios = (Button)findViewById(R.id.button1);
 		buttonPuntua =(Button)findViewById(R.id.button2);
 		imageButton = (ImageButton)findViewById(R.id.imageButton1);
-		
+		layout = (LinearLayout)findViewById(R.id.messageLayout);
+		sv = (ScrollView) findViewById(R.id.scrollView1);
+    	new GetComments().execute();
+    	sendScroll();
+    	 
 		this.buttonPuntua.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	//button.setText("He pulsado");
             	
-            	new SendRate().execute();//lanzo el hilo
-
-        		
-         
+            	new SendRate().execute();//lanzo el hilo         
             }
       });
 	}
@@ -133,5 +139,91 @@ public class TablonActivity extends Activity {
 		
 		
 		}
+		
+		
+		class GetComments extends AsyncTask<String, Integer, String> {
+	    	@Override
+	    	protected void onProgressUpdate(Integer... progress) {
+	// [... Update progress bar, Notification, or other UI element ...]
+	   	}	
+	    	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
+			@Override
+	    	protected void onPostExecute(String result) {
+	// [... Report results via UI update, Dialog, or notification ...]
+	    		/*En principio estaba puesto que soltara un toast*/
+	    		Context context = getApplicationContext();
+	    		int duration = Toast.LENGTH_SHORT;
+	    		Toast toast;
+	    		String message;
+	    		
+	    		
+	    		for(int i = 0; i<30; i++){
+        			TextView author = new TextView(context);
+        			TextView text = new TextView(context);
+        			
+        			author.setText("test"+i);
+        			author.setTextColor(Color.BLACK);
+        			text.setText("Menuda pedazo de charla charla charla charla charla charla charla charla charla charla charla charla"+i);
+        			author.setPadding(50, 0, 50, 0);
+        			text.setPadding(50, 0, 50, 5);
+        			text.setTextColor(Color.GRAY);
+        			//t.setY(50*i);
+        			
+        			layout.addView(author);
+        			layout.addView(text);
+        		}
+        		
+	    		
+	    		
+	    	}
+
+	protected String doInBackground(String... parameter) {
+				int myProgress = 0;
+		// 	[... Perform background processing task, update myProgress ...]
+				publishProgress(myProgress);
+		// 		[... Continue performing background processing task ...]
+		// 	Return the value to be passed to onPostExecute
+
+						
+				return null;
+			}
+		
+		
+		}
 	
+		protected void onSaveInstanceState(Bundle savedInstanceState){	
+			super.onSaveInstanceState(savedInstanceState);
+
+			savedInstanceState.putBoolean("rateSelected",ratingBar.isEnabled());
+			savedInstanceState.putFloat("rateValue", ratingBar.getRating());
+		}
+		
+		protected void onRestoreInstanceState(Bundle savedInstanceState){
+			super.onRestoreInstanceState(savedInstanceState);
+			
+			ratingBar.setRating(savedInstanceState.getFloat("rateValue"));
+			if(savedInstanceState.getBoolean("rateSelected") == false){
+				ratingBar.setEnabled(false);
+				buttonPuntua.setEnabled(false);
+			}	
+		}
+		
+	
+		private void sendScroll(){
+	        final Handler handler = new Handler();
+	        new Thread(new Runnable() {
+	            @Override
+	            public void run() {
+	                try {Thread.sleep(100);} catch (InterruptedException e) {}
+	                handler.post(new Runnable() {
+	                    @Override
+	                    public void run() {
+	                        sv.fullScroll(View.FOCUS_DOWN);
+	                    }
+	                });
+	            }
+	        }).start();
+	    }
+		
+		
 }

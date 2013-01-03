@@ -78,7 +78,8 @@ public final class R {
         public static final int imageButton1=0x7f08003f;
         public static final int image_view=0x7f08002f;
         public static final int launch_product_query=0x7f080004;
-        public static final int menu_settings=0x7f080041;
+        public static final int menu_settings=0x7f080043;
+        public static final int messageLayout=0x7f080042;
         public static final int meta_text_view=0x7f080028;
         public static final int meta_text_view_label=0x7f080027;
         public static final int page_number_view=0x7f080038;
@@ -92,6 +93,7 @@ public final class R {
         public static final int result_list_view=0x7f080037;
         public static final int result_view=0x7f08001f;
         public static final int return_scan_result=0x7f080007;
+        public static final int scrollView1=0x7f080041;
         public static final int search_book_contents_failed=0x7f080008;
         public static final int search_book_contents_succeeded=0x7f080009;
         public static final int share_app_button=0x7f08003a;

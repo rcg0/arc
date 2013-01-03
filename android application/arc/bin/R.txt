@@ -57,7 +57,8 @@ int id history_title 0x7f080033
 int id imageButton1 0x7f08003f
 int id image_view 0x7f08002f
 int id launch_product_query 0x7f080004
-int id menu_settings 0x7f080041
+int id menu_settings 0x7f080043
+int id messageLayout 0x7f080042
 int id meta_text_view 0x7f080028
 int id meta_text_view_label 0x7f080027
 int id page_number_view 0x7f080038
@@ -71,6 +72,7 @@ int id result_button_view 0x7f08002b
 int id result_list_view 0x7f080037
 int id result_view 0x7f08001f
 int id return_scan_result 0x7f080007
+int id scrollView1 0x7f080041
 int id search_book_contents_failed 0x7f080008
 int id search_book_contents_succeeded 0x7f080009
 int id share_app_button 0x7f08003a

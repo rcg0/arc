@@ -178,5 +178,28 @@ protected String doInBackground(String... parameter) {
 		   }
 		}
 	
+	protected void onSaveInstanceState(Bundle savedInstanceState){
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putString("alias",alias.getText().toString());
+		savedInstanceState.putBoolean("masculino",generoMasculino.isChecked());
+		savedInstanceState.putBoolean("femenino",generoFemenino.isChecked());
+		savedInstanceState.putInt("edad",edad.getPositionForView(edad));
+		savedInstanceState.putInt("profesion",trabajo.getPositionForView(trabajo));
+	}
+	
+	protected void onRestoreInstanceState(Bundle savedInstanceState){
+		super.onRestoreInstanceState(savedInstanceState);
+		
+		alias.setText(savedInstanceState.getString("alias"));
+		if(savedInstanceState.getBoolean("masculino")==true){
+			generoMasculino.setChecked(true);
+		}
+		if(savedInstanceState.getBoolean("femenino")==true){
+			generoFemenino.setChecked(true);
+		}
+		edad.setSelection(savedInstanceState.getInt("edad"));
+		trabajo.setSelection(savedInstanceState.getInt("profesion"));
+	}
+
 	
 }

@@ -10,42 +10,62 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Large Text"
+        android:text="text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <ImageButton
-        android:id="@+id/imageButton1"
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_menu_edit" />
+        android:layout_below="@+id/ratingBar1"
+        android:fillViewport="true"
+        android:scrollY="1000dp"> >
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ratingBar1"
-        android:layout_alignParentLeft="true"
-        android:text="Más comentarios" />
+        <LinearLayout
+            android:id="@+id/messageLayout"
+            android:layout_width="match_parent"
+            android:layout_height="158dp"
+            android:fillViewport="true"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Más comentarios" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/button2"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/ratingBar1"
+        android:layout_alignBottom="@+id/ratingBar1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/ratingBar1"
+        android:layout_toLeftOf="@+id/ratingBar1"
         android:text="Puntúa" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/scrollView1"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/ratingBar1"
+        android:layout_toRightOf="@+id/ratingBar1"
+        android:src="@android:drawable/ic_menu_edit" />
 
     <RatingBar
         android:id="@+id/ratingBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
-        android:layout_toRightOf="@+id/button1" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

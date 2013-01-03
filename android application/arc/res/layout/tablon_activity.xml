@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Large Text"
+        android:text="Large Text Large Text Large Text Large Text "
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageButton
@@ -21,15 +21,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:src="@android:drawable/ic_menu_edit" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ratingBar1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
-        android:text="Más comentarios" />
 
     <RatingBar
         android:id="@+id/ratingBar1"
@@ -46,5 +37,30 @@
         android:layout_below="@+id/ratingBar1"
         android:layout_centerHorizontal="true"
         android:text="Puntúa" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageButton1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/button2"
+        android:fillViewport="true" 
+		android:scrollY="1000dp">
+        <LinearLayout
+            android:id="@+id/messageLayout"
+            android:layout_width="match_parent"
+            android:layout_height="284dp"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Más comentarios" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
