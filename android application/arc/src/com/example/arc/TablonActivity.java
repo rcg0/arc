@@ -15,6 +15,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.example.arc.RegistroActivity.MyAsyncTask;
+import com.google.gson.Gson;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -24,6 +25,8 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -36,8 +39,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TablonActivity extends Activity {
+public class TablonActivity extends FragmentActivity {
 	
+	TextView tablonName;
 	RatingBar ratingBar;
 	ImageButton imageButton;
 	Button buttonComentarios;
@@ -48,6 +52,7 @@ public class TablonActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tablon_activity);
 		
+		tablonName = (TextView)findViewById(R.id.textView1);
 		ratingBar = (RatingBar)findViewById(R.id.ratingBar1);
 		buttonComentarios = (Button)findViewById(R.id.button1);
 		buttonPuntua =(Button)findViewById(R.id.button2);
@@ -56,6 +61,13 @@ public class TablonActivity extends Activity {
 		sv = (ScrollView) findViewById(R.id.scrollView1);
     	new GetComments().execute();
     	sendScroll();
+    	
+    	this.imageButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	showSendDialog();
+            	
+            }
+      });
     	 
 		this.buttonPuntua.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -63,6 +75,13 @@ public class TablonActivity extends Activity {
             	new SendRate().execute();//lanzo el hilo         
             }
       });
+	}
+		private void showSendDialog() {
+
+			  FragmentManager fm = getSupportFragmentManager();
+		      SendMessageDialog messageDialog = new SendMessageDialog();
+		      messageDialog.show(fm, "fragment_edit_name");
+			
 	}
 		class SendRate extends AsyncTask<String, Integer, String> {
 	    	@Override
@@ -151,27 +170,21 @@ public class TablonActivity extends Activity {
 	    	protected void onPostExecute(String result) {
 	// [... Report results via UI update, Dialog, or notification ...]
 	    		/*En principio estaba puesto que soltara un toast*/
+	    		
 	    		Context context = getApplicationContext();
 	    		int duration = Toast.LENGTH_SHORT;
 	    		Toast toast;
-	    		String message;
+	    		String message = result;
+	    		toast = Toast.makeText(context, result , duration);
+	    		toast.show();
 	    		
+	    		Gson gson = new Gson();
+        		Tablon tablon = gson.fromJson(result, Tablon.class);
 	    		
-	    		for(int i = 0; i<30; i++){
-        			TextView author = new TextView(context);
-        			TextView text = new TextView(context);
-        			
-        			author.setText("test"+i);
-        			author.setTextColor(Color.BLACK);
-        			text.setText("Menuda pedazo de charla charla charla charla charla charla charla charla charla charla charla charla"+i);
-        			author.setPadding(50, 0, 50, 0);
-        			text.setPadding(50, 0, 50, 5);
-        			text.setTextColor(Color.GRAY);
-        			//t.setY(50*i);
-        			
-        			layout.addView(author);
-        			layout.addView(text);
-        		}
+        		tablon.printTablon(tablonName,layout, context);
+	    		
+        		
+	    		
         		
 	    		
 	    		
@@ -183,9 +196,40 @@ public class TablonActivity extends Activity {
 				publishProgress(myProgress);
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
+				HttpClient httpclient = new DefaultHttpClient();
+    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/getTablon");
 
+    			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
+    			//Añadimos todos los parámetros que queramos enviar
+    			l.add(new BasicNameValuePair("tablonSpace","un espacio"));
+        		
+    	    			
+    			HttpResponse response = null;
+    			HttpEntity resEntity = null;
+    			String res = null;
+    			try {
+    				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l);
+    				httppost.setEntity(data);
+    		
+    				response = httpclient.execute(httppost);
+    				resEntity = response.getEntity();
+    		
+    				BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
+    				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
+    				res = b.readLine().trim();
+    				resEntity.consumeContent();
+    			} catch (ClientProtocolException e) {
+    				e.printStackTrace();
+    			} catch (IOException e) {
+    				e.printStackTrace();
+    				//tv.setText("No ha funcionado");
+    			}
+    	
+    			httpclient.getConnectionManager().shutdown();
+    	
+    			return res;
 						
-				return null;
+				
 			}
 		
 		

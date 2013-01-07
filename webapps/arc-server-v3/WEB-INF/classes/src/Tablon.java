@@ -197,6 +197,14 @@ public class Tablon {
 		return tablon;
 	}
 
+	public Tablon getTablonDDBB(String space){
+		Tablon tablon = null;
+		DataBaseManager manager = new DataBaseManager();
+		tablon = manager.getTablon(space);
+		
+		return tablon;
+	}
+
 	public Vector<Message> getBeforeMessages(int messageId,int limit){
 
 		DataBaseManager manager = new DataBaseManager();

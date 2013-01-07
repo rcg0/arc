@@ -1,4 +1,5 @@
-package arc;
+package com.example.arc;
+
 import java.util.Vector;
 
 
@@ -128,83 +129,23 @@ public class User {
     moderator = mod;
   
   }
-	
-  public Vector<Integer> getModerators(){		
-		/*llama a la base de datos para ver el vector */
-		DataBaseManager manager = new DataBaseManager();
+
+  public void setPermission(int permission){
 		
-		return	manager.getIdTablonModerateUsers(id);	
-	
+	this.permission = permission;
+		
   }
-
-  /*public void setPermission(Byte permission){
-		
-	this.permission = permission;
-		
-	}
 	
-	public String getPermission (){
+  public int getPermission (){
 		
-		return permission;
-	}
-*/
-
-    public void setPermission(int permission){
-		
-	this.permission = permission;
-		
-	}
-	
-    public int getPermission (){
-		
-		return permission;
-	}
-
-	public User checkUser(User user){
-
-		User dataBaseUser = null; 
-		DataBaseManager manager = new DataBaseManager();
-		dataBaseUser = manager.checkUser(user);
-
-		return dataBaseUser;
-	}
-
-	public Vector<User> getUsersStartsWith(String name){
-
-		Vector<User> users = null; 
-		DataBaseManager manager = new DataBaseManager();
-		users = manager.getUserStartsWith(name);
-
-		return users;
-	}
-
-
-      public Vector<User> getAllUsers(){
-
-	  	DataBaseManager manager = new DataBaseManager();
-	  	return manager.getAllDataBaseUsers();
-	  
-      }
-
-      public User existsSameNick(){
-
-      	User user = null;
-	  	DataBaseManager manager = new DataBaseManager();
-
-	  	user = manager.existsSameNick(this.nick);
-
-      	return user;
-
-      }
-
-	  public void saveRegister(){
-
-	  	DataBaseManager manager = new DataBaseManager();
-
-	  	manager.saveRegister(this);
-
-
-      }
-
-
-} 
+	return permission;
+  }
+  
+  public Boolean isValid(){
+	  Boolean result = false;
+	  if (this.id != 0) {
+		  result = true;
+	  }
+	  return result;
+  }
+}

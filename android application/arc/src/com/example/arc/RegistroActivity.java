@@ -15,6 +15,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.example.arc.MainActivity.MyAsyncTask;
+import com.google.gson.Gson;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,7 +39,8 @@ public class RegistroActivity extends Activity {
 	CheckBox generoFemenino;
 	Spinner edad;
 	Spinner trabajo;
-	
+	Boolean sessionOpen = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,8 +48,8 @@ public class RegistroActivity extends Activity {
 		
 		alias = (EditText)findViewById(R.id.editText1);
 		buttonEntrar = (Button)findViewById(R.id.button1);
-		generoFemenino = (CheckBox)findViewById(R.id.checkBox1);
-		generoMasculino = (CheckBox)findViewById(R.id.checkBox2);
+		generoFemenino = (CheckBox)findViewById(R.id.checkBox2);
+		generoMasculino = (CheckBox)findViewById(R.id.checkBox1);
 		edad = (Spinner)findViewById(R.id.spinner1);
 		trabajo = (Spinner)findViewById(R.id.Spinner01);
 	
@@ -72,16 +74,21 @@ public class RegistroActivity extends Activity {
     	protected void onPostExecute(String result) {
 // [... Report results via UI update, Dialog, or notification ...]
     		/*En principio estaba puesto que soltara un toast*/
-    		Context context = getApplicationContext();
-    		int duration = Toast.LENGTH_SHORT;
-    		Toast toast = Toast.makeText(context, result, duration);
-    		toast.show();
     		
-    		/*If the server says ok We access to the camera*/
-    		if(result.equals("ok")){
+    		/*If the server not says nok We access to the camera*/
+    		if(!result.equals("nok")){
+    			Gson gson = new Gson();
+        		User userLogin = gson.fromJson(result, User.class);
+    			sessionOpen = true;
     			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
         		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
         		startActivityForResult(intent, 0);
+    		}else{
+    			Context context = getApplicationContext();
+    			int duration = Toast.LENGTH_SHORT;
+        		Toast toast = Toast.makeText(context, "El nick ya está elegido, pruebe de nuevo", duration);
+        		toast.show();
+    			
     		}
 
     	}
@@ -101,10 +108,13 @@ protected String doInBackground(String... parameter) {
 			
 			l.add(new BasicNameValuePair("alias", alias.getText().toString()));
 			
+			Boolean masc = generoMasculino.isChecked();
+			Boolean fem = generoFemenino.isChecked();
 			/*case genre*/
-			if(generoMasculino.isSelected()){
+			if(generoMasculino.isChecked()){
 				l.add(new BasicNameValuePair("genre", "Masculino"));
-			}else{
+			}
+			if(generoFemenino.isChecked()){
 				l.add(new BasicNameValuePair("genre", "Femenino"));
 			}
 			
@@ -163,14 +173,6 @@ protected String doInBackground(String... parameter) {
 		    	 int duration = Toast.LENGTH_SHORT;
 		    	 Toast toast = Toast.makeText(context, contents, duration);
 		    	 toast.show();
-		         /*textView.setText(contents);*/
-		         //textView.append(format);
-		         // Handle successful scan
-		         
-		         /*para pruebas del tablón*/
-
-		         /*intent2= new Intent(this, TablonActivity.class);
-		         startActivity(intent2);*/
 		         
 		      } else if (resultCode == RESULT_CANCELED) {
 		         // Handle cancel

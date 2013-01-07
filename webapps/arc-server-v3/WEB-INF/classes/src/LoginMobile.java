@@ -6,6 +6,9 @@ import javax.servlet.http.*;
 
 import java.lang.String.*;
 
+import com.google.gson.Gson;
+
+
 public class LoginMobile extends HttpServlet {
   /**
 	 * 
@@ -15,17 +18,22 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	
 	PrintWriter out = response.getWriter();
 	HttpSession session = request.getSession(false);
-
+	Gson gson;
+	String json;
 	User user = new User();
 	System.out.println(request.getParameter("alias"));
 	user.setNick(request.getParameter("alias"));
 
 /*la cosa aquí es que no esté repetido el alias en la base de datos*/
-	if(user.existsSameNick()){
+	User databaseUser = user.existsSameNick();
+	if(databaseUser != null){
 		session=request.getSession();
-		out.println("ok");
+		gson = new Gson();
+    	json = gson.toJson(databaseUser); 
+		out.println(json);
+		System.out.println("El usuario ha hecho login y este es su json completo: "+json);
 	}else{
-		out.println("No existe, debe registrarse para entrar");
+		out.println("nok");
 	}
 
 	

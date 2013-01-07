@@ -6,6 +6,8 @@ import javax.servlet.http.*;
 
 import java.lang.String.*;
 
+import com.google.gson.Gson;
+
 public class RegisterMobile extends HttpServlet {
   /**
 	 * 
@@ -15,15 +17,18 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	
 	PrintWriter out = response.getWriter();
 	HttpSession session = request.getSession(false);
-
+	Gson gson;
+	String json;
 	User user = new User();
 	user.setNick(request.getParameter("alias"));
 
 /*la cosa aquí es que no esté repetido el alias en la base de datos*/
-	if(user.existsSameNick()){
-		session=request.getSession();
-		out.println("El nick ya existe, prueba con otro.");
+	
+
+	if(user.existsSameNick()!=null){
+		out.println("nok");
 	}else{
+		session=request.getSession();
 
 		System.out.println(request.getParameter("alias"));
 		System.out.println(request.getParameter("age"));
@@ -34,7 +39,10 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 		user.setWork(request.getParameter("work"));
 		user.setGenre(request.getParameter("genre"));
 		user.saveRegister();
-		out.println("ok");
+
+		gson = new Gson();
+    	json = gson.toJson(user); 
+		out.println(json);
 
 	}
 

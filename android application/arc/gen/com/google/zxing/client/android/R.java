@@ -23,40 +23,40 @@ public final class R {
 		public static final int quit = 0x7f080005;
 		public static final int search_book_contents_succeeded = 0x7f080009;
 		public static final int search_book_contents_failed = 0x7f080008;
-		public static final int query_text_view = 0x7f080035;
-		public static final int share_contact_button = 0x7f08003c;
+		public static final int query_text_view = 0x7f080039;
+		public static final int share_contact_button = 0x7f080040;
 		public static final int auto_focus = 0x7f080000;
-		public static final int done_button = 0x7f080032;
+		public static final int done_button = 0x7f080036;
 		public static final int launch_product_query = 0x7f080004;
-		public static final int result_list_view = 0x7f080037;
+		public static final int result_list_view = 0x7f08003b;
 		public static final int result_view = 0x7f08001f;
-		public static final int history_title = 0x7f080033;
-		public static final int share_bookmark_button = 0x7f08003b;
+		public static final int history_title = 0x7f080037;
+		public static final int share_bookmark_button = 0x7f08003f;
 		public static final int type_text_view = 0x7f080024;
 		public static final int contents_text_view = 0x7f080029;
-		public static final int history_detail = 0x7f080034;
-		public static final int share_clipboard_button = 0x7f08003d;
+		public static final int history_detail = 0x7f080038;
+		public static final int share_clipboard_button = 0x7f080041;
 		public static final int decode_failed = 0x7f080002;
-		public static final int help_contents = 0x7f080030;
-		public static final int share_app_button = 0x7f08003a;
+		public static final int help_contents = 0x7f080034;
+		public static final int share_app_button = 0x7f08003e;
 		public static final int format_text_view = 0x7f080022;
 		public static final int contents_supplement_text_view = 0x7f08002a;
 		public static final int time_text_view_label = 0x7f080025;
 		public static final int decode_succeeded = 0x7f080003;
 		public static final int time_text_view = 0x7f080026;
-		public static final int back_button = 0x7f080031;
+		public static final int back_button = 0x7f080035;
 		public static final int preview_view = 0x7f08001d;
-		public static final int query_button = 0x7f080036;
+		public static final int query_button = 0x7f08003a;
 		public static final int image_view = 0x7f08002f;
 		public static final int viewfinder_view = 0x7f08001e;
 		public static final int encode_view = 0x7f08002e;
 		public static final int result_button_view = 0x7f08002b;
 		public static final int decode = 0x7f080001;
-		public static final int snippet_view = 0x7f080039;
-		public static final int share_text_view = 0x7f08003e;
+		public static final int snippet_view = 0x7f08003d;
+		public static final int share_text_view = 0x7f080042;
 		public static final int shopper_button = 0x7f08002c;
 		public static final int bookmark_title = 0x7f08001b;
-		public static final int page_number_view = 0x7f080038;
+		public static final int page_number_view = 0x7f08003c;
 	}
 	public static final class color {
 		public static final int viewfinder_mask = 0x7f070015;
@@ -207,13 +207,13 @@ public final class R {
 	public static final class layout {
 		public static final int bookmark_picker_list_item = 0x7f030002;
 		public static final int encode = 0x7f030004;
-		public static final int share = 0x7f03000a;
-		public static final int help = 0x7f030005;
-		public static final int search_book_contents_list_item = 0x7f030009;
-		public static final int history_list_item = 0x7f030006;
-		public static final int search_book_contents_header = 0x7f030008;
+		public static final int share = 0x7f03000b;
+		public static final int help = 0x7f030006;
+		public static final int search_book_contents_list_item = 0x7f03000a;
+		public static final int history_list_item = 0x7f030007;
+		public static final int search_book_contents_header = 0x7f030009;
 		public static final int capture = 0x7f030003;
-		public static final int search_book_contents = 0x7f030007;
+		public static final int search_book_contents = 0x7f030008;
 	}
 	public static final class drawable {
 		public static final int launcher_icon = 0x7f020001;

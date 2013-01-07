@@ -20,12 +20,17 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.gson.Gson;
+;
+
+
 
 public class MainActivity extends Activity {
 
@@ -34,6 +39,9 @@ public class MainActivity extends Activity {
 	TextView textAlias;
 	EditText editAlias;
 	Intent intent2;
+	
+	Boolean sessionOpen = false;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +53,8 @@ public class MainActivity extends Activity {
 	    
 		textAlias = (TextView)findViewById(R.id.TextView01);
 		editAlias = (EditText)findViewById(R.id.editText2);
+		
+		Log.i("javi","Oncreate");
 		
         this.buttonRegistrate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -78,16 +88,20 @@ public class MainActivity extends Activity {
         	protected void onPostExecute(String result) {
     // [... Report results via UI update, Dialog, or notification ...]
         		/*En principio estaba puesto que soltara un toast*/
-        		Context context = getApplicationContext();
-        		int duration = Toast.LENGTH_SHORT;
-        		Toast toast = Toast.makeText(context, result, duration);
-        		toast.show();
         		
-        		/*If the server says ok We access to the camera*/
-        		if(result.equals("ok")){
+        		/*If user is found We access to the camera*/
+        		if(!result.equals("nok")){
+            		Gson gson = new Gson();
+            		User userLogin = gson.fromJson(result, User.class);
+        			sessionOpen = true;
         			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
             		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
             		startActivityForResult(intent, 0);
+        		}else{
+        			Context context = getApplicationContext();
+            		int duration = Toast.LENGTH_SHORT;
+            		Toast toast = Toast.makeText(context, "El usuario no existe.", duration);
+            		toast.show();
         		}
         		
         		
@@ -136,7 +150,18 @@ public class MainActivity extends Activity {
         
         
     }
+     
+        
+    protected void onSaveInstanceState(Bundle bundle){
+      	/*bundle.putBoolean("sessionOpen", sessionOpen);
+        Context context = getApplicationContext();
+   	 	int duration = Toast.LENGTH_SHORT;
+   	 	Toast toast = Toast.makeText(context, "onpause", duration);
+   	 	toast.show();*/
+		Log.i("javi","onSaveInstanceState");
 
+    }
+    
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -156,11 +181,7 @@ public class MainActivity extends Activity {
 		    	 int duration = Toast.LENGTH_SHORT;
 		    	 Toast toast = Toast.makeText(context, contents, duration);
 		    	 toast.show();
-		         /*textView.setText(contents);*/
-		         //textView.append(format);
-		         // Handle successful scan
-		         
-		         /*para pruebas del tablón*/
+
 
 		         intent2= new Intent(MainActivity.this, TablonActivity.class);
 		         startActivity(intent2);

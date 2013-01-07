@@ -133,7 +133,48 @@ public class DataBaseManager{
 	}
 
 
-	/*Obtiene el tablón según su descriptor o su id, muestra los mensajes asociados*/
+	public Tablon getTablon(String space){
+		
+		Tablon tablon = null;
+		
+		try{
+			Connection conn = openConnectionPool();
+			/***********************************************PARAMETRIZACIÓN*************************************************/
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Tablon WHERE space=?"); //AND surname1 = ? AND surname2 = ?");
+			statement.setString(1, space);
+
+			/****************************************************************************************************************/
+
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				tablon = new Tablon();
+				int idTablon = rs.getInt("id");
+				tablon.setId(idTablon);
+				tablon.setName(rs.getString("name"));
+				tablon.setVisibility(rs.getInt("visibility"));
+				tablon.setSpaceId(rs.getString("space"));
+				//tablon.setPermission(rs.getInt("permission"));
+				tablon.setAllMsg(getMessagesFromTablon(idTablon));
+				tablon.setAllTargetUser(getTablonTargetUsers(idTablon));
+				tablon.setAllUsers(getTablonModerateUsers(idTablon));
+			}
+			closeConnectionPool(conn);
+
+			
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		
+		
+		return tablon;
+		
+	}
+
+
+	/*Obtiene el tablón según su id, muestra los mensajes asociados*/
 	
 	public Tablon getTablon(int id){
 		
@@ -324,6 +365,7 @@ public class DataBaseManager{
 				m.setVisibility(rs.getInt("visibility"));
 				//m.setDate(rs.getTimestamp("dateTime"));//peta aquí
 				u.setId(rs.getInt("Message.user_id"));
+				u.setNick(rs.getString("User.nick"));
 				u.setName(rs.getString("User.name"));
 				u.setSurName1(rs.getString("User.surname1"));
 				u.setSurName2(rs.getString("User.surname2"));
@@ -529,7 +571,7 @@ catch(Exception ioe){
 		try{
 			Connection conn = openConnectionPool();
 			/***********************************************PARAMETRIZACIÓN*************************************************/
-			PreparedStatement statement = conn.prepareStatement("SELECT User.id, User.name, User.surname1,User.surname2 FROM TablonUserModerates INNER JOIN User ON TablonUserModerates.user_id = User.id WHERE TablonUserModerates.tablon_id = ?;"); 
+			PreparedStatement statement = conn.prepareStatement("SELECT User.id, User.nick, User.name, User.surname1,User.surname2 FROM TablonUserModerates INNER JOIN User ON TablonUserModerates.user_id = User.id WHERE TablonUserModerates.tablon_id = ?;"); 
 			statement.setInt(1, idTablon);
 			/****************************************************************************************************************/
 
@@ -539,6 +581,7 @@ catch(Exception ioe){
 				User u = new User();
 				u.setId(rs.getInt("User.id"));
 				u.setName(rs.getString("User.name"));
+				u.setNick(rs.getString("User.nick"));
 				u.setSurName1(rs.getString("User.surname1"));
 				u.setSurName2(rs.getString("User.surname2"));
 				moderators.addElement(u);
@@ -565,7 +608,7 @@ catch(Exception ioe){
 		try{
 			Connection conn = openConnectionPool();
 			/***********************************************PARAMETRIZACIÓN*************************************************/
-			PreparedStatement statement = conn.prepareStatement("SELECT User.id, User.name, User.surname1, User.surname2, UserPermission.permission  FROM TablonTargetUser INNER JOIN User ON TablonTargetUser.user_id = User.id INNER JOIN UserPermission ON UserPermission.user_id = TablonTargetUser.user_id  WHERE TablonTargetUser.tablon_id = ?"); 
+			PreparedStatement statement = conn.prepareStatement("SELECT User.id, User.nick, User.name, User.surname1, User.surname2, UserPermission.permission  FROM TablonTargetUser INNER JOIN User ON TablonTargetUser.user_id = User.id INNER JOIN UserPermission ON UserPermission.user_id = TablonTargetUser.user_id  WHERE TablonTargetUser.tablon_id = ?"); 
 			statement.setInt(1, idTablon);
 			/****************************************************************************************************************/
 
@@ -575,6 +618,7 @@ catch(Exception ioe){
 				User u = new User();
 				u.setId(rs.getInt("User.id"));
 				u.setName(rs.getString("User.name"));
+				u.setNick(rs.getString("User.nick"));
 				u.setSurName1(rs.getString("User.surname1"));
 				u.setSurName2(rs.getString("User.surname2"));
 				u.setPermission(rs.getByte("UserPermission.permission"));
@@ -971,27 +1015,36 @@ catch(Exception ioe){
 	}
 
 
-/*lo usa el login mobile*/
+/*login mobile uses it, returns the user object if exists, or null if not*/
 
-	public Boolean existsSameNick(String nick){
-
-		Boolean result = false;
-
+/*fix when you can, see checkUser -> do the same.*/
+	public User existsSameNick(String nick){
+			User result = null;
+			User databaseUser=new User();
+		
 		try{
 			Connection conn = openConnectionPool();
-		
 			/***********************************************PARAMETRIZACIÓN*************************************************/
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM User WHERE nick  = ?;");
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM User WHERE nick=?"); //AND surname1 = ? AND surname2 = ?");
 			statement.setString(1, nick);
 			/****************************************************************************************************************/
 
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) {
-				
-				result = true;
-				
+				databaseUser = new User();
+				databaseUser.setId(rs.getInt("id"));
+				databaseUser.setName(rs.getString("nick"));
+				databaseUser.setName(rs.getString("name"));
+				databaseUser.setSurName1(rs.getString("surname1"));
+				databaseUser.setSurName2(rs.getString("surname2"));
+				databaseUser.setAge(rs.getString("age"));
+				databaseUser.setWork(rs.getString("work"));
+				databaseUser.setGenre(rs.getString("genre"));
+				result = databaseUser;
 			}
 
+			System.out.println("Lo que hay en la base de datos: ");
+			System.out.println("name:" + databaseUser.getName());
 			closeConnectionPool(conn);
 		}catch(SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
@@ -1001,6 +1054,7 @@ catch(Exception ioe){
 		
 		
 		return result;
+
 
 	}
 
