@@ -28,9 +28,11 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	User databaseUser = user.existsSameNick();
 	if(databaseUser != null){
 		session=request.getSession();
+		System.out.println("el id de sesion es: " + session.getId());
 		gson = new Gson();
     	json = gson.toJson(databaseUser); 
 		out.println(json);
+		session.setAttribute("user",databaseUser);
 		System.out.println("El usuario ha hecho login y este es su json completo: "+json);
 	}else{
 		out.println("nok");

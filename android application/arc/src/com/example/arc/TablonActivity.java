@@ -48,6 +48,11 @@ public class TablonActivity extends FragmentActivity {
 	Button buttonPuntua;
 	LinearLayout layout;
 	ScrollView sv;
+	Tablon tablon;
+	
+	MyDefaultHttpClient myDefaultHttp;
+	HttpClient httpclient = null;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tablon_activity);
@@ -60,7 +65,12 @@ public class TablonActivity extends FragmentActivity {
 		layout = (LinearLayout)findViewById(R.id.messageLayout);
 		sv = (ScrollView) findViewById(R.id.scrollView1);
     	new GetComments().execute();
-    	sendScroll();
+
+		 myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
+         httpclient = myDefaultHttp.getHttpClient();
+		
+     	sendScroll();
+
     	
     	this.imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -80,7 +90,13 @@ public class TablonActivity extends FragmentActivity {
 
 			  FragmentManager fm = getSupportFragmentManager();
 		      SendMessageDialog messageDialog = new SendMessageDialog();
+		      Bundle args = new Bundle();
+		      args.putInt("tablonId", tablon.getId());
+		      messageDialog.setArguments(args);
+		      //args.putString("nickUser", value);
+		  
 		      messageDialog.show(fm, "fragment_edit_name");
+		      
 			
 	}
 		class SendRate extends AsyncTask<String, Integer, String> {
@@ -119,7 +135,6 @@ public class TablonActivity extends FragmentActivity {
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
 
-				HttpClient httpclient = new DefaultHttpClient();
 				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/sendRateMobile");
 
 				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
@@ -151,7 +166,7 @@ public class TablonActivity extends FragmentActivity {
 					e.printStackTrace();
 				}
 		
-				httpclient.getConnectionManager().shutdown();
+				//httpclient.getConnectionManager().shutdown();
 		
 				return res;
 			}
@@ -179,15 +194,10 @@ public class TablonActivity extends FragmentActivity {
 	    		toast.show();
 	    		
 	    		Gson gson = new Gson();
-        		Tablon tablon = gson.fromJson(result, Tablon.class);
-	    		
-        		tablon.printTablon(tablonName,layout, context);
-	    		
+	    		tablon = gson.fromJson(result, Tablon.class);
+
         		
-	    		
-        		
-	    		
-	    		
+        		tablon.printTablon(tablonName ,layout ,context);	
 	    	}
 
 	protected String doInBackground(String... parameter) {
@@ -196,7 +206,7 @@ public class TablonActivity extends FragmentActivity {
 				publishProgress(myProgress);
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
-				HttpClient httpclient = new DefaultHttpClient();
+				
     			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/getTablon");
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
@@ -225,7 +235,7 @@ public class TablonActivity extends FragmentActivity {
     				//tv.setText("No ha funcionado");
     			}
     	
-    			httpclient.getConnectionManager().shutdown();
+    			//httpclient.getConnectionManager().shutdown();
     	
     			return res;
 						

@@ -5,14 +5,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Vector;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,6 +48,8 @@ public class MainActivity extends Activity {
 	
 	Boolean sessionOpen = false;
 	
+	MyDefaultHttpClient myDefaultHttp;
+	HttpClient httpclient = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +62,16 @@ public class MainActivity extends Activity {
 		textAlias = (TextView)findViewById(R.id.TextView01);
 		editAlias = (EditText)findViewById(R.id.editText2);
 		
+		 myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
+         httpclient = myDefaultHttp.getHttpClient();
+		
 		Log.i("javi","Oncreate");
 		
         this.buttonRegistrate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	//button.setText("He pulsado");
+            	
             	Intent intent = new Intent(MainActivity.this, RegistroActivity.class);
-        		
         		startActivity(intent);
          
             }
@@ -114,7 +125,7 @@ public class MainActivity extends Activity {
     	// 		[... Continue performing background processing task ...]
     	// 	Return the value to be passed to onPostExecute
 
-    			HttpClient httpclient = new DefaultHttpClient();
+    			
     			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/loginMobile");
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
@@ -130,6 +141,8 @@ public class MainActivity extends Activity {
     				httppost.setEntity(data);
     		
     				response = httpclient.execute(httppost);
+
+
     				resEntity = response.getEntity();
     		
     				BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
@@ -143,7 +156,7 @@ public class MainActivity extends Activity {
     				//tv.setText("No ha funcionado");
     			}
     	
-    			httpclient.getConnectionManager().shutdown();
+    			//httpclient.getConnectionManager().shutdown();
     	
     			return res;
     		}
@@ -183,7 +196,7 @@ public class MainActivity extends Activity {
 		    	 toast.show();
 
 
-		         intent2= new Intent(MainActivity.this, TablonActivity.class);
+		    	 intent2= new Intent(MainActivity.this, TablonActivity.class);
 		         startActivity(intent2);
 		         
 		      } else if (resultCode == RESULT_CANCELED) {

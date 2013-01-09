@@ -41,6 +41,11 @@ public class RegistroActivity extends Activity {
 	Spinner trabajo;
 	Boolean sessionOpen = false;
 
+	Intent intent;
+	
+	MyDefaultHttpClient myDefaultHttp;
+	HttpClient httpclient = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,6 +58,9 @@ public class RegistroActivity extends Activity {
 		edad = (Spinner)findViewById(R.id.spinner1);
 		trabajo = (Spinner)findViewById(R.id.Spinner01);
 	
+		 myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
+         httpclient = myDefaultHttp.getHttpClient();
+		
 		
 		this.buttonEntrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -173,6 +181,9 @@ protected String doInBackground(String... parameter) {
 		    	 int duration = Toast.LENGTH_SHORT;
 		    	 Toast toast = Toast.makeText(context, contents, duration);
 		    	 toast.show();
+		    	 
+		    	 intent= new Intent(RegistroActivity.this, TablonActivity.class);
+		         startActivity(intent);
 		         
 		      } else if (resultCode == RESULT_CANCELED) {
 		         // Handle cancel
