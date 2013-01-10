@@ -30,23 +30,36 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-public class SendMessageDialog extends DialogFragment {
+public class SendMessageDialog extends DialogFragment implements OnEditorActionListener{
 	
 	 EditText mEditText;
 	 Button sendButton;
 	 
 	 int tablonId;
 	 
-	MyDefaultHttpClient myDefaultHttp;
-	HttpClient httpclient = null;
+	 MyDefaultHttpClient myDefaultHttp;
+	 HttpClient httpclient = null;
 	 
+	 public interface SendMessageDialogListener {
+	        void onFinishEditDialog(String inputText);
+	 }
+	 
+	 public SendMessageDialog() {
+	        // Empty constructor required for DialogFragment
+	 }
+	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -73,8 +86,9 @@ public class SendMessageDialog extends DialogFragment {
     public void setArguments(Bundle args) {
      super.setArguments(args);
      this.tablonId = args.getInt("tablonId");
-     
     }
+    
+
     
     class SendMessage extends AsyncTask<String, Integer, String> {
     	@Override
@@ -85,15 +99,8 @@ public class SendMessageDialog extends DialogFragment {
 		@Override
     	protected void onPostExecute(String result) {
     		
-    		//If the server says ok muestro un toast
-    		Context context = getActivity().getApplicationContext();
-    		int duration = Toast.LENGTH_SHORT;
-    		Toast toast;
-    		String message;
-    		message = result;
-    		toast = Toast.makeText(context, message, duration);
-
-    		toast.show();
+    		Log.i("javi", "checkpoint3");
+    		
     	}
 
    protected String doInBackground(String... parameter) {
@@ -105,7 +112,8 @@ public class SendMessageDialog extends DialogFragment {
 
 			
 
-			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/sendMessageMobile");
+			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/" +
+					"arc-server-v3/sendMessageMobile");
 
 			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 			//Añadimos todos los parámetros que queramos enviar
@@ -119,16 +127,17 @@ public class SendMessageDialog extends DialogFragment {
 			HttpEntity resEntity = null;
 			String res = null;
 			try {
-				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l);
+				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l,"utf-8");
 				httppost.setEntity(data);
 		
 				response = httpclient.execute(httppost);
+				Log.i("javi", "checkpoint1");
 				resEntity = response.getEntity();
 				BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
 				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
 				res = b.readLine().trim();
 				resEntity.consumeContent();
-				
+				Log.i("javi", "checkpoint2");
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -141,6 +150,22 @@ public class SendMessageDialog extends DialogFragment {
 		}
 	
 	
+	}
+
+
+
+
+    
+    @Override
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+    	 if (EditorInfo.IME_ACTION_DONE == actionId) {
+             // Return input text to activity
+             SendMessageDialogListener activity = (SendMessageDialogListener) getActivity();
+             activity.onFinishEditDialog(mEditText.getText().toString());
+             this.dismiss();
+             return true;
+         }
+         return false;
 	}
     
     

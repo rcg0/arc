@@ -14,7 +14,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.example.arc.MainActivity.MyAsyncTask;
 import com.google.gson.Gson;
 
 import android.os.AsyncTask;
@@ -109,7 +108,7 @@ protected String doInBackground(String... parameter) {
 	// 	Return the value to be passed to onPostExecute
 
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/registerMobile");
+			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/registerMobile");
 
 			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 			//Añadimos todos los parámetros que queramos enviar

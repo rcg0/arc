@@ -15,14 +15,15 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	
 	PrintWriter out = response.getWriter();
 	HttpSession session = request.getSession(false);
-
+System.out.println("checkpoint 1");
 	Tablon tablon = new Tablon();
 	tablon.setId(Integer.parseInt(request.getParameter("tablon_id")));
 	tablon.setRate(request.getParameter("rate"));
+	System.out.println("checkpoint 2");
 	tablon.setRateDDBB();
 	
-	System.out.println(request.getParameter("rate"));
-	System.out.println(request.getParameter("tablon_id"));
+	System.out.println("Rate enviada " + request.getParameter("rate"));
+	System.out.println("Al tablon "+request.getParameter("tablon_id"));
 
 	out.println("ok");
   }

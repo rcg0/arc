@@ -14,6 +14,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
       
+	PrintWriter out = response.getWriter();
 
 	HttpSession session = request.getSession(false);
 	String next = "/error.html";
@@ -38,7 +39,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	
 	
 	msg.setMsg(message);
-	//msg.setCreator(user);
+	msg.setCreator((User)session.getAttribute("user"));
 	tablon.setId(Integer.parseInt(tablonId));
 	System.out.println("El tablon es: "+ tablonId);
 
@@ -48,7 +49,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	
 	System.out.println("El mensaje que he enviado ha sido el siguiente: "+ msg.getMsg());
 	//tablones.elementAt(tablonId).createMessage(msg, Integer.parseInt(tablonId));
-	
+	out.println("ok");
 	
   }
 
