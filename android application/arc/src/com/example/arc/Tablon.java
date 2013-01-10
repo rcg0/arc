@@ -165,4 +165,22 @@ public class Tablon {
 		}
 		
 	}
+	
+	public void printMessage(String nick, String msg, LinearLayout layout,Context context){
+		
+		TextView author = new TextView(context);
+		TextView message = new TextView(context);
+		
+		author.setText(nick);
+		message.setText(msg);
+		
+		author.setTextColor(Color.BLACK);
+		message.setTextColor(Color.GRAY);
+
+		author.setPadding(50, 0, 50, 0);
+		message.setPadding(50, 0, 50, 5);
+		
+		layout.addView(author);
+		layout.addView(message);
+	}
 }

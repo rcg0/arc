@@ -51,6 +51,8 @@ public class MainActivity extends Activity {
 	MyDefaultHttpClient myDefaultHttp;
 	HttpClient httpclient = null;
 	
+	String user = null; //json user, it's important because other activity needs to know who is login in.
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -104,6 +106,7 @@ public class MainActivity extends Activity {
         		if(!result.equals("nok")){
             		Gson gson = new Gson();
             		User userLogin = gson.fromJson(result, User.class);
+            		user = result;
         			sessionOpen = true;
         			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
             		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
@@ -126,7 +129,7 @@ public class MainActivity extends Activity {
     	// 	Return the value to be passed to onPostExecute
 
     			
-    			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/loginMobile");
+    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/loginMobile");
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
@@ -137,7 +140,7 @@ public class MainActivity extends Activity {
     			HttpEntity resEntity = null;
     			String res = null;
     			try {
-    				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l);
+    				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l, "utf-8");
     				httppost.setEntity(data);
     		
     				response = httpclient.execute(httppost);
@@ -197,6 +200,7 @@ public class MainActivity extends Activity {
 
 
 		    	 intent2= new Intent(MainActivity.this, TablonActivity.class);
+		    	 intent2.putExtra("jsonUser", user);
 		         startActivity(intent2);
 		         
 		      } else if (resultCode == RESULT_CANCELED) {

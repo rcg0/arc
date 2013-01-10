@@ -45,6 +45,8 @@ public class RegistroActivity extends Activity {
 	MyDefaultHttpClient myDefaultHttp;
 	HttpClient httpclient = null;
 	
+	String jsonUser = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,6 +87,7 @@ public class RegistroActivity extends Activity {
     		/*If the server not says nok We access to the camera*/
     		if(!result.equals("nok")){
     			Gson gson = new Gson();
+    			jsonUser = result;
         		User userLogin = gson.fromJson(result, User.class);
     			sessionOpen = true;
     			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
@@ -108,7 +111,7 @@ protected String doInBackground(String... parameter) {
 	// 	Return the value to be passed to onPostExecute
 
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/registerMobile");
+			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/registerMobile");
 
 			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 			//Añadimos todos los parámetros que queramos enviar
@@ -132,7 +135,7 @@ protected String doInBackground(String... parameter) {
 			HttpEntity resEntity = null;
 			String res = null;
 			try {
-				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l);
+				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l, "utf-8");
 				httppost.setEntity(data);
 		
 				response = httpclient.execute(httppost);
@@ -182,6 +185,7 @@ protected String doInBackground(String... parameter) {
 		    	 toast.show();
 		    	 
 		    	 intent= new Intent(RegistroActivity.this, TablonActivity.class);
+		    	 intent.putExtra("jsonUser", jsonUser);
 		         startActivity(intent);
 		         
 		      } else if (resultCode == RESULT_CANCELED) {

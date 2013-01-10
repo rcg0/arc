@@ -1033,8 +1033,8 @@ catch(Exception ioe){
 			if (rs.next()) {
 				databaseUser = new User();
 				databaseUser.setId(rs.getInt("id"));
-				databaseUser.setName(rs.getString("nick"));
 				databaseUser.setName(rs.getString("name"));
+				databaseUser.setNick(rs.getString("nick"));
 				databaseUser.setSurName1(rs.getString("surname1"));
 				databaseUser.setSurName2(rs.getString("surname2"));
 				databaseUser.setAge(rs.getString("age"));

@@ -15,6 +15,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.example.arc.RegistroActivity.MyAsyncTask;
+import com.example.arc.SendMessageDialog.SendMessageDialogListener;
 import com.google.gson.Gson;
 
 import android.annotation.SuppressLint;
@@ -27,8 +28,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -39,7 +42,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TablonActivity extends FragmentActivity {
+public class TablonActivity extends FragmentActivity implements SendMessageDialogListener {
 	
 	TextView tablonName;
 	RatingBar ratingBar;
@@ -52,6 +55,8 @@ public class TablonActivity extends FragmentActivity {
 	
 	MyDefaultHttpClient myDefaultHttp;
 	HttpClient httpclient = null;
+	
+	String jsonUser = null;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,6 +71,9 @@ public class TablonActivity extends FragmentActivity {
 		sv = (ScrollView) findViewById(R.id.scrollView1);
     	new GetComments().execute();
 
+    	
+    	jsonUser = getIntent().getStringExtra("jsonUser");
+    	
 		 myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
          httpclient = myDefaultHttp.getHttpClient();
 		
@@ -135,13 +143,14 @@ public class TablonActivity extends FragmentActivity {
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
 
-				HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendRateMobile");
-
+				//HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendRateMobile");
+				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/sendRateMobile");
+				
 				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 				//Añadimos todos los parámetros que queramos enviar
 				
 				l.add(new BasicNameValuePair("rate", ratingBar.getRating()+""));
-				l.add(new BasicNameValuePair("tablon_id", 4+""));/*FIX*/
+				l.add(new BasicNameValuePair("tablon_id", 2+""));/*FIX*/
 
 				
 		    			
@@ -149,7 +158,7 @@ public class TablonActivity extends FragmentActivity {
 				HttpEntity resEntity = null;
 				String res = null;
 				try {
-					UrlEncodedFormEntity data = new UrlEncodedFormEntity(l);
+					UrlEncodedFormEntity data = new UrlEncodedFormEntity(l, "utf-8");
 					httppost.setEntity(data);
 			
 					response = httpclient.execute(httppost);
@@ -207,7 +216,7 @@ public class TablonActivity extends FragmentActivity {
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
 				
-    			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/getTablon");
+    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/getTablon");
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
@@ -218,7 +227,7 @@ public class TablonActivity extends FragmentActivity {
     			HttpEntity resEntity = null;
     			String res = null;
     			try {
-    				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l);
+    				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l, "utf-8");
     				httppost.setEntity(data);
     		
     				response = httpclient.execute(httppost);
@@ -245,6 +254,66 @@ public class TablonActivity extends FragmentActivity {
 		
 		}
 	
+	    class SendMessage extends AsyncTask<String, Integer, String> {
+	    	@Override
+	    	protected void onProgressUpdate(Integer... progress) {
+	// [... Update progress bar, Notification, or other UI element ...]
+	   	}	
+	    	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
+			@Override
+	    	protected void onPostExecute(String result) {
+	    		
+	    		Log.i("javi", "checkpoint3");
+	    		
+	    	}
+
+	   protected String doInBackground(String... parameter) {
+				int myProgress = 0;
+		// 	[... Perform background processing task, update myProgress ...]
+				publishProgress(myProgress);
+		// 		[... Continue performing background processing task ...]
+		// 	Return the value to be passed to onPostExecute
+
+				
+
+				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/" +
+						"arc-server-v3/sendMessageMobile");
+
+				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
+				//Añadimos todos los parámetros que queramos enviar
+				
+				l.add(new BasicNameValuePair("tablonId", tablon.getId()+""));
+				l.add(new BasicNameValuePair("message", parameter[0] ));//the parameter you pass				
+		    			
+				HttpResponse response = null;
+				HttpEntity resEntity = null;
+				String res = null;
+				try {
+					UrlEncodedFormEntity data = new UrlEncodedFormEntity(l,"utf-8");
+					httppost.setEntity(data);
+			
+					response = httpclient.execute(httppost);
+					Log.i("javi", "checkpoint1");
+					resEntity = response.getEntity();
+					BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
+					//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
+					res = b.readLine().trim();
+					resEntity.consumeContent();
+					Log.i("javi", "checkpoint2");
+				} catch (ClientProtocolException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		
+				//httpclient.getConnectionManager().shutdown();
+		
+				return res;
+			}
+		
+		
+		}
+		
 		protected void onSaveInstanceState(Bundle savedInstanceState){	
 			super.onSaveInstanceState(savedInstanceState);
 
@@ -263,6 +332,20 @@ public class TablonActivity extends FragmentActivity {
 		}
 		
 	
+		
+		@Override
+		public void onFinishEditDialog(String inputText) {
+	        Toast.makeText(this, "Hi, " + inputText, Toast.LENGTH_SHORT).show();
+	        new SendMessage().execute(inputText);
+	        Gson gson = new Gson();
+	        User user = gson.fromJson(jsonUser, User.class);
+	        String nick = user.getNick();
+	        tablon.printMessage(nick,inputText, layout, getApplicationContext());
+	        sendScroll();
+		}
+		
+		
+		
 		private void sendScroll(){
 	        final Handler handler = new Handler();
 	        new Thread(new Runnable() {
@@ -278,6 +361,7 @@ public class TablonActivity extends FragmentActivity {
 	            }
 	        }).start();
 	    }
+		
 		
 		
 }
