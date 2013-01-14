@@ -13,6 +13,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 import com.example.arc.RegistroActivity.MyAsyncTask;
 import com.example.arc.SendMessageDialog.SendMessageDialogListener;
@@ -77,7 +79,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		 myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
          httpclient = myDefaultHttp.getHttpClient();
 		
-     	sendScroll();
+     	//sendScroll();
 
     	
     	this.imageButton.setOnClickListener(new View.OnClickListener() {
@@ -196,17 +198,19 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	    		/*En principio estaba puesto que soltara un toast*/
 	    		
 	    		Context context = getApplicationContext();
-	    		int duration = Toast.LENGTH_SHORT;
+	    		/*int duration = Toast.LENGTH_SHORT;
 	    		Toast toast;
 	    		String message = result;
 	    		toast = Toast.makeText(context, result , duration);
-	    		toast.show();
+	    		toast.show();*/
 	    		
 	    		Gson gson = new Gson();
 	    		tablon = gson.fromJson(result, Tablon.class);
 
         		
         		tablon.printTablon(tablonName ,layout ,context);	
+             	sendScroll();
+
 	    	}
 
 	protected String doInBackground(String... parameter) {
@@ -232,11 +236,14 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
     		
     				response = httpclient.execute(httppost);
     				resEntity = response.getEntity();
-    		
-    				BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
+    			    
+    				/*a ver si funciona*/
+    				res = EntityUtils.toString(resEntity, HTTP.UTF_8);
+
+    				//BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
     				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
-    				res = b.readLine().trim();
-    				resEntity.consumeContent();
+    			    //res = b.readLine().trim();
+    				//resEntity.consumeContent();
     			} catch (ClientProtocolException e) {
     				e.printStackTrace();
     			} catch (IOException e) {

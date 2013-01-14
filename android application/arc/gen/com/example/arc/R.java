@@ -40,7 +40,7 @@ public final class R {
         public static final int viewfinder_mask=0x7f070015;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int arc_logo=0x7f020000;
         public static final int launcher_icon=0x7f020001;
         public static final int share_via_barcode=0x7f020002;
         public static final int shopper_icon=0x7f020003;
@@ -57,8 +57,8 @@ public final class R {
         public static final int barcode_image_view=0x7f080020;
         public static final int bookmark_title=0x7f08001b;
         public static final int bookmark_url=0x7f08001c;
-        public static final int button1=0x7f08000b;
-        public static final int button2=0x7f080010;
+        public static final int button1=0x7f08000e;
+        public static final int button2=0x7f08000c;
         public static final int checkBox1=0x7f080014;
         public static final int checkBox2=0x7f080013;
         public static final int contents_supplement_text_view=0x7f08002a;
@@ -67,8 +67,8 @@ public final class R {
         public static final int decode_failed=0x7f080002;
         public static final int decode_succeeded=0x7f080003;
         public static final int done_button=0x7f080035;
-        public static final int editText1=0x7f080011;
-        public static final int editText2=0x7f08000c;
+        public static final int editText1=0x7f080010;
+        public static final int editText2=0x7f08000f;
         public static final int edit_name=0x7f080030;
         public static final int encode_view=0x7f08002e;
         public static final int format_text_view=0x7f080022;
@@ -107,12 +107,12 @@ public final class R {
         public static final int snippet_view=0x7f08003c;
         public static final int spinner1=0x7f080018;
         public static final int status_view=0x7f08002d;
-        public static final int textView1=0x7f08000d;
-        public static final int textView2=0x7f08000f;
+        public static final int textView1=0x7f080011;
+        public static final int textView2=0x7f08000d;
         public static final int textView3=0x7f080019;
         public static final int textView4=0x7f08001a;
         public static final int textView5=0x7f08000a;
-        public static final int textView6=0x7f08000e;
+        public static final int textView6=0x7f08000b;
         public static final int time_text_view=0x7f080026;
         public static final int time_text_view_label=0x7f080025;
         public static final int txt_msg=0x7f080032;
@@ -144,6 +144,7 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f090000;
+        public static final int app_names=0x7f090078;
         public static final int app_picker_name=0x7f090001;
         public static final int bookmark_picker_name=0x7f090002;
         public static final int button_add_calendar=0x7f090003;
@@ -179,7 +180,6 @@ public final class R {
         public static final int contents_phone=0x7f090021;
         public static final int contents_sms=0x7f090022;
         public static final int contents_text=0x7f090023;
-        public static final int hello_world=0x7f090078;
         public static final int history_clear_one_history_text=0x7f090025;
         public static final int history_clear_text=0x7f090024;
         public static final int history_email_title=0x7f090026;

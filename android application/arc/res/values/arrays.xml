@@ -2,12 +2,14 @@
 <resources>
 
     <string-array name="arrayTrabajos">
-       <item>Ama/o de casa</item>
+       
        <item>Estudiante</item>
-       <item>Telecomunicaciones</item>
-       <item>Informática</item>
-       <item>Industriales</item>
-       <item>Trabajador social</item>
+       <item>Ciencias naturales</item>
+       <item>Ingeniería</item>
+       <item>Ciencias sociales</item>
+       <item>Humanidades</item>
+       <item>Funcionario</item>
+       <item>Ama/o de casa</item>
 	</string-array>
 	
     <string-array name="arrayEdades">

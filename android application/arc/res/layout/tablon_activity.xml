@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Large Text Large Text Large Text Large Text "
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:paddingLeft="2dp"/>
 
     <ImageButton
         android:id="@+id/imageButton1"
@@ -51,14 +51,11 @@
         <LinearLayout
             android:id="@+id/messageLayout"
             android:layout_width="match_parent"
-            android:layout_height="284dp"
-            android:orientation="vertical" >
+            android:layout_height="100dip"
+            android:orientation="vertical"
+         >
 
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Más comentarios" />
+       
 
         </LinearLayout>
     </ScrollView>

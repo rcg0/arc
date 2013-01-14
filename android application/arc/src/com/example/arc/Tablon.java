@@ -5,7 +5,12 @@ import java.util.Vector;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
 public class Tablon {
@@ -140,6 +145,7 @@ public class Tablon {
 		msg.addElement(mensaje);
 	}
 	
+	
 	public void printTablon(TextView tablonName, LinearLayout layout,Context context){
 		
 		Vector<Message> messages = this.getAllMsg();
@@ -150,37 +156,65 @@ public class Tablon {
 		tablonName.setText(this.getName());
 		
 		for(int i = 0; i<messages.size(); i++){
-			author = new TextView(context);
-			text = new TextView(context);
 			
-			author.setText(messages.elementAt(i).getCreator().getNick());
-			author.setTextColor(Color.BLACK);
-			text.setText(messages.elementAt(i).getMsg());
-			author.setPadding(50, 0, 50, 0);
-			text.setPadding(50, 0, 50, 5);
-			text.setTextColor(Color.GRAY);
-			
-			layout.addView(author);
-			layout.addView(text);
+			this.printMessage(messages.elementAt(i).getCreator().getNick(),messages.elementAt(i).getMsg(),layout,context);
+
 		}
 		
 	}
 	
 	public void printMessage(String nick, String msg, LinearLayout layout,Context context){
 		
+		LinearLayout l = new LinearLayout(context);
+		l.setOrientation(LinearLayout.HORIZONTAL);			
+		TextView author = new TextView(context);
+		TextView text = new TextView(context);
+		
+		
+		text.setText(msg);
+		text.setTextColor(Color.BLACK);
+		
+		author.setText(nick+ ": ");
+		author.setPadding(50, 0, 0, 0);
+		author.setTypeface(null, Typeface.BOLD);
+		author.setTextColor(Color.BLACK);
+
+		l.addView(author);
+		l.addView(text);
+		layout.addView(l);
+	}
+	
+	/*
+
+	}
+	
+	public void printMessage(String nick, String msg, TableLayout layout,Context context){
+		
+		
 		TextView author = new TextView(context);
 		TextView message = new TextView(context);
 		
-		author.setText(nick);
+		author.setText(nick + ": ");
+		author.setTypeface(null, Typeface.BOLD);
+		
 		message.setText(msg);
 		
 		author.setTextColor(Color.BLACK);
-		message.setTextColor(Color.GRAY);
+		message.setTextColor(Color.BLACK);
 
 		author.setPadding(50, 0, 50, 0);
 		message.setPadding(50, 0, 50, 5);
 		
+
+		
+		
+		
+		
+		
+		
+		
 		layout.addView(author);
 		layout.addView(message);
 	}
+	*/
 }
