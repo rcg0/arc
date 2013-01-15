@@ -82,26 +82,31 @@ public class RegistroActivity extends Activity {
 		@Override
     	protected void onPostExecute(String result) {
 // [... Report results via UI update, Dialog, or notification ...]
-    		/*En principio estaba puesto que soltara un toast*/
-    		
-    		/*If the server not says nok We access to the camera*/
-    		if(!result.equals("nok")){
-    			Gson gson = new Gson();
-    			jsonUser = result;
-        		User userLogin = gson.fromJson(result, User.class);
-    			sessionOpen = true;
-    			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-        		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-        		startActivityForResult(intent, 0);
+    		Context context = getApplicationContext();
+			int duration = Toast.LENGTH_SHORT;
+			Toast toast;
+			
+    		if(result == null){
+				toast = Toast.makeText(context, "No ha sido posible conectar con el servidor.", duration);
+				toast.show();
     		}else{
-    			Context context = getApplicationContext();
-    			int duration = Toast.LENGTH_SHORT;
-        		Toast toast = Toast.makeText(context, "El nick ya está elegido, pruebe de nuevo", duration);
-        		toast.show();
-    			
-    		}
-
+    			/*If the server not says nok We access to the camera*/
+    			if(!result.equals("nok")){
+    				Gson gson = new Gson();
+    				jsonUser = result;
+    				User userLogin = gson.fromJson(result, User.class);
+    				sessionOpen = true;
+    				Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+    				intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+    				startActivityForResult(intent, 0);
+    			}else{
+    				
+    				toast = Toast.makeText(context, "El nick ya está elegido, pruebe de nuevo", duration);
+    				toast.show();
+    			}
     	}
+
+    }
 
 protected String doInBackground(String... parameter) {
 			int myProgress = 0;
@@ -111,7 +116,7 @@ protected String doInBackground(String... parameter) {
 	// 	Return the value to be passed to onPostExecute
 
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/registerMobile");
+			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/registerMobile");
 
 			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 			//Añadimos todos los parámetros que queramos enviar
@@ -163,14 +168,6 @@ protected String doInBackground(String... parameter) {
 	
 	
 	
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_registro, menu);
-		return true;
-	}
-
 	/*Obtener los resultados desde la misma actividad*/
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		   if (requestCode == 0) {

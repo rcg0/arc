@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="arrayTrabajos">
-       
+       <item></item>
        <item>Estudiante</item>
        <item>Ciencias naturales</item>
        <item>Ingeniería</item>
@@ -13,6 +13,7 @@
 	</string-array>
 	
     <string-array name="arrayEdades">
+       <item></item>>
        <item>15-25</item>
        <item>26-35</item>
        <item>36-45</item>

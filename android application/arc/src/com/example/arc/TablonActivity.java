@@ -31,6 +31,8 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -122,19 +124,21 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	    		Context context = getApplicationContext();
 	    		int duration = Toast.LENGTH_SHORT;
 	    		Toast toast;
-	    		String message;
+	    		String message = null;
 	    		/*If the server says ok muestro un toast*/
-	    		
-	    		if(result.equals("ok")){
-		    		message = "Puntuación enviada correctamente";
+	    		if(result == null){
+	    			message = "La puntuación no se pudo enviar en estos momentos";
 	    		}else{
-	    			message = result;
+	    			if(result.equals("ok")){
+	    				message = "Puntuación enviada correctamente";
+	    				/*DESABILITO EL rating bar*/
+	    	    		ratingBar.setEnabled(false);
+	    	    		buttonPuntua.setEnabled(false);
+	    			}
 	    		}
-	    		toast = Toast.makeText(context, "Puntuación enviada correctamente" , duration);
+	    		toast = Toast.makeText(context, message , duration);
 	    		toast.show();
-	    		/*DESABILITO EL rating bar*/
-	    		ratingBar.setEnabled(false);
-	    		buttonPuntua.setEnabled(false);
+	    		
 	    		
 	    	}
 
@@ -146,13 +150,13 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		// 	Return the value to be passed to onPostExecute
 
 				//HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendRateMobile");
-				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/sendRateMobile");
+				HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendRateMobile");
 				
 				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 				//Añadimos todos los parámetros que queramos enviar
 				
 				l.add(new BasicNameValuePair("rate", ratingBar.getRating()+""));
-				l.add(new BasicNameValuePair("tablon_id", 2+""));/*FIX*/
+				l.add(new BasicNameValuePair("tablon_id", 4+""));/*FIX*/
 
 				
 		    			
@@ -197,20 +201,13 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	// [... Report results via UI update, Dialog, or notification ...]
 	    		/*En principio estaba puesto que soltara un toast*/
 	    		
-	    		Context context = getApplicationContext();
-	    		/*int duration = Toast.LENGTH_SHORT;
-	    		Toast toast;
-	    		String message = result;
-	    		toast = Toast.makeText(context, result , duration);
-	    		toast.show();*/
-	    		
-	    		Gson gson = new Gson();
-	    		tablon = gson.fromJson(result, Tablon.class);
-
-        		
-        		tablon.printTablon(tablonName ,layout ,context);	
-             	sendScroll();
-
+	    		if(result != null){
+	    			Context context = getApplicationContext();
+	    			Gson gson = new Gson();
+	    			tablon = gson.fromJson(result, Tablon.class);
+	    			tablon.printTablon(tablonName ,layout ,context);	
+	    			sendScroll();
+	    		}
 	    	}
 
 	protected String doInBackground(String... parameter) {
@@ -220,7 +217,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
 				
-    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/getTablon");
+    			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/getTablon");
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
@@ -269,9 +266,12 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	    	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
 			@Override
 	    	protected void onPostExecute(String result) {
-	    		
-	    		Log.i("javi", "checkpoint3");
-	    		
+	    		if (result == null){//no le ha llegado al servidor
+	    			Context context = getApplicationContext();
+					int duration = Toast.LENGTH_SHORT;
+					Toast toast = Toast.makeText(context, "No ha sido posible conectar con el servidor.", duration);
+    				toast.show();
+	    		}
 	    	}
 
 	   protected String doInBackground(String... parameter) {
@@ -283,7 +283,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 
 				
 
-				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/" +
+				HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/" +
 						"arc-server-v3/sendMessageMobile");
 
 				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
@@ -369,6 +369,27 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	        }).start();
 	    }
 		
+		@Override
+		public void onBackPressed() {
+		    super.onBackPressed();
+		    Intent intent = new Intent(TablonActivity.this, MainActivity.class);
+		    intent.putExtra("sessionOpen", true);
+		    startActivity(intent);
+		}
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+			// Inflate the menu; this adds items to the action bar if it is present.
+			getMenuInflater().inflate(R.menu.tablon_activity, menu);
+			return true;
+		}
 		
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+		    Intent intent = new Intent(TablonActivity.this, MainActivity.class);
+		    startActivity(intent);
+			
+			return false;
+		    
+		}
 		
 }

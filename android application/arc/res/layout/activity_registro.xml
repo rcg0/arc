@@ -26,15 +26,6 @@
         <requestFocus />
     </EditText>
 
-    <Button
-        android1:id="@+id/button1"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android1:layout_alignParentBottom="true"
-        android1:layout_centerHorizontal="true"
-        android1:layout_marginBottom="16dp"
-        android1:text="Entrar" />
-
     <CheckBox
         android1:id="@+id/checkBox2"
         android1:layout_width="wrap_content"
@@ -106,5 +97,14 @@
         android1:layout_below="@+id/checkBox2"
         android1:layout_marginTop="31dp"
         android1:entries="@array/arrayEdades" />
+
+    <Button
+        android1:id="@+id/button1"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_below="@+id/Spinner01"
+        android1:layout_centerHorizontal="true"
+        android1:layout_marginTop="38dp"
+        android1:text="Entrar" />
 
 </RelativeLayout>

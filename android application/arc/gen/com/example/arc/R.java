@@ -41,9 +41,10 @@ public final class R {
     }
     public static final class drawable {
         public static final int arc_logo=0x7f020000;
-        public static final int launcher_icon=0x7f020001;
-        public static final int share_via_barcode=0x7f020002;
-        public static final int shopper_icon=0x7f020003;
+        public static final int ic_launcher=0x7f020001;
+        public static final int launcher_icon=0x7f020002;
+        public static final int share_via_barcode=0x7f020003;
+        public static final int shopper_icon=0x7f020004;
     }
     public static final class id {
         public static final int Spinner01=0x7f080017;
@@ -136,8 +137,7 @@ public final class R {
         public static final int tablon_activity=0x7f03000c;
     }
     public static final class menu {
-        public static final int activity_main=0x7f0b0000;
-        public static final int activity_registro=0x7f0b0001;
+        public static final int tablon_activity=0x7f0b0000;
     }
     public static final class raw {
         public static final int beep=0x7f050000;

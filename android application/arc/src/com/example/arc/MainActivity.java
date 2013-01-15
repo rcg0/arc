@@ -45,9 +45,7 @@ public class MainActivity extends Activity {
 	TextView textAlias;
 	EditText editAlias;
 	Intent intent2;
-	
-	Boolean sessionOpen = false;
-	
+		
 	MyDefaultHttpClient myDefaultHttp;
 	HttpClient httpclient = null;
 	
@@ -67,7 +65,11 @@ public class MainActivity extends Activity {
 		 myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
          httpclient = myDefaultHttp.getHttpClient();
 		
-		Log.i("javi","Oncreate");
+        if(getIntent().getExtras() != null){
+        	callCamera();
+        }
+         
+         Log.i("javi","Oncreate");
 		
         this.buttonRegistrate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -100,28 +102,30 @@ public class MainActivity extends Activity {
 			@Override
         	protected void onPostExecute(String result) {
     // [... Report results via UI update, Dialog, or notification ...]
-        		/*En principio estaba puesto que soltara un toast*/
-        		
-        		/*If user is found We access to the camera*/
-        		if(!result.equals("nok")){
-            		Gson gson = new Gson();
-            		User userLogin = gson.fromJson(result, User.class);
-            		user = result;
-        			sessionOpen = true;
-        			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-            		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-            		startActivityForResult(intent, 0);
+        		Context context = getApplicationContext();
+				int duration = Toast.LENGTH_SHORT;
+				Toast toast = null;
+				
+        		if(result == null){
+        			toast = Toast.makeText(context, "No ha sido posible conectar con el servidor.", duration);
+    				toast.show();
         		}else{
-        			Context context = getApplicationContext();
-            		int duration = Toast.LENGTH_SHORT;
-            		Toast toast = Toast.makeText(context, "El usuario no existe.", duration);
-            		toast.show();
+        			/*If user is found We access to the camera*/
+        			if(!result.equals("nok")){
+        				Gson gson = new Gson();
+        				User userLogin = gson.fromJson(result, User.class);
+        				callCamera();
+        				user = result;
+        			}else{
+        				
+        				toast = Toast.makeText(context, "El usuario no existe.", duration);
+        				toast.show();
+        			}
         		}
         		
-        		
         	}
-
-    protected String doInBackground(String... parameter) {
+    
+	protected String doInBackground(String... parameter) {
     			int myProgress = 0;
     	// 	[... Perform background processing task, update myProgress ...]
     			publishProgress(myProgress);
@@ -129,8 +133,8 @@ public class MainActivity extends Activity {
     	// 	Return the value to be passed to onPostExecute
 
     			
-    			//HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/loginMobile");
-    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/loginMobile");
+    			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/loginMobile");
+    			//HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/loginMobile");
     			
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
@@ -167,7 +171,11 @@ public class MainActivity extends Activity {
         
         
     }
-     
+    private void callCamera() {
+        	Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+    		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+    		startActivityForResult(intent, 0);				
+   	}
         
     protected void onSaveInstanceState(Bundle bundle){
       	/*bundle.putBoolean("sessionOpen", sessionOpen);
@@ -178,13 +186,6 @@ public class MainActivity extends Activity {
 		Log.i("javi","onSaveInstanceState");
 
     }
-    
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
-	}
 	
 	/*Obtener los resultados desde la misma actividad*/
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -198,16 +199,26 @@ public class MainActivity extends Activity {
 		    	 int duration = Toast.LENGTH_SHORT;
 		    	 Toast toast = Toast.makeText(context, contents, duration);
 		    	 toast.show();
-
-
-		    	 intent2= new Intent(MainActivity.this, TablonActivity.class);
-		    	 intent2.putExtra("jsonUser", user);
-		         startActivity(intent2);
 		         
+		    	 callTablonActivity();
+		    	 
 		      } else if (resultCode == RESULT_CANCELED) {
 		         // Handle cancel
 		      }
 		   }
 		}
+
+
+	
+	private void callTablonActivity(){
+		intent2= new Intent(MainActivity.this, TablonActivity.class);
+		intent2.putExtra("jsonUser", user);
+		startActivity(intent2);
+	}
+	
+	public void onBackPressed() {
+		return;
+	    
+	}
 
 }
