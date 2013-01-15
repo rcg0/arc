@@ -50,7 +50,8 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	
 	TextView tablonName;
 	RatingBar ratingBar;
-	ImageButton imageButton;
+	ImageButton writeMessage;
+	ImageButton updateMessages;
 	Button buttonComentarios;
 	Button buttonPuntua;
 	LinearLayout layout;
@@ -70,7 +71,8 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		ratingBar = (RatingBar)findViewById(R.id.ratingBar1);
 		buttonComentarios = (Button)findViewById(R.id.button1);
 		buttonPuntua =(Button)findViewById(R.id.button2);
-		imageButton = (ImageButton)findViewById(R.id.imageButton1);
+		writeMessage = (ImageButton)findViewById(R.id.imageButton1);
+		updateMessages = (ImageButton)findViewById(R.id.imageButton2);
 		layout = (LinearLayout)findViewById(R.id.messageLayout);
 		sv = (ScrollView) findViewById(R.id.scrollView1);
     	new GetComments().execute();
@@ -78,13 +80,20 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
     	
     	jsonUser = getIntent().getStringExtra("jsonUser");
     	
-		 myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
-         httpclient = myDefaultHttp.getHttpClient();
+		myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
+        httpclient = myDefaultHttp.getHttpClient();
 		
-     	//sendScroll();
+        this.updateMessages.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
+            	String higherMessageId = tablon.searchHighMessageId()+"";
+            	new GetMoreMessages().execute(higherMessageId);
+            	
+            }
+      });
+    	 
     	
-    	this.imageButton.setOnClickListener(new View.OnClickListener() {
+    	this.writeMessage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	showSendDialog();
             	
@@ -150,13 +159,13 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		// 	Return the value to be passed to onPostExecute
 
 				//HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendRateMobile");
-				HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendRateMobile");
+				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/sendRateMobile");
 				
 				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 				//Añadimos todos los parámetros que queramos enviar
 				
 				l.add(new BasicNameValuePair("rate", ratingBar.getRating()+""));
-				l.add(new BasicNameValuePair("tablon_id", 4+""));/*FIX*/
+				l.add(new BasicNameValuePair("tablon_id", 2+""));/*FIX*/
 
 				
 		    			
@@ -187,8 +196,11 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 			}
 		
 		
-		}
+	
 		
+		}
+
+
 		
 		class GetComments extends AsyncTask<String, Integer, String> {
 	    	@Override
@@ -217,12 +229,81 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
 				
-    			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/getTablon");
+    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/getTablon");
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
     			l.add(new BasicNameValuePair("tablonSpace","un espacio"));
         		
+    	    			
+    			HttpResponse response = null;
+    			HttpEntity resEntity = null;
+    			String res = null;
+    			try {
+    				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l, "utf-8");
+    				httppost.setEntity(data);
+    		
+    				response = httpclient.execute(httppost);
+    				resEntity = response.getEntity();
+    			    
+    				/*a ver si funciona*/
+    				res = EntityUtils.toString(resEntity, HTTP.UTF_8);
+
+    				//BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
+    				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
+    			    //res = b.readLine().trim();
+    				//resEntity.consumeContent();
+    			} catch (ClientProtocolException e) {
+    				e.printStackTrace();
+    			} catch (IOException e) {
+    				e.printStackTrace();
+    				//tv.setText("No ha funcionado");
+    			}
+    	
+    			//httpclient.getConnectionManager().shutdown();
+    	
+    			return res;
+						
+				
+			}
+		
+		
+		}
+		
+		class GetMoreMessages extends AsyncTask<String, Integer, String> {
+	    	@Override
+	    	protected void onProgressUpdate(Integer... progress) {
+	// [... Update progress bar, Notification, or other UI element ...]
+	   	}	
+	    	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
+			@Override
+	    	protected void onPostExecute(String result) {
+	// [... Report results via UI update, Dialog, or notification ...]
+	    		/*En principio estaba puesto que soltara un toast*/
+	    		
+	    		if(result != null){
+	    			Context context = getApplicationContext();
+	    			Gson gson = new Gson();
+	    			Vector<Message> messages = gson.fromJson(result, Vector.class);
+	    			tablon.printSomeMessages(messages ,layout ,context);	
+	    			sendScroll();
+	    		}
+	    	}
+
+	protected String doInBackground(String... parameter) {
+				int myProgress = 0;
+		// 	[... Perform background processing task, update myProgress ...]
+				publishProgress(myProgress);
+		// 		[... Continue performing background processing task ...]
+		// 	Return the value to be passed to onPostExecute
+				
+    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/getAfterMessagesMobile");
+
+    			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
+    			//Añadimos todos los parámetros que queramos enviar
+    			l.add(new BasicNameValuePair("tablonSpace","un espacio"));
+    			l.add(new BasicNameValuePair("messageId",parameter[0]));
+
     	    			
     			HttpResponse response = null;
     			HttpEntity resEntity = null;

@@ -78,10 +78,11 @@ public final class R {
         public static final int history_detail=0x7f080037;
         public static final int history_title=0x7f080036;
         public static final int imageButton1=0x7f080042;
+        public static final int imageButton2=0x7f080046;
         public static final int image_view=0x7f08002f;
         public static final int launch_product_query=0x7f080004;
         public static final int lbl_msg=0x7f080031;
-        public static final int menu_settings=0x7f080046;
+        public static final int menu_settings=0x7f080047;
         public static final int messageLayout=0x7f080045;
         public static final int meta_text_view=0x7f080028;
         public static final int meta_text_view_label=0x7f080027;

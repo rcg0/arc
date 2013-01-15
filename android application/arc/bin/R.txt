@@ -57,10 +57,11 @@ int id help_contents 0x7f080033
 int id history_detail 0x7f080037
 int id history_title 0x7f080036
 int id imageButton1 0x7f080042
+int id imageButton2 0x7f080046
 int id image_view 0x7f08002f
 int id launch_product_query 0x7f080004
 int id lbl_msg 0x7f080031
-int id menu_settings 0x7f080046
+int id menu_settings 0x7f080047
 int id messageLayout 0x7f080045
 int id meta_text_view 0x7f080028
 int id meta_text_view_label 0x7f080027

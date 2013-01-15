@@ -214,6 +214,15 @@ public class Tablon {
 
 	}
 
+	public Vector<Message> getAfterMessages(int messageId, int tablonId){
+
+		DataBaseManager manager = new DataBaseManager();
+
+		return manager.getAfterMessages(messageId, tablonId);
+
+
+	}
+
 	public void setRateDDBB(){
 
 		DataBaseManager manager = new DataBaseManager();		

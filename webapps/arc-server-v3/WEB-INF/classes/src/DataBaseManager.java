@@ -466,6 +466,55 @@ public class DataBaseManager{
 
 	}
 
+	/*Obtiene los mensajes posteriores a un message_id dado*/
+
+	public Vector<Message> getAfterMessages(int messageId, int tablonId){
+
+
+		Vector <Message> msg = new Vector<Message>();
+		try{
+			Connection conn = openConnectionPool();
+
+			/***********************************************PARAMETRIZACIÓN*************************************************/
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Message INNER JOIN User ON Message.user_id=User.id WHERE tablon_id = ? AND Message.id > ? ORDER BY dateTime DESC;"); 
+			
+			statement.setInt(1, tablonId);
+			statement.setInt(2, messageId);
+			
+				/****************************************************************************************************************/
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				Message m = new Message();
+				User u = new User();
+				m.setId(rs.getInt("id"));
+
+				//System.out.println(rs.getString("Message.message"));
+				m.setMsg(rs.getString("Message.message"));
+				//System.out.println("visibility:"+rs.getInt("visibility"));
+				m.setVisibility(rs.getInt("visibility"));
+				//m.setDate(rs.getTimestamp("dateTime"));//peta aquí
+				u.setId(rs.getInt("Message.user_id"));
+				u.setName(rs.getString("User.name"));
+				u.setNick(rs.getString("User.nick"));
+				//System.out.println(rs.getString("User.name"));
+				u.setSurName1(rs.getString("User.surname1"));
+				u.setSurName2(rs.getString("User.surname2"));
+				m.setCreator(u);
+				msg.addElement(m);
+			}	
+
+			closeConnectionPool(conn);
+				
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+
+		return msg;
+
+	}
+
 
 	/*Obtiene los 'limit últimos mensajes del tablón' y los asocia al tablon*/
 

@@ -155,12 +155,16 @@ public class Tablon {
 		
 		tablonName.setText(this.getName());
 		
-		for(int i = 0; i<messages.size(); i++){
-			
-			this.printMessage(messages.elementAt(i).getCreator().getNick(),messages.elementAt(i).getMsg(),layout,context);
+		printSomeMessages(messages, layout, context);
 
-		}
 		
+	}
+	
+	public void printSomeMessages(Vector<Message> messages, LinearLayout layout,Context context){
+		
+		for(int i = 0; i<messages.size(); i++){	
+			this.printMessage(messages.elementAt(i).getCreator().getNick(),messages.elementAt(i).getMsg(),layout,context);
+		}
 	}
 	
 	public void printMessage(String nick, String msg, LinearLayout layout,Context context){
@@ -184,37 +188,10 @@ public class Tablon {
 		layout.addView(l);
 	}
 	
-	/*
-
+	public int searchHighMessageId(){
+		
+		int higherMessageId = this.msg.elementAt(msg.size()-1).getId();
+		
+		return higherMessageId; 
 	}
-	
-	public void printMessage(String nick, String msg, TableLayout layout,Context context){
-		
-		
-		TextView author = new TextView(context);
-		TextView message = new TextView(context);
-		
-		author.setText(nick + ": ");
-		author.setTypeface(null, Typeface.BOLD);
-		
-		message.setText(msg);
-		
-		author.setTextColor(Color.BLACK);
-		message.setTextColor(Color.BLACK);
-
-		author.setPadding(50, 0, 50, 0);
-		message.setPadding(50, 0, 50, 5);
-		
-
-		
-		
-		
-		
-		
-		
-		
-		layout.addView(author);
-		layout.addView(message);
-	}
-	*/
 }

@@ -60,4 +60,13 @@
         </LinearLayout>
     </ScrollView>
 
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_alignRight="@+id/ratingBar1"
+        android:layout_below="@+id/ratingBar1"
+        android:src="@android:drawable/stat_notify_sync" />
+
 </RelativeLayout>
