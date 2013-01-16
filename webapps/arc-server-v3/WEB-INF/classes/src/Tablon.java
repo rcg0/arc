@@ -152,10 +152,16 @@ public class Tablon {
 		msg.addElement(mensaje);
 	}
 
-	public void sendMessage(Message message){
+	public void setSomeMsg(Vector<Message> m){
+		for(int i = 0; i<m.size(); i++){
+			this.setMsg(m.elementAt(i));
+		}
+	}
+
+	public long sendMessage(Message message){
 		DataBaseManager manager = new DataBaseManager();
 		message.setMsg(manager.sanitizer(message.getMsg()));//saneo la cadena antes de pasarla a la base de datos.
-		manager.createMessage(message, this.getId());
+		return manager.createMessage(message, this.getId());
 	}
 
 
@@ -214,7 +220,7 @@ public class Tablon {
 
 	}
 
-	public Vector<Message> getAfterMessages(int messageId, int tablonId){
+	public Tablon getAfterMessages(int messageId, int tablonId){
 
 		DataBaseManager manager = new DataBaseManager();
 

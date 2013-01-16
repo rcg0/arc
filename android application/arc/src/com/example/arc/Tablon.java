@@ -145,6 +145,11 @@ public class Tablon {
 		msg.addElement(mensaje);
 	}
 	
+	public void setSomeMsg(Vector<Message> m){
+		for(int i = 0; i<m.size(); i++){
+			this.setMsg(m.elementAt(i));
+		}
+	}
 	
 	public void printTablon(TextView tablonName, LinearLayout layout,Context context){
 		

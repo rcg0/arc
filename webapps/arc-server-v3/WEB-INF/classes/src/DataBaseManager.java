@@ -468,15 +468,16 @@ public class DataBaseManager{
 
 	/*Obtiene los mensajes posteriores a un message_id dado*/
 
-	public Vector<Message> getAfterMessages(int messageId, int tablonId){
+	public Tablon getAfterMessages(int messageId, int tablonId){
 
-
+		Tablon tablon = new Tablon();
 		Vector <Message> msg = new Vector<Message>();
+
 		try{
 			Connection conn = openConnectionPool();
 
 			/***********************************************PARAMETRIZACIÓN*************************************************/
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Message INNER JOIN User ON Message.user_id=User.id WHERE tablon_id = ? AND Message.id > ? ORDER BY dateTime DESC;"); 
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Message INNER JOIN User ON Message.user_id=User.id WHERE tablon_id = ? AND Message.id > ?"); 
 			
 			statement.setInt(1, tablonId);
 			statement.setInt(2, messageId);
@@ -502,6 +503,7 @@ public class DataBaseManager{
 				m.setCreator(u);
 				msg.addElement(m);
 			}	
+			tablon.setAllMsg(msg);
 
 			closeConnectionPool(conn);
 				
@@ -511,7 +513,7 @@ public class DataBaseManager{
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
 
-		return msg;
+		return tablon;
 
 	}
 
@@ -939,15 +941,16 @@ catch(Exception ioe){
 	}
 
 
-	public boolean createMessage(Message message, int tablonId){
-		boolean result= false;
-		
+	public long createMessage(Message message, int tablonId){
+		long result = 0;
+
 		try {
 			Connection conn = openConnectionPool();
 			Statement stmt = conn.createStatement();
-			
+		    ResultSet generatedKeys = null;
+
 			PreparedStatement statement = conn.prepareStatement("INSERT INTO " +
-					"Message (user_id,tablon_id, message, format, visibility, dateTime) VALUES (?, ?, ?, ?, ?, NOW())");
+					"Message (user_id,tablon_id, message, format, visibility, dateTime) VALUES (?, ?, ?, ?, ?, NOW())",Statement.RETURN_GENERATED_KEYS);
 				
 			statement.setInt(1, message.getCreator().getId());
 			statement.setInt(2, tablonId);
@@ -957,9 +960,13 @@ catch(Exception ioe){
 
 			
 			int aux = statement.executeUpdate();
-			if(aux!=0)
-				result=true;
-		
+			
+	        generatedKeys = statement.getGeneratedKeys();
+	        if (generatedKeys.next()) {
+	        	result = generatedKeys.getLong(1);
+          		System.out.println("El id del msg insertado es : "+ result);
+        	} 
+
 			closeConnectionPool(conn);
 		}catch(SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());

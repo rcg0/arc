@@ -16,18 +16,19 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	HttpSession session = request.getSession(false);
 	User user = null;
 	String next="/error.html";
-	Tablon tablon = null;
+	Tablon tablon = new Tablon();	
 	PrintWriter out = response.getWriter();
-   	tablon= new Tablon();	
+   	Tablon returnTablon = new Tablon();
 	
 	tablon = tablon.getTablonDDBB(request.getParameter("tablonSpace"));
 	System.out.println("el último messageId que tiene el cliente es: "+request.getParameter("messageId"));
-	Vector<Message> msgs = tablon.getAfterMessages(Integer.parseInt(request.getParameter("messageId")),tablon.getId());
+	
+	returnTablon = tablon.getAfterMessages(Integer.parseInt(request.getParameter("messageId")),tablon.getId());
 	System.out.println("el parámetro que llega: "+request.getParameter("tablonSpace"));
 	Gson gson = new Gson();
-	String messagesJson = gson.toJson(msgs);
-	System.out.println("Mas mensajes pedidos son: "+messagesJson);
-	out.println(messagesJson);
+	String tablonJson = gson.toJson(returnTablon);
+	System.out.println("Mas mensajes pedidos son: "+ tablonJson);
+	out.println(tablonJson);
 
   }
 

@@ -138,7 +138,9 @@ public final class R {
         public static final int tablon_activity=0x7f03000c;
     }
     public static final class menu {
-        public static final int tablon_activity=0x7f0b0000;
+        public static final int activity_main=0x7f0b0000;
+        public static final int activity_registro=0x7f0b0001;
+        public static final int tablon_activity=0x7f0b0002;
     }
     public static final class raw {
         public static final int beep=0x7f050000;

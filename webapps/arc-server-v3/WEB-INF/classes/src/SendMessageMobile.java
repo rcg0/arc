@@ -44,12 +44,12 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	System.out.println("El tablon es: "+ tablonId);
 
 	//envía el mensaje a la base de datos
-	tablon.sendMessage(msg);
+	long writeMessageId = tablon.sendMessage(msg);
 	//msg.setVisibility();
 	
 	System.out.println("El mensaje que he enviado ha sido el siguiente: "+ msg.getMsg());
 	//tablones.elementAt(tablonId).createMessage(msg, Integer.parseInt(tablonId));
-	out.println("ok");
+	out.println(writeMessageId+"");
 	
   }
 

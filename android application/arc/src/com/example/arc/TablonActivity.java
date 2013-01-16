@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -57,6 +58,8 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	LinearLayout layout;
 	ScrollView sv;
 	Tablon tablon;
+	Message messageSended;
+	String higherMessageId;
 	
 	MyDefaultHttpClient myDefaultHttp;
 	HttpClient httpclient = null;
@@ -75,9 +78,9 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		updateMessages = (ImageButton)findViewById(R.id.imageButton2);
 		layout = (LinearLayout)findViewById(R.id.messageLayout);
 		sv = (ScrollView) findViewById(R.id.scrollView1);
+    	
     	new GetComments().execute();
 
-    	
     	jsonUser = getIntent().getStringExtra("jsonUser");
     	
 		myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
@@ -85,7 +88,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		
         this.updateMessages.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+            	
             	String higherMessageId = tablon.searchHighMessageId()+"";
             	new GetMoreMessages().execute(higherMessageId);
             	
@@ -284,9 +287,16 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	    		if(result != null){
 	    			Context context = getApplicationContext();
 	    			Gson gson = new Gson();
-	    			Vector<Message> messages = gson.fromJson(result, Vector.class);
-	    			tablon.printSomeMessages(messages ,layout ,context);	
-	    			sendScroll();
+	    			Tablon tablonReceived = gson.fromJson(result, Tablon.class);
+	    			if(!tablonReceived.getAllMsg().isEmpty()){
+	    				tablon.printSomeMessages(tablonReceived.getAllMsg() ,layout ,context);	
+	    				tablon.setSomeMsg(tablonReceived.getAllMsg());
+	    				sendScroll();
+	    			}else{
+						int duration = Toast.LENGTH_SHORT;
+						Toast toast = Toast.makeText(context, "No hay más mensajes que mostrar.", duration);
+	    				toast.show();
+	    			}
 	    		}
 	    	}
 
@@ -353,6 +363,10 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 					Toast toast = Toast.makeText(context, "No ha sido posible conectar con el servidor.", duration);
     				toast.show();
 	    		}
+	    		else{
+    				messageSended.setId(Integer.parseInt(result));
+    				tablon.setMsg(messageSended);
+	    		}
 	    	}
 
 	   protected String doInBackground(String... parameter) {
@@ -364,7 +378,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 
 				
 
-				HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/" +
+				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/" +
 						"arc-server-v3/sendMessageMobile");
 
 				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
@@ -423,15 +437,23 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		
 		@Override
 		public void onFinishEditDialog(String inputText) {
-	        Toast.makeText(this, "Hi, " + inputText, Toast.LENGTH_SHORT).show();
-	        new SendMessage().execute(inputText);
-	        Gson gson = new Gson();
-	        User user = gson.fromJson(jsonUser, User.class);
-	        String nick = user.getNick();
-	        tablon.printMessage(nick,inputText, layout, getApplicationContext());
-	        sendScroll();
+
+		   /*	String higherMessageId = tablon.searchHighMessageId()+"";
+			AsyncTask<String, Integer, String> instance = new GetMoreMessages().execute(higherMessageId);
+					
+			while (instance.getStatus() == Status.RUNNING);*/
+			
+			new SendMessage().execute(inputText);
+			Gson gson = new Gson();
+			User user = gson.fromJson(jsonUser, User.class);
+			String nick = user.getNick();
+			tablon.printMessage(nick,inputText, layout, getApplicationContext());
+			sendScroll();
+			messageSended = new Message();
+			messageSended.setCreator(user);
+			messageSended.setMsg(inputText);
+			
 		}
-		
 		
 		
 		private void sendScroll(){
