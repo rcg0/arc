@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:paddingLeft="2dp"/>
+        android:paddingLeft="2dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageButton
         android:id="@+id/imageButton1"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@+id/imageButton2"
         android:src="@android:drawable/ic_menu_edit" />
 
     <RatingBar
@@ -29,15 +29,6 @@
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/button2"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ratingBar1"
-        android:layout_centerHorizontal="true"
-        android:text="Puntúa" />
-
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="wrap_content"
@@ -45,17 +36,15 @@
         android:layout_above="@+id/imageButton1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/button2"
-        android:fillViewport="true" 
-		android:scrollY="1000dp">
+        android:layout_below="@+id/ratingBar1"
+        android:fillViewport="true"
+        android:scrollY="1000dp" >
+
         <LinearLayout
             android:id="@+id/messageLayout"
             android:layout_width="match_parent"
-            android:layout_height="100dip"
-            android:orientation="vertical"
-         >
-
-       
+            android:layout_height="344dp"
+            android:orientation="vertical" >
 
         </LinearLayout>
     </ScrollView>
@@ -64,9 +53,8 @@
         android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_alignRight="@+id/ratingBar1"
-        android:layout_below="@+id/ratingBar1"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/scrollView1"
         android:src="@android:drawable/stat_notify_sync" />
 
 </RelativeLayout>

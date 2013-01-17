@@ -15,7 +15,7 @@
     <application
         android:name=".MyDefaultHttpClient" 
         android:allowBackup="true"
-        android:icon="@drawable/arc_logo"
+        android:icon="@drawable/arc_icon_bubble"
         android:label="@string/app_names"
         android:theme="@style/AppTheme" >
         <activity

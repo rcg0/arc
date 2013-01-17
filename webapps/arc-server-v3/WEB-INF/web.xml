@@ -52,6 +52,17 @@
         	<url-pattern>/logout</url-pattern>
         </servlet-mapping>
 	
+
+    <servlet>
+            <servlet-name>ServletLogoutMobile</servlet-name>
+            <servlet-class>arc.LogoutMobile</servlet-class>
+        </servlet>
+        
+        <servlet-mapping>
+            <servlet-name>ServletLogoutMobile</servlet-name>
+            <url-pattern>/logoutMobile</url-pattern>
+        </servlet-mapping>
+    
 	
 	
 	

@@ -36,41 +36,32 @@
         </TableLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/button2"
-        style="?android:attr/buttonStyleSmall"
+    
+    
+    <RatingBar
+        android:id="@+id/ratingBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ratingBar1"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/ratingBar1"
-        android:layout_toLeftOf="@+id/ratingBar1"
-        android:text="Puntúa" />
+        android:layout_below="@+id/textView1"
+        android:layout_marginLeft="19dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageButton2"
+        android:layout_marginLeft="42dp"
+        android:layout_toRightOf="@+id/ratingBar1"
+        android:src="@android:drawable/ic_menu_edit" />
 
     <ImageButton
         android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/scrollView1"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="39dp"
+        android:layout_toRightOf="@+id/imageButton1"
         android:src="@android:drawable/stat_notify_sync" />
-
-    <RatingBar
-        android:id="@+id/ratingBar1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/imageButton1" />
-
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageButton2"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/imageButton2"
-        android:src="@android:drawable/ic_menu_edit" />
 
 </RelativeLayout>

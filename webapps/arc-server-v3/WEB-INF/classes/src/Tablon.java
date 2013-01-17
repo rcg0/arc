@@ -231,6 +231,7 @@ public class Tablon {
 
 	public void setMediaToTablon(float newRate){
 
+		System.out.println("SetMediaToTablon en tablon");
 		DataBaseManager manager = new DataBaseManager();		
 		manager.setMediaToTablon(this, newRate);
 

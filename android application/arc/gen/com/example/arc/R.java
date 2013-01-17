@@ -40,11 +40,12 @@ public final class R {
         public static final int viewfinder_mask=0x7f070015;
     }
     public static final class drawable {
-        public static final int arc_logo=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int launcher_icon=0x7f020002;
-        public static final int share_via_barcode=0x7f020003;
-        public static final int shopper_icon=0x7f020004;
+        public static final int arc_icon_bubble=0x7f020000;
+        public static final int arc_logo=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int launcher_icon=0x7f020003;
+        public static final int share_via_barcode=0x7f020004;
+        public static final int shopper_icon=0x7f020005;
     }
     public static final class id {
         public static final int Spinner01=0x7f080017;
@@ -78,12 +79,12 @@ public final class R {
         public static final int history_detail=0x7f080037;
         public static final int history_title=0x7f080036;
         public static final int imageButton1=0x7f080042;
-        public static final int imageButton2=0x7f080046;
+        public static final int imageButton2=0x7f080043;
         public static final int image_view=0x7f08002f;
         public static final int launch_product_query=0x7f080004;
         public static final int lbl_msg=0x7f080031;
         public static final int menu_settings=0x7f080047;
-        public static final int messageLayout=0x7f080045;
+        public static final int messageLayout=0x7f080046;
         public static final int meta_text_view=0x7f080028;
         public static final int meta_text_view_label=0x7f080027;
         public static final int page_number_view=0x7f08003b;
@@ -91,13 +92,13 @@ public final class R {
         public static final int query_button=0x7f080039;
         public static final int query_text_view=0x7f080038;
         public static final int quit=0x7f080005;
-        public static final int ratingBar1=0x7f080043;
+        public static final int ratingBar1=0x7f080044;
         public static final int restart_preview=0x7f080006;
         public static final int result_button_view=0x7f08002b;
         public static final int result_list_view=0x7f08003a;
         public static final int result_view=0x7f08001f;
         public static final int return_scan_result=0x7f080007;
-        public static final int scrollView1=0x7f080044;
+        public static final int scrollView1=0x7f080045;
         public static final int search_book_contents_failed=0x7f080008;
         public static final int search_book_contents_succeeded=0x7f080009;
         public static final int share_app_button=0x7f08003d;

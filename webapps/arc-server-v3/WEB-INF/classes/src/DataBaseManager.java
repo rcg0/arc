@@ -1167,6 +1167,7 @@ catch(Exception ioe){
 
 	public void setMediaToTablon(Tablon tablon, float newRate){
 	
+
 		float oldRate=0;
 		//leo rate
 		oldRate = Float.parseFloat(readRateDDBB(tablon));
@@ -1209,8 +1210,8 @@ catch(Exception ioe){
 			Connection conn = openConnectionPool();
 		
 
-			PreparedStatement statement = conn.prepareStatement("SELECT rate FROM Tablon WHERE id  = ?;");
-			statement.setInt(1, tablon.getId());
+			PreparedStatement statement = conn.prepareStatement("SELECT rate FROM Tablon WHERE space  = ?;");
+			statement.setString(1, tablon.getSpaceId());
 
 
 			ResultSet rs = statement.executeQuery();
