@@ -162,15 +162,14 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		// 	Return the value to be passed to onPostExecute
 
 				//HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendRateMobile");
-				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/sendRateMobile");
+				HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080x/arc-server-v3/sendRateMobile");
 				
 				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 				//Añadimos todos los parámetros que queramos enviar
 				
 				l.add(new BasicNameValuePair("rate", ratingBar.getRating()+""));
-				l.add(new BasicNameValuePair("tablon_id", 2+""));/*FIX*/
+				l.add(new BasicNameValuePair("spaceId", "un espacio"));
 
-				
 		    			
 				HttpResponse response = null;
 				HttpEntity resEntity = null;
@@ -232,7 +231,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
 				
-    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/getTablon");
+    			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/getTablon");
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
@@ -307,7 +306,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
 				
-    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/getAfterMessagesMobile");
+    			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/getAfterMessagesMobile");
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
@@ -378,7 +377,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 
 				
 
-				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/" +
+				HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/" +
 						"arc-server-v3/sendMessageMobile");
 
 				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();

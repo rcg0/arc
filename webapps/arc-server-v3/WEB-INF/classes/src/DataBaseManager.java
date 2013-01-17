@@ -1139,19 +1139,45 @@ catch(Exception ioe){
 		}
 	}
 
-	public void setRateDDBB(Tablon tablon){
+	public void setRateDDBB(Rate rate){
+
+		Connection conn = openConnectionPool();
+		try {	
+			Statement stmt = conn.createStatement();
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO Rate (user_id,space_id,rate) VALUES (?,?,?)");
+		
+			statement.setInt(1, rate.getUserId());
+			statement.setString(2, rate.getSpaceId());
+			statement.setFloat(3, rate.getRate());
+
+			int aux = statement.executeUpdate();
+
+			closeConnectionPool(conn);
+
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}		
+	}
+
+
+
+	/*método media y auxiliares debajo*/
+
+	public void setMediaToTablon(Tablon tablon, float newRate){
 	
 		float oldRate=0;
-		float newRate=0;
-		/*leo rate*/
+		//leo rate
 		oldRate = Float.parseFloat(readRateDDBB(tablon));
 		System.out.println("oldRate:" +oldRate);
-		/*calculo nueva rate*/
-		newRate = (Float.parseFloat(tablon.getRate()) + oldRate) / 2;
+		//calculo nueva rate
+		newRate = (newRate + oldRate) / 2;
 
-		/*actualizo nueva rate.*/
+		//actualizo nueva rate.
 		updateRate(tablon, newRate);
 	}
+
 
 	public void updateRate(Tablon tablon, float newRate){
 
@@ -1182,10 +1208,10 @@ catch(Exception ioe){
 		try{
 			Connection conn = openConnectionPool();
 		
-			/***********************************************PARAMETRIZACIÓN*************************************************/
+
 			PreparedStatement statement = conn.prepareStatement("SELECT rate FROM Tablon WHERE id  = ?;");
 			statement.setInt(1, tablon.getId());
-			/****************************************************************************************************************/
+
 
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) {
@@ -1204,5 +1230,5 @@ catch(Exception ioe){
 		
 		return oldRate;			
 	}
-/**/
+
 }

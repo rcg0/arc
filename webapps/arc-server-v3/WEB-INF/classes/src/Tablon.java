@@ -229,10 +229,10 @@ public class Tablon {
 
 	}
 
-	public void setRateDDBB(){
+	public void setMediaToTablon(float newRate){
 
 		DataBaseManager manager = new DataBaseManager();		
-		manager.setRateDDBB(this);
+		manager.setMediaToTablon(this, newRate);
 
 	}
 

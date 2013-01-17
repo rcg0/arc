@@ -13,19 +13,38 @@ public class SendRateMobile extends HttpServlet {
 public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 	
+
 	PrintWriter out = response.getWriter();
 	HttpSession session = request.getSession(false);
-System.out.println("checkpoint 1");
-	Tablon tablon = new Tablon();
-	tablon.setId(Integer.parseInt(request.getParameter("tablon_id")));
-	tablon.setRate(request.getParameter("rate"));
-	System.out.println("checkpoint 2");
-	tablon.setRateDDBB();
-	
-	System.out.println("Rate enviada " + request.getParameter("rate"));
-	System.out.println("Al tablon "+request.getParameter("tablon_id"));
+	User user = (User)session.getAttribute("user");
 
-	out.println("ok");
+	System.out.println("Checkpoint 0");
+
+	if(user != null){
+
+		float newRate = Float.parseFloat(request.getParameter("rate"));
+		String spaceId = request.getParameter("spaceId");
+
+		System.out.println("checkpoint 1");
+		Tablon tablon = new Tablon();
+		tablon.setSpaceId(spaceId);
+		Rate rate = new Rate();
+		rate.setUserId(user.getId());
+		rate.setSpaceId(spaceId);
+		rate.setRate(newRate);
+		System.out.println("checkpoint 2");
+		
+		rate.setRateDDBB();
+		System.out.println("checkpoint 3");
+
+		tablon.setMediaToTablon(newRate);
+	
+		System.out.println("Rate enviada " + newRate);
+		System.out.println("Al tablon "+ spaceId);
+
+		out.println("ok");
+	}
+
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response)
