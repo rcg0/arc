@@ -16,7 +16,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import com.example.arc.RegistroActivity.MyAsyncTask;
 import com.example.arc.SendMessageDialog.SendMessageDialogListener;
 import com.google.gson.Gson;
 
@@ -359,15 +358,16 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	    	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
 			@Override
 	    	protected void onPostExecute(String result) {
-	    		if (result == null){//no le ha llegado al servidor
+	    		if (result != null){//no le ha llegado al servidor
+	    		/*este método hace lo mismo que el onpostexecute de getAfterMessages --> REFACTOR */
 	    			Context context = getApplicationContext();
-					int duration = Toast.LENGTH_SHORT;
-					Toast toast = Toast.makeText(context, "No ha sido posible conectar con el servidor.", duration);
-    				toast.show();
-	    		}
-	    		else{
-    				messageSended.setId(Integer.parseInt(result));
-    				tablon.setMsg(messageSended);
+	    			Gson gson = new Gson();
+	    			Tablon tablonReceived = gson.fromJson(result, Tablon.class);
+	    			if(!tablonReceived.getAllMsg().isEmpty()){
+	    				tablon.printSomeMessages(tablonReceived.getAllMsg() ,layout ,context);	
+	    				tablon.setSomeMsg(tablonReceived.getAllMsg());
+	    				sendScroll();
+	    			}
 	    		}
 	    	}
 
@@ -386,8 +386,10 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 				//Añadimos todos los parámetros que queramos enviar
 				
 				l.add(new BasicNameValuePair("tablonId", tablon.getId()+""));
-				l.add(new BasicNameValuePair("message", parameter[0] ));//the parameter you pass				
-		    			
+				l.add(new BasicNameValuePair("tablonSpace", tablon.getSpaceId()));
+				l.add(new BasicNameValuePair("message", parameter[0] ));
+				l.add(new BasicNameValuePair("messageId", parameter[1]));
+				
 				HttpResponse response = null;
 				HttpEntity resEntity = null;
 				String res = null;
@@ -489,8 +491,8 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		protected void onSaveInstanceState(Bundle savedInstanceState){	
 			super.onSaveInstanceState(savedInstanceState);
 
-			savedInstanceState.putBoolean("rateSelected",ratingBar.isEnabled());
 			savedInstanceState.putFloat("rateValue", ratingBar.getRating());
+	
 		}
 		
 		protected void onRestoreInstanceState(Bundle savedInstanceState){
@@ -509,13 +511,14 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 			AsyncTask<String, Integer, String> instance = new GetMoreMessages().execute(higherMessageId);
 					
 			while (instance.getStatus() == Status.RUNNING);*/
-			
-			new SendMessage().execute(inputText);
+        	String higherMessageId = tablon.searchHighMessageId()+"";
+
+			new SendMessage().execute(inputText, higherMessageId);
 			Gson gson = new Gson();
 			User user = gson.fromJson(jsonUser, User.class);
 			String nick = user.getNick();
-			tablon.printMessage(nick,inputText, layout, getApplicationContext());
-			sendScroll();
+			//tablon.printMessage(nick,inputText, layout, getApplicationContext());
+			//sendScroll();
 			messageSended = new Message();
 			messageSended.setCreator(user);
 			messageSended.setMsg(inputText);

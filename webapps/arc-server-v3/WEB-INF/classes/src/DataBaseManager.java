@@ -1077,7 +1077,6 @@ catch(Exception ioe){
 	public User existsSameNick(String nick){
 			User result = null;
 			User databaseUser=new User();
-		
 		try{
 			Connection conn = openConnectionPool();
 			/***********************************************PARAMETRIZACIÓN*************************************************/
@@ -1115,13 +1114,18 @@ catch(Exception ioe){
 	}
 
 		/*mobile register, without name, and surnames*/
-		public void saveRegister(User user){
+		public int saveRegister(User user){
+
+			int result = 0;
+
 
 		try {
 			Connection conn = openConnectionPool();
 			Statement stmt = conn.createStatement();
-			
-			PreparedStatement statement = conn.prepareStatement("INSERT INTO User (	genre, age, work, nick) VALUES (?, ?, ?, ?)");
+			ResultSet generatedKeys = null;
+
+
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO User (	genre, age, work, nick) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 				
 			statement.setString(1, user.getGenre());
 			statement.setString(2, user.getAge());
@@ -1130,6 +1134,12 @@ catch(Exception ioe){
 		
 			int aux = statement.executeUpdate();
 		
+			generatedKeys = statement.getGeneratedKeys();
+	        if (generatedKeys.next()) {
+	        	result = generatedKeys.getInt(1);
+          		System.out.println("El id del usuario insertado es : "+ result);
+        	} 
+
 			closeConnectionPool(conn);
 
 		}catch(SQLException ex){
@@ -1137,6 +1147,8 @@ catch(Exception ioe){
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
+
+		return result;
 	}
 
 	public void setRateDDBB(Rate rate){

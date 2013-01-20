@@ -104,6 +104,6 @@
         android1:layout_alignRight="@+id/textView3"
         android1:layout_below="@+id/Spinner01"
         android1:layout_marginTop="15dp"
-        android1:text="Entrar" />
+        android1:text="Registrar" />
 
 </RelativeLayout>

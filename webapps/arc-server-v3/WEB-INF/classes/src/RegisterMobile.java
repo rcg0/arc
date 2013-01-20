@@ -15,20 +15,21 @@ public class RegisterMobile extends HttpServlet {
 public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 	
+
 	PrintWriter out = response.getWriter();
 	HttpSession session = request.getSession(false);
 	Gson gson;
 	String json;
 	User user = new User();
+	
 	user.setNick(request.getParameter("alias"));
 
 /*la cosa aquí es que no esté repetido el alias en la base de datos*/
+	User databaseUser = user.existsSameNick();
 	
-
-	if(user.existsSameNick()!=null){
+	if(databaseUser!=null){
 		out.println("nok");
 	}else{
-		session=request.getSession();
 
 		System.out.println(request.getParameter("alias"));
 		System.out.println(request.getParameter("age"));
@@ -38,12 +39,14 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 		user.setAge(request.getParameter("age"));
 		user.setWork(request.getParameter("work"));
 		user.setGenre(request.getParameter("genre"));
-		user.saveRegister();
+		int userId = user.saveRegister();
+		user.setId(userId);
 
 		gson = new Gson();
     	json = gson.toJson(user); 
-		out.println(json);
+		
 
+		out.println(json);
 	}
 
   }

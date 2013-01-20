@@ -16,9 +16,16 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 
 	PrintWriter out = response.getWriter();
 	HttpSession session = request.getSession(false);
-	User user = (User)session.getAttribute("user");
+	
+	System.out.println("el id de sesion es: "+session.getId());
 
 	System.out.println("Checkpoint 0");
+
+	User user = (User)session.getAttribute("user");
+	if(user == null){
+		System.out.println("el user es null");
+	}
+		System.out.println("checkpoint 0.5");
 
 	if(user != null){
 
@@ -44,6 +51,8 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 
 		out.println("ok");
 	}
+
+
 
   }
 

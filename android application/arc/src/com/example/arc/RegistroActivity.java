@@ -59,21 +59,20 @@ public class RegistroActivity extends Activity {
 		edad = (Spinner)findViewById(R.id.spinner1);
 		trabajo = (Spinner)findViewById(R.id.Spinner01);
 	
-		 myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
-         httpclient = myDefaultHttp.getHttpClient();
+		myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
+        httpclient = myDefaultHttp.getHttpClient();
 		
 		
 		this.buttonEntrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	
-            	new MyAsyncTask().execute();//lanzo el hilo
-            	
+            	new Registro().execute();
             }
       });
 		
 		
 	}
-    class MyAsyncTask extends AsyncTask<String, Integer, String> {
+    class Registro extends AsyncTask<String, Integer, String> {
     	@Override
     	protected void onProgressUpdate(Integer... progress) {
 // [... Update progress bar, Notification, or other UI element ...]
@@ -90,15 +89,15 @@ public class RegistroActivity extends Activity {
 				toast = Toast.makeText(context, "No ha sido posible conectar con el servidor.", duration);
 				toast.show();
     		}else{
-    			/*If the server not says nok We access to the camera*/
     			if(!result.equals("nok")){
     				Gson gson = new Gson();
     				jsonUser = result;
     				User userLogin = gson.fromJson(result, User.class);
-    				sessionOpen = true;
-    				Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-    				intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-    				startActivityForResult(intent, 0);
+    				
+    				intent = new Intent(RegistroActivity.this, MainActivity.class);
+    				startActivity(intent);
+    				toast = Toast.makeText(context, "Usuario registrado. Introduce tu alias para acceder.", duration);
+    				toast.show();
     			}else{
     				
     				toast = Toast.makeText(context, "El nick ya está elegido, pruebe de nuevo", duration);
@@ -168,28 +167,7 @@ protected String doInBackground(String... parameter) {
 	
 	
 	
-	/*Obtener los resultados desde la misma actividad*/
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		   if (requestCode == 0) {
-		      if (resultCode == RESULT_OK) {
-		         String contents = intent.getStringExtra("SCAN_RESULT");
-		         String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-		         
-		         
-		         Context context = getApplicationContext();
-		    	 int duration = Toast.LENGTH_SHORT;
-		    	 Toast toast = Toast.makeText(context, contents, duration);
-		    	 toast.show();
-		    	 
-		    	 intent= new Intent(RegistroActivity.this, TablonActivity.class);
-		    	 intent.putExtra("jsonUser", jsonUser);
-		         startActivity(intent);
-		         
-		      } else if (resultCode == RESULT_CANCELED) {
-		         // Handle cancel
-		      }
-		   }
-		}
+	
 	
 	protected void onSaveInstanceState(Bundle savedInstanceState){
 		super.onSaveInstanceState(savedInstanceState);

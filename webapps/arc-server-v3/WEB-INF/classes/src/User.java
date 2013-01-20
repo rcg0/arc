@@ -197,11 +197,11 @@ public class User {
 
       }
 
-	  public void saveRegister(){
+	  public int saveRegister(){
 
 	  	DataBaseManager manager = new DataBaseManager();
 
-	  	manager.saveRegister(this);
+	  	return manager.saveRegister(this);
 
 
       }

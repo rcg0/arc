@@ -214,10 +214,7 @@ public class MainActivity extends Activity {
 		intent2= new Intent(MainActivity.this, TablonActivity.class);
 		intent2.putExtra("jsonUser", user);
 		startActivity(intent2);
+		//finish();	
 	}
-	/*
-	public void onBackPressed() {
-		return;  
-	}*/
-	
+
 }
