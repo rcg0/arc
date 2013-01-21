@@ -46,9 +46,7 @@ import android.widget.Toast;
 public class SendMessageDialog extends DialogFragment implements OnEditorActionListener{
 	
 	 EditText mEditText;
-	 
-	 int tablonId;
-	 
+	 	 
 	 MyDefaultHttpClient myDefaultHttp;
 	 HttpClient httpclient = null;
 	 
@@ -65,17 +63,15 @@ public class SendMessageDialog extends DialogFragment implements OnEditorActionL
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_send_message, container);
         
-
+        Bundle bundle = getArguments();
+        
         mEditText = (EditText) view.findViewById(R.id.txt_msg);
         
+        mEditText.setText(bundle.getString("predefinedMessage"));
         // Show soft keyboard automatically
         mEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         mEditText.setOnEditorActionListener(this);
-        
-        myDefaultHttp = ((MyDefaultHttpClient)getActivity().getApplicationContext());
-
-        httpclient = myDefaultHttp.getHttpClient();
         
        
         return view;

@@ -38,9 +38,9 @@ public class RegistroActivity extends Activity {
 	CheckBox generoFemenino;
 	Spinner edad;
 	Spinner trabajo;
-	Boolean sessionOpen = false;
 
 	Intent intent;
+	Intent intent2;
 	
 	MyDefaultHttpClient myDefaultHttp;
 	HttpClient httpclient = null;
@@ -62,6 +62,10 @@ public class RegistroActivity extends Activity {
 		myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
         httpclient = myDefaultHttp.getHttpClient();
 		
+        if(getIntent().getExtras() != null){
+        	jsonUser = getIntent().getExtras().getString("jsonUser");
+        	callCamera();
+        }
 		
 		this.buttonEntrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -93,11 +97,8 @@ public class RegistroActivity extends Activity {
     				Gson gson = new Gson();
     				jsonUser = result;
     				User userLogin = gson.fromJson(result, User.class);
+    				callCamera();
     				
-    				intent = new Intent(RegistroActivity.this, MainActivity.class);
-    				startActivity(intent);
-    				toast = Toast.makeText(context, "Usuario registrado. Introduce tu alias para acceder.", duration);
-    				toast.show();
     			}else{
     				
     				toast = Toast.makeText(context, "El nick ya está elegido, pruebe de nuevo", duration);
@@ -114,7 +115,6 @@ protected String doInBackground(String... parameter) {
 	// 		[... Continue performing background processing task ...]
 	// 	Return the value to be passed to onPostExecute
 
-			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/registerMobile");
 
 			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
@@ -157,16 +157,50 @@ protected String doInBackground(String... parameter) {
 				//tv.setText("No ha funcionado");
 			}
 	
-			httpclient.getConnectionManager().shutdown();
+			//httpclient.getConnectionManager().shutdown();
 	
 			return res;
 		}
     
     
 }
+    
+
+	private void callTablonActivity(String contents){
+		intent2= new Intent(RegistroActivity.this, TablonActivity.class);
+		intent2.putExtra("jsonUser", jsonUser);
+		intent2.putExtra("qrdecodified", contents);
+		startActivity(intent2);
+		//finish();	
+	}
 	
+    private void callCamera() {
+    	Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+		startActivityForResult(intent, 0);				
+	}
 	
-	
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    	 	
+    	       if (requestCode == 0) {
+    	          if (resultCode == RESULT_OK) {    		  	
+    	        	  String contents = intent.getStringExtra("SCAN_RESULT");
+    	        	  String format = intent.getStringExtra("SCAN_RESULT_FORMAT");  	
+    	        	  Context context = getApplicationContext();
+    		  	
+    	        	  int duration = Toast.LENGTH_SHORT;
+    	          	  Toast toast = Toast.makeText(context, contents, duration);   		  	
+    	        	  toast.show();
+    	        	  
+    	        	  callTablonActivity(contents);
+    	        	  
+        	          } else if (resultCode == RESULT_CANCELED) {
+                 // Handle cancel
+        	          }
+    	
+    	       }
+    	
+        }
 	
 	
 	protected void onSaveInstanceState(Bundle savedInstanceState){

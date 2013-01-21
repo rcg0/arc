@@ -16,6 +16,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 	
 
+	String nextServlet = "";	
 	PrintWriter out = response.getWriter();
 	HttpSession session = request.getSession(false);
 	Gson gson;
@@ -45,9 +46,12 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 		gson = new Gson();
     	json = gson.toJson(user); 
 		
+		nextServlet = "/loginMobile";		
+		}
 
-		out.println(json);
-	}
+
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextServlet);
+		dispatcher.forward(request,response);	
 
   }
 

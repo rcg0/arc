@@ -64,6 +64,11 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	MyDefaultHttpClient myDefaultHttp;
 	HttpClient httpclient = null;
 	
+	
+	String qrdecodified = null;//format space,predefinedMessage
+	String space = null;
+	String predefinedMessage = "";
+	
 	String jsonUser = null;
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,23 +112,31 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
     	
     	this.writeMessage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	showSendDialog();
+            	showSendDialog(predefinedMessage);
             	
             }
       });
     	
-    	new GetComments().execute();
+    	qrdecodified = getIntent().getStringExtra("qrdecodified");
+    	String [] qr = qrdecodified.split(",");
+    	space = qr[0];
+    	if(qr.length == 2){
+    		predefinedMessage = qr[1];
+    	}
+    	new GetComments().execute(); 
 
-    	 
+    	
+    	
+    	
 	}
-		private void showSendDialog() {
+		
+		private void showSendDialog(String predefinedMessage) {
 
 			  FragmentManager fm = getSupportFragmentManager();
 		      SendMessageDialog messageDialog = new SendMessageDialog();
 		      Bundle args = new Bundle();
-		      args.putInt("tablonId", tablon.getId());
+		      args.putString("predefinedMessage", predefinedMessage);
 		      messageDialog.setArguments(args);
-		      //args.putString("nickUser", value);
 		  
 		      messageDialog.show(fm, "fragment_edit_name");
 		      
@@ -170,7 +183,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 				//Añadimos todos los parámetros que queramos enviar
 				
 				l.add(new BasicNameValuePair("rate", ratingBar.getRating()+""));
-				l.add(new BasicNameValuePair("spaceId", "un espacio"));
+				l.add(new BasicNameValuePair("spaceId", space));
 
 		    			
 				HttpResponse response = null;
@@ -224,6 +237,10 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	    			tablon.printTablon(tablonName ,layout ,context);	
 	    			sendScroll();
 	    		}
+	    		if(!predefinedMessage.equals("")){//predefinedMessage Exists
+	    			showSendDialog(predefinedMessage);
+	    			predefinedMessage = "";//lo reseteo para que no lo coja la siguiente vez
+	    		}
 	    	}
 
 	protected String doInBackground(String... parameter) {
@@ -237,7 +254,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
-    			l.add(new BasicNameValuePair("tablonSpace","un espacio"));
+    			l.add(new BasicNameValuePair("tablonSpace",space));
         		
     	    			
     			HttpResponse response = null;
@@ -312,7 +329,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
-    			l.add(new BasicNameValuePair("tablonSpace","un espacio"));
+    			l.add(new BasicNameValuePair("tablonSpace",space));
     			l.add(new BasicNameValuePair("messageId",parameter[0]));
 
     	    			
@@ -492,14 +509,15 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 			super.onSaveInstanceState(savedInstanceState);
 
 			savedInstanceState.putFloat("rateValue", ratingBar.getRating());
-	
+			savedInstanceState.putString("jsonUser", jsonUser);
 		}
 		
 		protected void onRestoreInstanceState(Bundle savedInstanceState){
 			super.onRestoreInstanceState(savedInstanceState);
 			
 			ratingBar.setRating(savedInstanceState.getFloat("rateValue"));
-			
+			jsonUser = savedInstanceState.getString("jsonUser");
+			predefinedMessage = "";
 		}
 		
 	
@@ -517,8 +535,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 			Gson gson = new Gson();
 			User user = gson.fromJson(jsonUser, User.class);
 			String nick = user.getNick();
-			//tablon.printMessage(nick,inputText, layout, getApplicationContext());
-			//sendScroll();
+			
 			messageSended = new Message();
 			messageSended.setCreator(user);
 			messageSended.setMsg(inputText);
@@ -546,7 +563,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		public void onBackPressed() {
 		    super.onBackPressed();
 		    Intent intent = new Intent(TablonActivity.this, MainActivity.class);
-		    intent.putExtra("sessionOpen", true);
+		    intent.putExtra("jsonUser", jsonUser);
 		    startActivity(intent);
 		}
 		@Override

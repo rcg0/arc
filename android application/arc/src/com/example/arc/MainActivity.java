@@ -65,7 +65,9 @@ public class MainActivity extends Activity {
 		 myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
          httpclient = myDefaultHttp.getHttpClient();
 		
+        
         if(getIntent().getExtras() != null){
+        	user = getIntent().getExtras().getString("jsonUser");
         	callCamera();
         }
          
@@ -171,6 +173,7 @@ public class MainActivity extends Activity {
         
         
     }
+    
     private void callCamera() {
         	Intent intent = new Intent("com.google.zxing.client.android.SCAN");
     		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
@@ -194,13 +197,14 @@ public class MainActivity extends Activity {
 		         String contents = intent.getStringExtra("SCAN_RESULT");
 		         String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 		         
-		         
+		         /*debug*/
 		         Context context = getApplicationContext();
 		    	 int duration = Toast.LENGTH_SHORT;
 		    	 Toast toast = Toast.makeText(context, contents, duration);
 		    	 toast.show();
-		         
-		    	 callTablonActivity();
+		         /******/
+		    	 
+		    	 callTablonActivity(contents);
 		    	 
 		      } else if (resultCode == RESULT_CANCELED) {
 		         // Handle cancel
@@ -210,9 +214,10 @@ public class MainActivity extends Activity {
 
 
 	
-	private void callTablonActivity(){
+	private void callTablonActivity(String contents){
 		intent2= new Intent(MainActivity.this, TablonActivity.class);
 		intent2.putExtra("jsonUser", user);
+		intent2.putExtra("qrdecodified", contents);
 		startActivity(intent2);
 		//finish();	
 	}
