@@ -13,6 +13,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
 
@@ -115,7 +117,7 @@ protected String doInBackground(String... parameter) {
 	// 		[... Continue performing background processing task ...]
 	// 	Return the value to be passed to onPostExecute
 
-			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/registerMobile");
+			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/registerMobile");
 
 			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 			//Añadimos todos los parámetros que queramos enviar
@@ -139,16 +141,17 @@ protected String doInBackground(String... parameter) {
 			HttpEntity resEntity = null;
 			String res = null;
 			try {
-				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l, "utf-8");
+				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l, HTTP.UTF_8);
 				httppost.setEntity(data);
 		
 				response = httpclient.execute(httppost);
 				resEntity = response.getEntity();
 		
-				BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
+	            res = EntityUtils.toString(resEntity, "UTF-8");
+				/*BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
 				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
 				res = b.readLine().trim();
-				resEntity.consumeContent();
+				resEntity.consumeContent();*/
 				
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();

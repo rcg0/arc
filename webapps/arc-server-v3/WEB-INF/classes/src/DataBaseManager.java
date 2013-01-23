@@ -151,9 +151,12 @@ public class DataBaseManager{
 				int idTablon = rs.getInt("id");
 				tablon.setId(idTablon);
 				tablon.setName(rs.getString("name"));
+				tablon.setSubtitle(rs.getString("subtitle"));
+				System.out.println("Lo que saca de la bbdd, el nombre de tablon es : "+rs.getString("name"));
 				tablon.setVisibility(rs.getInt("visibility"));
 				tablon.setSpaceId(rs.getString("space"));
 				//tablon.setPermission(rs.getInt("permission"));
+				tablon.setRate(readRateDDBB(tablon));
 				tablon.setAllMsg(getMessagesFromTablon(idTablon));
 				tablon.setAllTargetUser(getTablonTargetUsers(idTablon));
 				tablon.setAllUsers(getTablonModerateUsers(idTablon));
@@ -1177,7 +1180,7 @@ catch(Exception ioe){
 
 	/*método media y auxiliares debajo*/
 
-	public void setMediaToTablon(Tablon tablon, float newRate){
+	public float setMediaToTablon(Tablon tablon, float newRate){
 	
 
 		float oldRate=0;
@@ -1186,9 +1189,11 @@ catch(Exception ioe){
 		System.out.println("oldRate:" +oldRate);
 		//calculo nueva rate
 		newRate = (newRate + oldRate) / 2;
-
+		System.out.println("La newRate es: " + newRate);
 		//actualizo nueva rate.
 		updateRate(tablon, newRate);
+
+		return newRate;
 	}
 
 
@@ -1198,10 +1203,12 @@ catch(Exception ioe){
 			Connection conn = openConnectionPool();
 			Statement stmt = conn.createStatement();
 			
-			PreparedStatement statement = conn.prepareStatement("UPDATE Tablon SET rate = ? where id = ?");
+			System.out.println("tablon id : "+tablon.getId() + "rate: "+newRate);
+
+			PreparedStatement statement = conn.prepareStatement("UPDATE Tablon SET rate = ? where space = ?");
 				
 			statement.setString(1, newRate+"");
-			statement.setInt(2, tablon.getId());
+			statement.setString(2, tablon.getSpaceId());
 			int aux = statement.executeUpdate();
 		
 			closeConnectionPool(conn);

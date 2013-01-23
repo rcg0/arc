@@ -44,12 +44,12 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 		rate.setRateDDBB();
 		System.out.println("checkpoint 3");
 
-		tablon.setMediaToTablon(newRate);
+		float media = tablon.setMediaToTablon(newRate);
 	
 		System.out.println("Rate enviada " + newRate);
 		System.out.println("Al tablon "+ spaceId);
 
-		out.println("ok");
+		out.println(media);
 	}
 
 

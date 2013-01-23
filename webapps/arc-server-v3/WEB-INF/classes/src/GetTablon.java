@@ -21,6 +21,8 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
    	tablon= new Tablon();	
 	//tablon = tablon.getTablonDDBB(Integer.parseInt(request.getParameter("tablonId")));
 	tablon = tablon.getTablonDDBB(request.getParameter("tablonSpace"));
+
+	System.out.println("Nombre de tablón: "+tablon.getName());
 	System.out.println("el parámetro que llega: "+request.getParameter("tablonSpace"));
 	Gson gson = new Gson();
 	System.out.println(gson.toJson(tablon));

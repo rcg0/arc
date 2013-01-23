@@ -51,6 +51,7 @@ import android.widget.Toast;
 public class TablonActivity extends FragmentActivity implements SendMessageDialogListener {
 	
 	TextView tablonName;
+	TextView tablonSubtitle;
 	RatingBar ratingBar;
 	ImageButton writeMessage;
 	ImageButton updateMessages;
@@ -76,6 +77,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		setContentView(R.layout.tablon_activity);
 		
 		tablonName = (TextView)findViewById(R.id.textView1);
+		tablonSubtitle = (TextView)findViewById(R.id.subtitle);
 		ratingBar = (RatingBar)findViewById(R.id.ratingBar1);
 		buttonComentarios = (Button)findViewById(R.id.button1);
 		writeMessage = (ImageButton)findViewById(R.id.imageButton1);
@@ -160,8 +162,11 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	    		if(result == null){
 	    			message = "La puntuación no se pudo enviar en estos momentos";
 	    		}else{
-	    			if(result.equals("ok")){
-	    				message = "Puntuación enviada correctamente";
+		    		float media = Float.parseFloat(result);
+	    			
+		    		if(media >= 0 || media<=5){
+		    			tablon.printRate(ratingBar, media);
+	    				message = "La puntuación media del evento es de: "+media;
 	    			}
 	    		}
 	    		toast = Toast.makeText(context, message , duration);
@@ -177,7 +182,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
 
-				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/sendRateMobile");
+				HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendRateMobile");
 				
 				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 				//Añadimos todos los parámetros que queramos enviar
@@ -233,8 +238,9 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	    		if(result != null){
 	    			Context context = getApplicationContext();
 	    			Gson gson = new Gson();
+	    		
 	    			tablon = gson.fromJson(result, Tablon.class);
-	    			tablon.printTablon(tablonName ,layout ,context);	
+	    			tablon.printTablon(tablonName, tablonSubtitle, ratingBar, layout, context);
 	    			sendScroll();
 	    		}
 	    		if(!predefinedMessage.equals("")){//predefinedMessage Exists
@@ -250,7 +256,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
 				
-    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/getTablon");
+    			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/getTablon");
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
@@ -269,7 +275,6 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
     			    
     				/*a ver si funciona*/
     				res = EntityUtils.toString(resEntity, HTTP.UTF_8);
-
     				//BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
     				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
     			    //res = b.readLine().trim();
@@ -325,7 +330,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 		// 		[... Continue performing background processing task ...]
 		// 	Return the value to be passed to onPostExecute
 				
-    			HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/getAfterMessagesMobile");
+    			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/getAfterMessagesMobile");
 
     			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
     			//Añadimos todos los parámetros que queramos enviar
@@ -397,7 +402,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 
 				
 
-				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/sendMessageMobile");
+				HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendMessageMobile");
 
 				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 				//Añadimos todos los parámetros que queramos enviar
@@ -471,7 +476,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 
 				
 
-				HttpPost httppost = new HttpPost("http://192.168.1.3:8080/arc-server-v3/logoutMobile");
+				HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/logoutMobile");
 
 				Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 				//Añadimos todos los parámetros que queramos enviar

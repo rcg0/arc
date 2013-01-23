@@ -8,6 +8,7 @@ public class Tablon {
 	private int id;
 	private String spaceId;
 	private String name;
+	private String subtitle;
 	private Vector <User> users = new Vector<User>();
 	private int permission;//?
 	private int visibility;
@@ -46,6 +47,17 @@ public class Tablon {
 	public String getName(){
 		
 		return name;
+	}
+
+	public void setSubtitle(String subtitle){
+		
+		this.subtitle = subtitle;
+		
+	}
+	
+	public String getSubtitle (){
+		
+		return subtitle;
 	}
 
 	public void setRate(String rate){
@@ -229,11 +241,12 @@ public class Tablon {
 
 	}
 
-	public void setMediaToTablon(float newRate){
+	public float setMediaToTablon(float newRate){
 
 		System.out.println("SetMediaToTablon en tablon");
 		DataBaseManager manager = new DataBaseManager();		
-		manager.setMediaToTablon(this, newRate);
+
+		return manager.setMediaToTablon(this, newRate);
 
 	}
 

@@ -10,9 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="text"
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:paddingLeft = "2dp"/>
+        android:paddingLeft="2dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -63,5 +62,14 @@
         android:layout_marginLeft="39dp"
         android:layout_toRightOf="@+id/imageButton1"
         android:src="@android:drawable/stat_notify_sync" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_marginLeft="34dp"
+        android:layout_toRightOf="@+id/textView1" />
 
 </RelativeLayout>

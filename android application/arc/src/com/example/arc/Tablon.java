@@ -7,17 +7,20 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
+import java.lang.Math;
 
 public class Tablon {
 
 	private int id;
 	private String spaceId;
 	private String name;
+	private String subtitle;
 	private Vector <User> users = new Vector<User>();
 	private int permission;//?
 	private int visibility;
@@ -56,6 +59,17 @@ public class Tablon {
 	public String getName(){
 		
 		return name;
+	}
+	
+	public void setSubtitle(String subtitle){
+		
+		this.subtitle = subtitle;
+		
+	}
+	
+	public String getSubtitle (){
+		
+		return subtitle;
 	}
 
 	public void setRate(String rate){
@@ -151,7 +165,7 @@ public class Tablon {
 		}
 	}
 	
-	public void printTablon(TextView tablonName, LinearLayout layout,Context context){
+	public void printTablon(TextView tablonName, TextView tablonSubtitle, RatingBar ratingBar, LinearLayout layout,Context context){
 		
 		Vector<Message> messages = this.getAllMsg();
 		TextView name;
@@ -159,9 +173,10 @@ public class Tablon {
 		TextView text;
 		
 		tablonName.setText(this.getName());
+		tablonSubtitle.setText(this.getSubtitle());
 		
 		printSomeMessages(messages, layout, context);
-
+		printRate(ratingBar);
 		
 	}
 	
@@ -198,5 +213,15 @@ public class Tablon {
 		int higherMessageId = this.msg.elementAt(msg.size()-1).getId();
 		
 		return higherMessageId; 
+	}
+	
+	public void printRate(RatingBar ratingBar){
+		
+		float rate = Float.parseFloat(this.rate);
+		ratingBar.setRating(rate);
+	}
+	
+	public void printRate(RatingBar ratingBar, float rate){
+		ratingBar.setRating(rate);
 	}
 }

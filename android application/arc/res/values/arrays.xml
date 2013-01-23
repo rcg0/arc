@@ -14,14 +14,13 @@
 	
     <string-array name="arrayEdades">
        <item></item>>
-       <item>15-25</item>
-       <item>26-35</item>
-       <item>36-45</item>
-       <item>46-55</item>
-       <item>56-65</item>
-       <item>66-75</item>
-       <item>76-85</item>
-       <item>86-95</item>
+       <item> &lt;18 </item>
+       <item>18-25</item>
+       <item>25-35</item>
+       <item>35-50</item>
+       <item>50-65</item>
+       <item>>65</item>
+       
 	</string-array>
     
     

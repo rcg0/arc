@@ -22,13 +22,6 @@
         android:layout_toLeftOf="@+id/imageButton2"
         android:src="@android:drawable/ic_menu_edit" />
 
-    <RatingBar
-        android:id="@+id/ratingBar1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true" />
-
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="wrap_content"
@@ -43,7 +36,7 @@
         <LinearLayout
             android:id="@+id/messageLayout"
             android:layout_width="match_parent"
-            android:layout_height="344dp"
+            android:layout_height="331dp"
             android:orientation="vertical" >
 
         </LinearLayout>
@@ -56,5 +49,29 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/scrollView1"
         android:src="@android:drawable/stat_notify_sync" />
+
+    <RatingBar
+        android:id="@+id/ratingBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_toRightOf="@+id/textView1" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:text="" />
 
 </RelativeLayout>
