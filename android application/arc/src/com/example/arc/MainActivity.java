@@ -198,10 +198,10 @@ public class MainActivity extends Activity {
 		         String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 		         
 		         /*debug*/
-		         Context context = getApplicationContext();
+		         /*Context context = getApplicationContext();
 		    	 int duration = Toast.LENGTH_SHORT;
 		    	 Toast toast = Toast.makeText(context, contents, duration);
-		    	 toast.show();
+		    	 toast.show();*/
 		         /******/
 		    	 
 		    	 callTablonActivity(contents);

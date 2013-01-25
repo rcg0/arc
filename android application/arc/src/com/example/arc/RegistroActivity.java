@@ -197,10 +197,10 @@ protected String doInBackground(String... parameter) {
     	        	  String format = intent.getStringExtra("SCAN_RESULT_FORMAT");  	
     	        	  Context context = getApplicationContext();
     		  	
-    	        	  int duration = Toast.LENGTH_SHORT;
+    	        	  /*int duration = Toast.LENGTH_SHORT;
     	          	  Toast toast = Toast.makeText(context, contents, duration);   		  	
     	        	  toast.show();
-    	        	  
+    	        	  */
     	        	  callTablonActivity(contents);
     	        	  
         	          } else if (resultCode == RESULT_CANCELED) {
