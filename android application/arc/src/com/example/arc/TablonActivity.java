@@ -3,6 +3,7 @@ package com.example.arc;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Vector;
 
 import org.apache.http.HttpEntity;
@@ -18,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 
 import com.example.arc.SendMessageDialog.SendMessageDialogListener;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -238,8 +240,10 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 	    		if(result != null){
 	    			Context context = getApplicationContext();
 	    			Gson gson = new Gson();
-	    		
-	    			tablon = gson.fromJson(result, Tablon.class);
+/**/
+	    			
+					tablon = gson.fromJson(result, Tablon.class);
+					
 	    			tablon.printTablon(tablonName, tablonSubtitle, ratingBar, layout, context);
 	    			sendScroll();
 	    		}
@@ -417,6 +421,7 @@ public class TablonActivity extends FragmentActivity implements SendMessageDialo
 				String res = null;
 				try {
 					UrlEncodedFormEntity data = new UrlEncodedFormEntity(l,"utf-8");
+					
 					httppost.setEntity(data);
 			
 					response = httpclient.execute(httppost);

@@ -12,6 +12,7 @@ public class GetTablon extends HttpServlet {
 public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
+	response.setHeader("Content-Type", "text/plain; charset=UTF-8");
 	HttpSession session = request.getSession(false);
 	User user = null;
 	String next="/error.html";

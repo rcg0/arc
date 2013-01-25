@@ -39,7 +39,7 @@ public class RegistroActivity extends Activity {
 	CheckBox generoMasculino;
 	CheckBox generoFemenino;
 	Spinner edad;
-	Spinner trabajo;
+	EditText trabajo;
 
 	Intent intent;
 	Intent intent2;
@@ -59,7 +59,7 @@ public class RegistroActivity extends Activity {
 		generoFemenino = (CheckBox)findViewById(R.id.checkBox2);
 		generoMasculino = (CheckBox)findViewById(R.id.checkBox1);
 		edad = (Spinner)findViewById(R.id.spinner1);
-		trabajo = (Spinner)findViewById(R.id.Spinner01);
+		trabajo = (EditText)findViewById(R.id.Spinner01);
 	
 		myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
         httpclient = myDefaultHttp.getHttpClient();
@@ -72,7 +72,13 @@ public class RegistroActivity extends Activity {
 		this.buttonEntrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	
-            	new Registro().execute();
+            	if(alias.getText().toString().equals("")){
+            		Toast toast = Toast.makeText(getApplicationContext(), "Es necesario que escribas un alias.", Toast.LENGTH_SHORT);
+            		toast.show();
+            	}
+            	else{
+            		new Registro().execute();
+            	}
             }
       });
 		
@@ -135,7 +141,7 @@ protected String doInBackground(String... parameter) {
 			}
 			
 			l.add(new BasicNameValuePair("age", edad.getSelectedItem().toString()));
-			l.add(new BasicNameValuePair("work", trabajo.getSelectedItem().toString()));
+			l.add(new BasicNameValuePair("work", trabajo.getText().toString()));
 	    			
 			HttpResponse response = null;
 			HttpEntity resEntity = null;
@@ -212,7 +218,7 @@ protected String doInBackground(String... parameter) {
 		savedInstanceState.putBoolean("masculino",generoMasculino.isChecked());
 		savedInstanceState.putBoolean("femenino",generoFemenino.isChecked());
 		savedInstanceState.putInt("edad",edad.getPositionForView(edad));
-		savedInstanceState.putInt("profesion",trabajo.getPositionForView(trabajo));
+		savedInstanceState.putString("profesion",trabajo.getText().toString());
 	}
 	
 	protected void onRestoreInstanceState(Bundle savedInstanceState){

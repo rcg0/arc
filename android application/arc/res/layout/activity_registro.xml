@@ -70,7 +70,7 @@
         android1:layout_alignTop="@+id/Spinner01"
         android1:text="Profesión" />
 
-    <Spinner
+    <EditText
         android1:id="@+id/Spinner01"
         android1:layout_width="wrap_content"
         android1:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         android1:layout_alignParentRight="true"
         android1:layout_below="@+id/spinner1"
         android1:layout_marginTop="18dp"
-        android1:entries="@array/arrayTrabajos" />
+        />
 
     <TextView
         android1:id="@+id/TextView02"

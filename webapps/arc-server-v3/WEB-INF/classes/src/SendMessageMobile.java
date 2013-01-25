@@ -3,7 +3,7 @@ package arc;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-
+import java.net.URLDecoder;
 import java.util.Vector;
 
 public class SendMessageMobile extends HttpServlet {
@@ -19,7 +19,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 
 	System.out.println("el id de sesion es: " + session.getId());
 
-	String message = request.getParameter("message");
+	String message = URLDecoder.decode(request.getParameter("message"),"UTF-8");
 	String tablonId=request.getParameter("tablonId").trim();
 	String lastMessageId = request.getParameter("messageId");//lastMessageId
 

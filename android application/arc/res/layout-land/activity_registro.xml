@@ -80,14 +80,14 @@
         android1:layout_toLeftOf="@+id/checkBox2"
         android1:text="Profesión" />
 
-    <Spinner
+    <EditText
         android1:id="@+id/Spinner01"
         android1:layout_width="wrap_content"
         android1:layout_height="wrap_content"
         android1:layout_alignLeft="@+id/textView3"
         android1:layout_alignParentRight="true"
         android1:layout_alignTop="@+id/spinner1"
-        android1:entries="@array/arrayTrabajos" />
+        />
 
     <Spinner
         android1:id="@+id/spinner1"

@@ -208,11 +208,16 @@ public class Tablon {
 		layout.addView(l);
 	}
 	
+	/*returns the highmessageid or -1 if there isn't messages*/
 	public int searchHighMessageId(){
 		
-		int higherMessageId = this.msg.elementAt(msg.size()-1).getId();
+		int result=-1;
 		
-		return higherMessageId; 
+		if(this.msg.size() > 0){
+			result = this.msg.elementAt(msg.size()-1).getId();
+		}
+		
+		return result; 
 	}
 	
 	public void printRate(RatingBar ratingBar){
