@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+      <item android:id="@+id/menu_update"
+          android:icon="@drawable/navigation_refresh"
+          
+          android:showAsAction="always" />
+      
+      <item android:id="@+id/menu_write"
+          android:icon="@drawable/content_edit"
+          android:showAsAction="always" />
+
+      <item android:id="@+id/camera_access"
+          android:icon="@drawable/device_access_switch_video"
+          android:showAsAction="always" />
+
+            <item android:id="@+id/logout"
+          android:icon="@drawable/logout"
+          android:showAsAction="always" />
+      
+</menu>
