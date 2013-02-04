@@ -34,25 +34,28 @@ function showContents(){
   if (xhr.readyState==4 && xhr.status==200){
 
     var text = xhr.responseText;
-    pos = text.indexOf("]");
-    var tablonId = text.substring(0,pos+1);
-    var tablonNames= text.substring(pos+1,text.length);
-    tablonIdx = tablonId.replace("[","").replace("]","");
-    tablonid = tablonIdx.split(",");
+
+    if(text != ""){
+
+      pos = text.indexOf("]");
+      var tablonId = text.substring(0,pos+1);
+      var tablonNames= text.substring(pos+1,text.length);
+      tablonIdx = tablonId.replace("[","").replace("]","");
+      tablonid = tablonIdx.split(",");
 
 
-    for(var i=0;i<tablonNames.length;i++){//tengo que quitar las "" y eso a cada elemento
-      var tablonNames = tablonNames.replace("[","").replace("]","").replace("\"","").replace("\"","");
-    }    
+      for(var i=0;i<tablonNames.length;i++){//tengo que quitar las "" y eso a cada elemento
+        var tablonNames = tablonNames.replace("[","").replace("]","").replace("\"","").replace("\"","");
+      }    
 
-    var tablones = tablonNames.split(",");
-    if(tablones == undefined){//es undefined si tiene un elemento
+      var tablones = tablonNames.split(",");
+      if(tablones == undefined){//es undefined si tiene un elemento
 
-      tablones= tablonNames;
-
-    }
-    creaMenu(tablones,"submenu_tablones","showModifyTablones");//el array de nombre de tablones y el id del ul donde quiero meterlo y la url a donde voy
-    creaMenu(tablones,"submenu_mensajes", "getTablones");
+        tablones= tablonNames;
+      }
+      creaMenu(tablones,"submenu_tablones","showModifyTablones");//el array de nombre de tablones y el id del ul donde quiero meterlo y la url a donde voy
+      creaMenu(tablones,"submenu_mensajes", "getTablones");
+      }
     }
   }
 

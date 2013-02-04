@@ -27,14 +27,19 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
       			
 			tablon = new Tablon();
 			Vector<Integer> tablonId = user.getModerators(); //obtengo el vector de enteros de tablones que modera el usuario
-			Vector<String> tablonNames =  tablon.getTablonNames(tablonId);
-			//lo paso a Json y lo envío
-			Gson gson = new Gson();
+			
+			/*Si no modera ningún tablón no mando nada de vuelta.*/
+			if(tablonId.size() > 0){
 
-			//flush it to the page
-			out.println(gson.toJson(tablonId));
-			out.println(gson.toJson(tablonNames));
+				Vector<String> tablonNames =  tablon.getTablonNames(tablonId);
+			
+				//lo paso a Json y lo envío
+				Gson gson = new Gson();
 
+				out.println(gson.toJson(tablonId));
+				out.println(gson.toJson(tablonNames));
+
+			}
 		}
 
 	}

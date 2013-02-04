@@ -181,7 +181,17 @@ function asociarPermisoAUsuario(usersSelected){
 
 function save_data() {
 
-  var id = document.getElementById("messageTablonId").text;
+  mitablon = {};
+
+  var id;
+  /*Compruebo si existe la variable, si no, */
+  if(document.getElementById("messageTablonId") == undefined){
+
+    id = -1;//-1 means you are creating a new Tablon! not mofifying
+  }else{
+    id = document.getElementById("messageTablonId").text;
+  }
+  
   var tablon_name = document.getElementById("tablon_name").value;
   //moderators are in variable "moderatorsSelected"
 
@@ -214,9 +224,12 @@ function save_data() {
     }
   }
 
+  
+  mitablon.id = id;
+  mitablon.name = tablon_name;
 
 
-  var url = "sendTablonInformation?tablon_id="+id +"?tablon_name="+tablon_name+"?";
+  var url = "sendTablonInformation?tablon_id="+id +"&tablon_name="+tablon_name;
   
   for(var k = 0; k < hashArray.length; k++ ){
 
@@ -226,7 +239,7 @@ function save_data() {
   
     
  
-  //createAJAXRequest(url, "recargar", false);
+  createAJAXRequest(url, "recargar", false);
 
 
 
