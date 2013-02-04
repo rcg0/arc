@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.arc"
+    package="com.example.asdf"
     android:versionCode="1"
     android:versionName="1.0" >
-
-    <uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" >
     </uses-permission>
     
@@ -13,19 +12,23 @@
         android:targetSdkVersion="8" />
 
     <application
-        android:name=".MyDefaultHttpClient" 
+        android:name=".MyDefaultHttpClient"
         android:allowBackup="true"
         android:icon="@drawable/arc_icon_bubble"
         android:label="@string/app_names"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.example" 
+        android:uiOptions="splitActionBarWhenNarrow"
+        >
         <activity
-            android:name="com.example.arc.MainActivity"
-            android:label="@string/app_names" >
+            android:name="com.example.asdf.MainActivity"
+            android:label="@string/app_names" 
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
         </activity>
         <activity 
             android:name = ".RegistroActivity"
@@ -55,4 +58,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
