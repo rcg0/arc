@@ -97,7 +97,8 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
-				
+            	//Toast.makeText(getApplicationContext(), "De momento nada...", Toast.LENGTH_LONG).show();
+
 			}
 
 			@Override
@@ -171,8 +172,12 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
             	
             	return true;
             case R.id.camera_access:
-            	Toast.makeText(getApplicationContext(), "De momento nada...", Toast.LENGTH_LONG).show();
-
+            	//Toast.makeText(getApplicationContext(), "De momento nada...", Toast.LENGTH_LONG).show();
+            	Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+        		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+        		startActivityForResult(intent, 0);		
+            	
+            	
             	return true;
             case R.id.logout:
 
@@ -183,6 +188,31 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
                 return super.onOptionsItemSelected(item);
             }  
         }
+    
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		   if (requestCode == 0) {
+		      if (resultCode == RESULT_OK) {
+		         String contents = intent.getStringExtra("SCAN_RESULT");
+		         String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+		         
+		         /*debug*/
+		         /*Context context = getApplicationContext();
+		    	 int duration = Toast.LENGTH_SHORT;
+		    	 Toast toast = Toast.makeText(context, contents, duration);
+		    	 toast.show();*/
+		         /******/
+		    	 
+		        Intent intent2= new Intent(TablonActivity.this, TablonActivity.class);
+		 		intent2.putExtra("jsonUser", jsonUser);
+		 		intent2.putExtra("qrdecodified", contents);
+		 		startActivity(intent2);
+			    finish();
+
+		      } else if (resultCode == RESULT_CANCELED) {
+		         // Handle cancel
+		      }
+		   }
+		}
    
     
     class SendRate extends AsyncTask<String, Integer, String> {
@@ -602,10 +632,7 @@ protected String doInBackground(String... parameter) {
 
 	@Override
 	public void onFinishEditDialog(String inputText) {
-		/*	String higherMessageId = tablon.searchHighMessageId()+"";
-		AsyncTask<String, Integer, String> instance = new GetMoreMessages().execute(higherMessageId);
-				
-		while (instance.getStatus() == Status.RUNNING);*/
+
     	String higherMessageId = tablon.searchHighMessageId()+"";
 
 		new SendMessage().execute(inputText, higherMessageId);

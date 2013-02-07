@@ -43,9 +43,10 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-public class SendMessageDialog extends DialogFragment implements OnEditorActionListener{
+public class SendMessageDialog extends DialogFragment{
 	
 	 EditText mEditText;
+	 Button sendButton;
 	 	 
 	 MyDefaultHttpClient myDefaultHttp;
 	 HttpClient httpclient = null;
@@ -66,20 +67,38 @@ public class SendMessageDialog extends DialogFragment implements OnEditorActionL
         Bundle bundle = getArguments();
         
         mEditText = (EditText) view.findViewById(R.id.txt_msg);
+        sendButton = (Button) view.findViewById(R.id.button1);
         
         mEditText.setText(bundle.getString("predefinedMessage"));
         // Show soft keyboard automatically
         mEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        mEditText.setOnEditorActionListener(this);
+        
+        
+        this.sendButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				SendMessageDialogListener activity = (SendMessageDialogListener) getActivity();
+				activity.onFinishEditDialog(mEditText.getText().toString());
+				getDialog().dismiss();
+			}
+        	
+        	
+        });
         
        
         return view;
 	}
     
+    
+    
+    /*
     @Override
 	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-    	 if (EditorInfo.IME_ACTION_DONE == actionId) {
+    	
+    	if (EditorInfo.IME_ACTION_DONE == actionId) {
              // Return input text to activity
              SendMessageDialogListener activity = (SendMessageDialogListener) getActivity();
              activity.onFinishEditDialog(mEditText.getText().toString());
@@ -88,6 +107,6 @@ public class SendMessageDialog extends DialogFragment implements OnEditorActionL
          }
          return false;
 	}
-    
+    */
     
 }
