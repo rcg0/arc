@@ -133,10 +133,11 @@ public class DataBaseManager{
 	}
 
 
-	public Tablon getTablon(String space){
+	public Vector<Tablon> getTablon(String space){
 		
+		Vector<Tablon> tablones = new Vector<Tablon>();
 		Tablon tablon = null;
-		
+
 		try{
 			Connection conn = openConnectionPool();
 			/***********************************************PARAMETRIZACIÓN*************************************************/
@@ -146,7 +147,7 @@ public class DataBaseManager{
 			/****************************************************************************************************************/
 
 			ResultSet rs = statement.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				tablon = new Tablon();
 				int idTablon = rs.getInt("id");
 				tablon.setId(idTablon);
@@ -160,6 +161,8 @@ public class DataBaseManager{
 				tablon.setAllMsg(getMessagesFromTablon(idTablon));
 				tablon.setAllTargetUser(getTablonTargetUsers(idTablon));
 				tablon.setAllUsers(getTablonModerateUsers(idTablon));
+
+				tablones.addElement(tablon);
 			}
 			closeConnectionPool(conn);
 
@@ -172,7 +175,7 @@ public class DataBaseManager{
 		
 		
 		
-		return tablon;
+		return tablones;
 		
 	}
 
@@ -485,6 +488,8 @@ public class DataBaseManager{
 			statement.setInt(1, tablonId);
 			statement.setInt(2, messageId);
 			
+			System.out.println("dentro del manager:  vemos que tablonId es :"+ tablonId+ " y el messageId es: "+messageId);
+
 				/****************************************************************************************************************/
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
@@ -492,7 +497,7 @@ public class DataBaseManager{
 				User u = new User();
 				m.setId(rs.getInt("id"));
 
-				//System.out.println(rs.getString("Message.message"));
+				System.out.println("El mensaje de la base de datos es: "+rs.getString("Message.message"));
 				m.setMsg(rs.getString("Message.message"));
 				//System.out.println("visibility:"+rs.getInt("visibility"));
 				m.setVisibility(rs.getInt("visibility"));
@@ -1229,8 +1234,8 @@ catch(Exception ioe){
 			Connection conn = openConnectionPool();
 		
 
-			PreparedStatement statement = conn.prepareStatement("SELECT rate FROM Tablon WHERE space  = ?;");
-			statement.setString(1, tablon.getSpaceId());
+			PreparedStatement statement = conn.prepareStatement("SELECT rate FROM Tablon WHERE id  = ?;");
+			statement.setInt(1, tablon.getId());
 
 
 			ResultSet rs = statement.executeQuery();

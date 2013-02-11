@@ -38,6 +38,7 @@ import com.example.asdf.R;
 import com.example.asdf.Tablon;
 import com.example.asdf.TablonActivity.SendRate;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -68,6 +69,8 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 	RatingBar ratingBar;
 	LinearLayout layout;
 	ScrollView sv;
+	Vector<Tablon> tablones;
+	
 	Tablon tablon;
 	Message messageSended;
 	String higherMessageId;
@@ -82,6 +85,7 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 	
 	String jsonUser = null;
 
+	Tablon tablonSelected = null;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,8 +101,9 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
-            	//Toast.makeText(getApplicationContext(), "De momento nada...", Toast.LENGTH_LONG).show();
-
+    			tablonSelected = tablones.elementAt(tab.getPosition());
+    			tablonSelected.printTablon(tablonSubtitle, ratingBar, layout, getApplicationContext());
+    			sendScroll();
 			}
 
 			@Override
@@ -162,7 +167,7 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
       switch (item.getItemId()) {
             case R.id.menu_update:         
 
-            	String higherMessageId = tablon.searchHighMessageId()+"";
+            	String higherMessageId = tablonSelected.searchHighMessageId()+"";
             	new GetMoreMessages().execute(higherMessageId);
             	
             	return true;
@@ -294,6 +299,7 @@ protected String doInBackground(String... parameter) {
     	protected void onProgressUpdate(Integer... progress) {
 // [... Update progress bar, Notification, or other UI element ...]
    	}	
+    	
     	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
 		@Override
     	protected void onPostExecute(String result) {
@@ -303,12 +309,12 @@ protected String doInBackground(String... parameter) {
     		if(result != null){
     			Context context = getApplicationContext();
     			Gson gson = new Gson();
-/**/
     			
-				tablon = gson.fromJson(result, Tablon.class);
-				
-    			tablon.printTablon(actionBar,listener, tablonSubtitle, ratingBar, layout, context);
-    			sendScroll();
+    			/*ESTO HAY QUE ARREGLARLO, SIMPLEMENTE ES UNA PRUEBA*/
+    			tablones = gson.fromJson(result, new TypeToken<Vector<Tablon>>(){}.getType());
+    			printBar(actionBar,listener);
+    			//tablones.elementAt(1).printTablon(actionBar,listener, tablonSubtitle, ratingBar, layout, context);
+    			/**/
     		}
     		if(!predefinedMessage.equals("")){//predefinedMessage Exists
     			showSendDialog(predefinedMessage);
@@ -406,8 +412,8 @@ protected String doInBackground(String... parameter) {
     			Gson gson = new Gson();
     			Tablon tablonReceived = gson.fromJson(result, Tablon.class);
     			if(!tablonReceived.getAllMsg().isEmpty()){
-    				tablon.printSomeMessages(tablonReceived.getAllMsg() ,layout ,context);	
-    				tablon.setSomeMsg(tablonReceived.getAllMsg());
+    				tablonSelected.printSomeMessages(tablonReceived.getAllMsg() ,layout ,context);	
+    				tablonSelected.setSomeMsg(tablonReceived.getAllMsg());
     				sendScroll();
     			}
     		}
@@ -427,8 +433,8 @@ protected String doInBackground(String... parameter) {
 			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 			//Añadimos todos los parámetros que queramos enviar
 			
-			l.add(new BasicNameValuePair("tablonId", tablon.getId()+""));
-			l.add(new BasicNameValuePair("tablonSpace", tablon.getSpaceId()));
+			l.add(new BasicNameValuePair("tablonId", tablonSelected.getId()+""));
+			//l.add(new BasicNameValuePair("tablonSpace", tablon.getSpaceId()));
 			l.add(new BasicNameValuePair("message", parameter[0] ));
 			l.add(new BasicNameValuePair("messageId", parameter[1]));
 			
@@ -478,8 +484,8 @@ protected String doInBackground(String... parameter) {
     			Gson gson = new Gson();
     			Tablon tablonReceived = gson.fromJson(result, Tablon.class);
     			if(!tablonReceived.getAllMsg().isEmpty()){
-    				tablon.printSomeMessages(tablonReceived.getAllMsg() ,layout ,context);	
-    				tablon.setSomeMsg(tablonReceived.getAllMsg());
+    				tablonSelected.printSomeMessages(tablonReceived.getAllMsg() ,layout ,context);	
+    				tablonSelected.setSomeMsg(tablonReceived.getAllMsg());
     				sendScroll();
     			}else{
 					int duration = Toast.LENGTH_SHORT;
@@ -500,7 +506,7 @@ protected String doInBackground(String... parameter) {
 
 			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 			//Añadimos todos los parámetros que queramos enviar
-			l.add(new BasicNameValuePair("tablonSpace",space));
+			l.add(new BasicNameValuePair("tablonId", tablonSelected.getId()+""));
 			l.add(new BasicNameValuePair("messageId",parameter[0]));
 
 	    			
@@ -633,15 +639,28 @@ protected String doInBackground(String... parameter) {
 	@Override
 	public void onFinishEditDialog(String inputText) {
 
-    	String higherMessageId = tablon.searchHighMessageId()+"";
-
+    	String higherMessageId = tablonSelected.searchHighMessageId()+"";
 		new SendMessage().execute(inputText, higherMessageId);
+		messageSended = new Message();
+
 		Gson gson = new Gson();
 		User user = gson.fromJson(jsonUser, User.class);
-		String nick = user.getNick();
+		//String nick = user.getNick();
 		
-		messageSended = new Message();
 		messageSended.setCreator(user);
 		messageSended.setMsg(inputText);		
 	}
+	
+	public void printBar(ActionBar actionBar,TabListener listener){
+		
+		for(int i=0;i<tablones.size();i++){
+		
+			actionBar.addTab(actionBar.newTab().
+					setText(tablones.elementAt(i).getName()).
+					setContentDescription(tablones.elementAt(i).getSubtitle()).
+					setTabListener(listener));
+		}
+		
+	}
+	
 }
