@@ -35,7 +35,7 @@
     
 <% User user = (User)session.getAttribute("user"); %>
 
-    <p><%= user.getName()%></p>
+    <p><%= user.getNick()%></p>
   </div>
    
 <% 

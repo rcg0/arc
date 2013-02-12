@@ -69,6 +69,7 @@ public class DataBaseManager{
 				databaseUser = new User();
 				databaseUser.setId(rs.getInt("id"));
 				databaseUser.setName(rs.getString("name"));
+				databaseUser.setNick(rs.getString("nick"));
 				databaseUser.setSurName1(rs.getString("surname1"));
 				databaseUser.setSurName2(rs.getString("surname2"));
 				databaseUser.setAllModerators(getIdTablonModerateUsers(databaseUser.getId()));
@@ -453,6 +454,7 @@ public class DataBaseManager{
 				//m.setDate(rs.getTimestamp("dateTime"));//peta aquí
 				u.setId(rs.getInt("Message.user_id"));
 				u.setName(rs.getString("User.name"));
+				u.setNick(rs.getString("User.nick"));
 				//System.out.println(rs.getString("User.name"));
 				u.setSurName1(rs.getString("User.surname1"));
 				u.setSurName2(rs.getString("User.surname2"));
@@ -550,16 +552,16 @@ public class DataBaseManager{
 				System.out.println(rs.getString("Message.message"));
 				m.setMsg(rs.getString("Message.message"));
 
-/********************************/
-try{
-String string = new String(rs.getString("Message.message").getBytes(), "UTF-8");
-System.out.println("EL STRING TIENE PROBLEMAS ? :  " + string);
-}
-catch(Exception ioe){
+				/********************************/
+				try{
+					String string = new String(rs.getString("Message.message").getBytes(), "UTF-8");
+					System.out.println("EL STRING TIENE PROBLEMAS ? :  " + string);
+				}
+				catch(Exception ioe){
+	
+				}
 
-}
-
-/**********************************/
+				/**********************************/
 
 
 				System.out.println("visibility:"+rs.getInt("visibility"));
@@ -567,6 +569,7 @@ catch(Exception ioe){
 				//m.setDate(rs.getTimestamp("dateTime"));//peta aquí
 				u.setId(rs.getInt("Message.user_id"));
 				u.setName(rs.getString("User.name"));
+				u.setNick(rs.getString("User.nick"));
 				System.out.println(rs.getString("User.name"));
 
 				u.setSurName1(rs.getString("User.surname1"));
@@ -711,6 +714,7 @@ catch(Exception ioe){
 				User u = new User();
 				u.setId(rs.getInt("User.id"));
 				u.setName(rs.getString("User.name"));
+				u.setNick(rs.getString("User.nick"));
 				u.setSurName1(rs.getString("User.surname1"));
 				u.setSurName2(rs.getString("User.surname2"));
 				u.setPermission(rs.getByte("UserPermission.permission"));
@@ -768,6 +772,7 @@ catch(Exception ioe){
 		System.out.println("nombre: "+user.getName());
 		System.out.println("apellido1: "+user.getSurName1());
 		System.out.println("apellido2: "+user.getSurName2());
+		System.out.println("nick: "+user.getNick());
 	}
 	
 	public void printMessage(Message message){
@@ -787,11 +792,12 @@ catch(Exception ioe){
 			Connection conn = openConnectionPool();
 			Statement stmt = conn.createStatement();
 			
-			PreparedStatement statement = conn.prepareStatement("INSERT INTO User (name, surname1, surname2) VALUES (?, ?, ?)");
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO User (name,nick, surname1, surname2) VALUES (?, ?, ?)");
 				
 			statement.setString(1, user.getName());
-			statement.setString(2, user.getSurName1());
-			statement.setString(3, user.getSurName2());
+			statement.setString(2, user.getNick());
+			statement.setString(3, user.getSurName1());
+			statement.setString(4, user.getSurName2());
 		
 			int aux = statement.executeUpdate();
 			if(aux!=0)
@@ -1082,6 +1088,7 @@ catch(Exception ioe){
 /*login mobile uses it, returns the user object if exists, or null if not*/
 
 /*fix when you can, see checkUser -> do the same.*/
+
 	public User existsSameNick(String nick){
 			User result = null;
 			User databaseUser=new User();
@@ -1126,38 +1133,36 @@ catch(Exception ioe){
 
 			int result = 0;
 
+			try {
+				Connection conn = openConnectionPool();
+				Statement stmt = conn.createStatement();
+				ResultSet generatedKeys = null;
 
-		try {
-			Connection conn = openConnectionPool();
-			Statement stmt = conn.createStatement();
-			ResultSet generatedKeys = null;
-
-
-			PreparedStatement statement = conn.prepareStatement("INSERT INTO User (	genre, age, work, nick) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement statement = conn.prepareStatement("INSERT INTO User (	genre, age, work, nick) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 				
-			statement.setString(1, user.getGenre());
-			statement.setString(2, user.getAge());
-			statement.setString(3, user.getWork());
-			statement.setString(4, user.getNick());
+				statement.setString(1, user.getGenre());
+				statement.setString(2, user.getAge());
+				statement.setString(3, user.getWork());
+				statement.setString(4, user.getNick());
 		
-			int aux = statement.executeUpdate();
+				int aux = statement.executeUpdate();
 		
-			generatedKeys = statement.getGeneratedKeys();
-	        if (generatedKeys.next()) {
-	        	result = generatedKeys.getInt(1);
-          		System.out.println("El id del usuario insertado es : "+ result);
-        	} 
-
-			closeConnectionPool(conn);
-
-		}catch(SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
-			System.out.println("SQLState: " + ex.getSQLState());
-			System.out.println("VendorError: " + ex.getErrorCode());
+				generatedKeys = statement.getGeneratedKeys();
+			        if (generatedKeys.next()) {
+			        	result = generatedKeys.getInt(1);
+		          		System.out.println("El id del usuario insertado es : "+ result);
+		        	} 
+	
+				closeConnectionPool(conn);
+	
+			}catch(SQLException ex){
+				System.out.println("SQLException: " + ex.getMessage());
+				System.out.println("SQLState: " + ex.getSQLState());
+				System.out.println("VendorError: " + ex.getErrorCode());
+			}
+	
+			return result;
 		}
-
-		return result;
-	}
 
 	public void setRateDDBB(Rate rate){
 
