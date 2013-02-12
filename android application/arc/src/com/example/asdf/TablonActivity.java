@@ -241,7 +241,7 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 	    		float media = Float.parseFloat(result);
     			
 	    		if(media >= 0 || media<=5){
-	    			tablon.printRate(ratingBar, media);
+	    			tablonSelected.printRate(ratingBar, media);
     				message = "La puntuación media del evento es de: "+media;
     			}
     		}
@@ -264,7 +264,7 @@ protected String doInBackground(String... parameter) {
 			//Añadimos todos los parámetros que queramos enviar
 			
 			l.add(new BasicNameValuePair("rate", ratingBar.getRating()+""));
-			l.add(new BasicNameValuePair("spaceId", space));
+			l.add(new BasicNameValuePair("tablonId", tablonSelected.getId()+""));
 
 	    			
 			HttpResponse response = null;

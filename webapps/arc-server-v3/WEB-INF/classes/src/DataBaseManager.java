@@ -1164,10 +1164,10 @@ catch(Exception ioe){
 		Connection conn = openConnectionPool();
 		try {	
 			Statement stmt = conn.createStatement();
-			PreparedStatement statement = conn.prepareStatement("INSERT INTO Rate (user_id,space_id,rate) VALUES (?,?,?)");
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO Rate (user_id,tablon_id,rate) VALUES (?,?,?)");
 		
 			statement.setInt(1, rate.getUserId());
-			statement.setString(2, rate.getSpaceId());
+			statement.setInt(2, rate.getTablonId());
 			statement.setFloat(3, rate.getRate());
 
 			int aux = statement.executeUpdate();
@@ -1210,10 +1210,10 @@ catch(Exception ioe){
 			
 			System.out.println("tablon id : "+tablon.getId() + "rate: "+newRate);
 
-			PreparedStatement statement = conn.prepareStatement("UPDATE Tablon SET rate = ? where space = ?");
+			PreparedStatement statement = conn.prepareStatement("UPDATE Tablon SET rate = ? where id = ?");
 				
 			statement.setString(1, newRate+"");
-			statement.setString(2, tablon.getSpaceId());
+			statement.setInt(2, tablon.getId());
 			int aux = statement.executeUpdate();
 		
 			closeConnectionPool(conn);
@@ -1240,8 +1240,9 @@ catch(Exception ioe){
 
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) {
-				
+
 				oldRate = rs.getString("rate");
+				System.out.println("readRateDDBB: oldRate: "+oldRate);				
 				
 			}
 

@@ -3,7 +3,7 @@ package arc;
 public class Rate {
 
 	private int userId;
-	private String spaceId;
+	private int tablonId;
 	public float rate;
 
 	public int getUserId(){
@@ -13,13 +13,13 @@ public class Rate {
 		this.userId = userId;
 	}
 
-	public String getSpaceId(){
-		return spaceId;
+	public int getTablonId(){
+		return tablonId;
+	}
+	public void setTablonId(int tablonId){
+		this.tablonId = tablonId;
 	}
 
-	public void setSpaceId(String spaceId){
-		this.spaceId = spaceId;
-	}
 
 	public float getRate(){
 		return rate;
