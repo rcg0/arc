@@ -14,6 +14,10 @@ public class GetMessages extends HttpServlet {
 public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
+
+	response.setCharacterEncoding("UTF-8");
+
+
 	HttpSession session = request.getSession(false);
 	User user = null;
 	String next="/error.html";
