@@ -24,7 +24,7 @@
     <a href="logout"><img id="imgApagado" src="IMG/apagado2.png"></a>
 <% User user = (User)session.getAttribute("user"); %>
 
-    <p><%= user.getName()%></p>
+    <p><%= user.getNick()%></p>
   </div>
    
   <ul class= "menu">

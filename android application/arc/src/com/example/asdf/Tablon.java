@@ -168,18 +168,14 @@ public class Tablon {
 		}
 	}
 	
-	public void printTablon(ActionBar actionBar,TabListener listener, TextView tablonSubtitle, RatingBar ratingBar, LinearLayout layout,Context context){
+	public void printTablon(TextView tablonSubtitle, RatingBar ratingBar, LinearLayout layout,Context context){
 		
 		Vector<Message> messages = this.getAllMsg();
 		TextView name;
 		TextView author;
 		TextView text;
 		
-		actionBar.addTab(actionBar.newTab().
-				setText(this.getName()).
-				setContentDescription(this.getSubtitle()).
-				setTabListener(listener));
-
+		layout.removeAllViews();
 		//tablonSubtitle.setText(this.getSubtitle());
 		
 		printSomeMessages(messages, layout, context);

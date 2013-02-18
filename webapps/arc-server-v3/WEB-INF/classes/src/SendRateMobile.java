@@ -19,7 +19,6 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	
 	System.out.println("el id de sesion es: "+session.getId());
 
-	System.out.println("Checkpoint 0");
 
 	User user = (User)session.getAttribute("user");
 	if(user == null){
@@ -30,25 +29,29 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	if(user != null){
 
 		float newRate = Float.parseFloat(request.getParameter("rate"));
-		String spaceId = request.getParameter("spaceId");
+		int tablonId = Integer.parseInt(request.getParameter("tablonId"));
 
-		System.out.println("checkpoint 1");
 		Tablon tablon = new Tablon();
-		tablon.setSpaceId(spaceId);
+		tablon.setId(tablonId);
+
 		Rate rate = new Rate();
 		rate.setUserId(user.getId());
-		rate.setSpaceId(spaceId);
+		rate.setTablonId(tablonId);
 		rate.setRate(newRate);
-		System.out.println("checkpoint 2");
 		
 		rate.setRateDDBB();
-		System.out.println("checkpoint 3");
+
+		System.out.println("checkpoint 1");
 
 		float media = tablon.setMediaToTablon(newRate);
 	
-		System.out.println("Rate enviada " + newRate);
-		System.out.println("Al tablon "+ spaceId);
+		System.out.println("checkpoint 1.5");
 
+		System.out.println("Rate enviada " + newRate);
+		System.out.println("Al tablon "+ tablonId);
+
+
+		System.out.println("SendRateMobile imprime: "+media);
 		out.println(media);
 	}
 

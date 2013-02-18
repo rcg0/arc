@@ -173,7 +173,7 @@ function showContents(){
     
     var text=document.createTextNode(msg.msg);
     //alert(msg.msg);
-    var autor = document.createTextNode(msg.creator.name + " " + msg.creator.surname1 + " " + msg.creator.surname2 );
+    var autor = document.createTextNode(msg.creator.nick+":");
     var nuevoDiv = document.createElement("div");
     
 

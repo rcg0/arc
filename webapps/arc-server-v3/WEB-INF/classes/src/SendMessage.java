@@ -13,7 +13,6 @@ public class SendMessage extends HttpServlet {
 public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-      
 
 	HttpSession session = request.getSession(false);
 	String next = "/error.html";

@@ -215,12 +215,12 @@ public class Tablon {
 		return tablon;
 	}
 
-	public Tablon getTablonDDBB(String space){
-		Tablon tablon = null;
+	public Vector<Tablon> getTablonDDBB(String space){
+		Vector<Tablon> tablones = null;
 		DataBaseManager manager = new DataBaseManager();
-		tablon = manager.getTablon(space);
+		tablones = manager.getTablon(space);
 		
-		return tablon;
+		return tablones;
 	}
 
 	public Vector<Message> getBeforeMessages(int messageId,int limit){

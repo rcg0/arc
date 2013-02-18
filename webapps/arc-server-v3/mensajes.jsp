@@ -27,7 +27,7 @@
     <a href="logout"><img id="imgApagado" src="IMG/apagado2.png"></a>
 <% User user = (User)session.getAttribute("user"); %>
 
-    <p><%= user.getName()%></p>
+    <p><%= user.getNick()%></p>
   </div>
 
       <ul class="menu">
@@ -76,7 +76,7 @@ Vector<Message> msgs = tablon.getAllMsg();
 
 <%System.out.println("msgs.size()="+msgs.size());%>
 
-	 <div id="<%=msgs.elementAt(j).getId()%>" class="mensaje"><p><b><%=msgs.elementAt(j).getCreator().getName()  + " " +  msgs.elementAt(j).getCreator().getSurName1()  + " " +  msgs.elementAt(j).getCreator().getSurName2()%></b>:
+	 <div id="<%=msgs.elementAt(j).getId()%>" class="mensaje"><p><b><%=msgs.elementAt(j).getCreator().getNick()%></b>:
 	  <p><%=msgs.elementAt(j).getMsg()%></p>
 	<img class="delete" src="IMG/delete.jpg" onClick="removeMessage(<%=msgs.elementAt(j).getId()%>)">
 	</div>

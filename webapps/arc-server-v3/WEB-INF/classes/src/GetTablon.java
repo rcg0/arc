@@ -3,6 +3,7 @@ package arc;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import java.util.Vector;
 
 import com.google.gson.Gson;
 
@@ -16,19 +17,22 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	HttpSession session = request.getSession(false);
 	User user = null;
 	String next="/error.html";
-	Tablon tablon = null;
+	Vector<Tablon> tablones = new Vector<Tablon>();
 	PrintWriter out = response.getWriter();
 
-   	tablon= new Tablon();	
+   	Tablon tablon= new Tablon();	
 	//tablon = tablon.getTablonDDBB(Integer.parseInt(request.getParameter("tablonId")));
-	tablon = tablon.getTablonDDBB(request.getParameter("tablonSpace"));
+	tablones = tablon.getTablonDDBB(request.getParameter("tablonSpace"));
 
-	System.out.println("Nombre de tablón: "+tablon.getName());
+	System.out.println("Nombre de tablón: "+tablones.elementAt(0).getName());
+	//System.out.println("Nombre de tablón: "+tablones.elementAt(1).getName());
+	System.out.println("Size "+tablones.size());
 	System.out.println("el parámetro que llega: "+request.getParameter("tablonSpace"));
+	
 	Gson gson = new Gson();
-	System.out.println(gson.toJson(tablon));
-	System.out.println(tablon.getId());
-	out.println(gson.toJson(tablon));
+	System.out.println(gson.toJson(tablones));
+	//System.out.println(tablon.getId());
+	out.println(gson.toJson(tablones));
 
   }
 
