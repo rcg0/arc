@@ -217,8 +217,8 @@ public final class R {
 	}
 	public static final class drawable {
 		public static final int launcher_icon = 0x7f02005e;
-		public static final int shopper_icon = 0x7f02006b;
-		public static final int share_via_barcode = 0x7f02006a;
+		public static final int shopper_icon = 0x7f02006c;
+		public static final int share_via_barcode = 0x7f02006b;
 	}
 	public static final class xml {
 		public static final int preferences = 0x7f040000;

@@ -10,7 +10,8 @@ import com.google.gson.Gson;
 
 public class GetMessages extends HttpServlet {
 
-	 
+/*no es lo mismo que getMessagesMobile -> este coje los X mensajes anteriores a un mensaje dado.*/
+
 public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 

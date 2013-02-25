@@ -77,102 +77,15 @@ public class RegistroActivity extends Activity {
             		toast.show();
             	}
             	else{
-            		new Registro().execute();
+            		AsyncTask<String, Integer, String> registro = new Registro(RegistroActivity.this);
+            		registro.execute();
             	}
             }
       });
 		
 		
 	}
-    class Registro extends AsyncTask<String, Integer, String> {
-    	@Override
-    	protected void onProgressUpdate(Integer... progress) {
-// [... Update progress bar, Notification, or other UI element ...]
-   	}	
-    	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
-		@Override
-    	protected void onPostExecute(String result) {
-// [... Report results via UI update, Dialog, or notification ...]
-    		Context context = getApplicationContext();
-			int duration = Toast.LENGTH_SHORT;
-			Toast toast;
-			
-    		if(result == null){
-				toast = Toast.makeText(context, "No ha sido posible conectar con el servidor.", duration);
-				toast.show();
-    		}else{
-    			if(!result.equals("nok")){
-    				Gson gson = new Gson();
-    				jsonUser = result;
-    				User userLogin = gson.fromJson(result, User.class);
-    				callCamera();
-    				
-    			}else{
-    				
-    				toast = Toast.makeText(context, "El nick ya está elegido, pruebe de nuevo", duration);
-    				toast.show();
-    			}
-    	}
-
-    }
-
-protected String doInBackground(String... parameter) {
-			int myProgress = 0;
-	// 	[... Perform background processing task, update myProgress ...]
-			publishProgress(myProgress);
-	// 		[... Continue performing background processing task ...]
-	// 	Return the value to be passed to onPostExecute
-
-			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/registerMobile");
-
-			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
-			//Añadimos todos los parámetros que queramos enviar
-			
-			l.add(new BasicNameValuePair("alias", alias.getText().toString()));
-			
-			Boolean masc = generoMasculino.isChecked();
-			Boolean fem = generoFemenino.isChecked();
-			/*case genre*/
-			if(generoMasculino.isChecked()){
-				l.add(new BasicNameValuePair("genre", "Masculino"));
-			}
-			if(generoFemenino.isChecked()){
-				l.add(new BasicNameValuePair("genre", "Femenino"));
-			}
-			
-			l.add(new BasicNameValuePair("age", edad.getSelectedItem().toString()));
-			l.add(new BasicNameValuePair("work", trabajo.getText().toString()));
-	    			
-			HttpResponse response = null;
-			HttpEntity resEntity = null;
-			String res = null;
-			try {
-				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l, HTTP.UTF_8);
-				httppost.setEntity(data);
-		
-				response = httpclient.execute(httppost);
-				resEntity = response.getEntity();
-		
-	            res = EntityUtils.toString(resEntity, "UTF-8");
-				/*BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
-				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
-				res = b.readLine().trim();
-				resEntity.consumeContent();*/
-				
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-				//tv.setText("No ha funcionado");
-			}
-	
-			//httpclient.getConnectionManager().shutdown();
-	
-			return res;
-		}
     
-    
-}
     
 
 	private void callTablonActivity(String contents){
@@ -183,7 +96,7 @@ protected String doInBackground(String... parameter) {
 		//finish();	
 	}
 	
-    private void callCamera() {
+    void callCamera() {
     	Intent intent = new Intent("com.google.zxing.client.android.SCAN");
 		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 		startActivityForResult(intent, 0);				

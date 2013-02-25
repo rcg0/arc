@@ -8,15 +8,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
-import java.lang.Math;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.TabListener;
+
 
 public class Tablon {
 
@@ -171,9 +165,6 @@ public class Tablon {
 	public void printTablon(TextView tablonSubtitle, RatingBar ratingBar, LinearLayout layout,Context context){
 		
 		Vector<Message> messages = this.getAllMsg();
-		TextView name;
-		TextView author;
-		TextView text;
 		
 		layout.removeAllViews();
 		//tablonSubtitle.setText(this.getSubtitle());
@@ -186,29 +177,36 @@ public class Tablon {
 	public void printSomeMessages(Vector<Message> messages, LinearLayout layout,Context context){
 		
 		for(int i = 0; i<messages.size(); i++){	
-			this.printMessage(messages.elementAt(i).getCreator().getNick(),messages.elementAt(i).getMsg(),layout,context);
+			//this.printMessage(messages.elementAt(i).getCreator().getNick(),messages.elementAt(i).getMsg(),layout,context);
+			this.printMessage(messages.elementAt(i),layout,context);
 		}
 	}
 	
-	public void printMessage(String nick, String msg, LinearLayout layout,Context context){
+	public void printMessage(Message message, LinearLayout layout,Context context){
 		
 		LinearLayout l = new LinearLayout(context);
 		l.setOrientation(LinearLayout.HORIZONTAL);			
 		TextView author = new TextView(context);
 		TextView text = new TextView(context);
 		
+		if(message.getFormat() == 0){//texto
+			text.setText(message.getMsg());
+			text.setTextColor(Color.BLACK);
 		
-		text.setText(msg);
-		text.setTextColor(Color.BLACK);
-		
-		author.setText(nick+ ": ");
-		author.setPadding(30, 0, 0, 0);
-		author.setTypeface(null, Typeface.BOLD);
-		author.setTextColor(Color.BLACK);
+			author.setText(message.getCreator().getNick()+ ": ");
+			author.setPadding(30, 0, 0, 0);
+			author.setTypeface(null, Typeface.BOLD);
+			author.setTextColor(Color.BLACK);
 
-		l.addView(author);
-		l.addView(text);
-		layout.addView(l);
+			l.addView(author);
+			l.addView(text);
+			layout.addView(l);
+		}
+		else if(message.getFormat() == 1){//image
+			
+			
+			
+		}
 	}
 	
 	/*returns the highmessageid or -1 if there isn't messages*/
