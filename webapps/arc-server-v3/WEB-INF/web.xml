@@ -243,6 +243,15 @@
         </servlet-mapping>
 
 
+        <servlet>
+            <servlet-name>ServletSendImage</servlet-name>
+            <servlet-class>arc.SendImage</servlet-class>
+        </servlet>
+        
+        <servlet-mapping>
+            <servlet-name>ServletSendImage</servlet-name>
+            <url-pattern>/sendImage</url-pattern>
+        </servlet-mapping>
 
 
 	<!--Define the default session timeout for your application, in minutes. From a servlet or JSP page, you can modify the timeout for a particular session dynamically by using HttpSession.getMaxInactiveInterval().

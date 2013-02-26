@@ -1,6 +1,9 @@
 package com.example.asdf;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Vector;
@@ -24,30 +27,32 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.example.asdf.TablonActivity.GetMoreMessages;
 import com.example.asdf.MainActivity;
 import com.example.asdf.TablonActivity;
 import com.example.asdf.User;
-import com.example.asdf.TablonActivity.SendMessage;
 import com.example.asdf.SendMessageDialog;
 import com.example.asdf.SendMessageDialog.SendMessageDialogListener;
-import com.example.asdf.TablonActivity.GetTablon;
 import com.example.asdf.Message;
 import com.example.asdf.MyDefaultHttpClient;
 import com.example.asdf.R;
 import com.example.asdf.Tablon;
-import com.example.asdf.TablonActivity.SendRate;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -64,24 +69,24 @@ import android.widget.Toast;
 public class TablonActivity extends SherlockFragmentActivity implements SendMessageDialogListener{
 	
 	TextView tablonSubtitle;
-	TabListener listener;
-	ActionBar actionBar;
+	public TabListener listener;
+	public ActionBar actionBar;
 	RatingBar ratingBar;
 	LinearLayout layout;
 	ScrollView sv;
-	Vector<Tablon> tablones;
+	public Vector<Tablon> tablones;
 	
 	Tablon tablon;
 	Message messageSended;
 	String higherMessageId;
 	
 	MyDefaultHttpClient myDefaultHttp;
-	HttpClient httpclient = null;
+	public HttpClient httpclient = null;
 	
 	
 	String qrdecodified = null;//format space,predefinedMessage
-	String space = null;
-	String predefinedMessage = "";
+	public String space = null;
+	public String predefinedMessage = "";
 	
 	String jsonUser = null;
 
@@ -134,7 +139,8 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 			public boolean onTouch(View v, MotionEvent event) {
 
 		        if (event.getAction() == MotionEvent.ACTION_UP) {
-	            	new SendRate().execute();//lanzo el hilo         
+		        	AsyncTask<String, Integer, String> sendRate =new SendRate(TablonActivity.this);//lanzo el hilo
+		        	sendRate.execute();
 		        }
 				return false;
 			}
@@ -146,7 +152,9 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
     	if(qr.length == 2){
     		predefinedMessage = qr[1];
     	}
-    	new GetTablon().execute(); 
+    	
+    	AsyncTask<String, Integer, String> getTablon = new GetTablon(this);
+    	getTablon.execute();
 
         
     }    
@@ -164,38 +172,59 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+    	
+    	Intent intent;
+    	
       switch (item.getItemId()) {
             case R.id.menu_update:         
 
             	String higherMessageId = tablonSelected.searchHighMessageId()+"";
-            	new GetMoreMessages().execute(higherMessageId);
+            	AsyncTask<String, Integer, String> getMoreMessages = new GetMoreMessages(this);
+            	getMoreMessages.execute(higherMessageId);
             	
             	return true;
+            	
             case R.id.menu_write:
 
             	showSendDialog(predefinedMessage);
             	
             	return true;
+            
+            case R.id.new_picture:
+            	
+            	//intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Media.EXTERNAL_CONTENT_URI);
+            	intent = new Intent(Intent.ACTION_GET_CONTENT);
+            	intent.setType("image/* video/* audio/*");
+            	startActivityForResult(intent, 1);
+            	
+            	return true;
+                        
             case R.id.camera_access:
             	//Toast.makeText(getApplicationContext(), "De momento nada...", Toast.LENGTH_LONG).show();
-            	Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+            	intent = new Intent("com.google.zxing.client.android.SCAN");
         		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
         		startActivityForResult(intent, 0);		
             	
-            	
             	return true;
+            	 
             case R.id.logout:
 
-            	new Logout().execute();
+            	AsyncTask<String, Integer, String> logout = new Logout(this);
+            	logout.execute();
             	
             	return true;
+            	
             default:
                 return super.onOptionsItemSelected(item);
             }  
         }
     
+    
+    
+    
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		   if (requestCode == 0) {
+		   
+		if (requestCode == 0) {//camera
 		      if (resultCode == RESULT_OK) {
 		         String contents = intent.getStringExtra("SCAN_RESULT");
 		         String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
@@ -216,160 +245,58 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 		      } else if (resultCode == RESULT_CANCELED) {
 		         // Handle cancel
 		      }
-		   }
 		}
-   
-    
-    class SendRate extends AsyncTask<String, Integer, String> {
-    	@Override
-    	protected void onProgressUpdate(Integer... progress) {
-// [... Update progress bar, Notification, or other UI element ...]
-   	}	
-    	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
-		@Override
-    	protected void onPostExecute(String result) {
-// [... Report results via UI update, Dialog, or notification ...]
-    		/*En principio estaba puesto que soltara un toast*/
-    		Context context = getApplicationContext();
-    		int duration = Toast.LENGTH_SHORT;
-    		Toast toast;
-    		String message = null;
-    		/*If the server says ok muestro un toast*/
-    		if(result == null){
-    			message = "La puntuación no se pudo enviar en estos momentos";
-    		}else{
-	    		float media = Float.parseFloat(result);
-    			
-	    		if(media >= 0 || media<=5){
-	    			tablonSelected.printRate(ratingBar, media);
-    				message = "La puntuación media del evento es de: "+media;
-    			}
-    		}
-    		toast = Toast.makeText(context, message , duration);
-    		toast.show();
-    		
-    		
-    	}
-
-protected String doInBackground(String... parameter) {
-			int myProgress = 0;
-	// 	[... Perform background processing task, update myProgress ...]
-			publishProgress(myProgress);
-	// 		[... Continue performing background processing task ...]
-	// 	Return the value to be passed to onPostExecute
-
-			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendRateMobile");
+		else if(requestCode == 1){//multimedia
 			
-			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
-			//Añadimos todos los parámetros que queramos enviar
-			
-			l.add(new BasicNameValuePair("rate", ratingBar.getRating()+""));
-			l.add(new BasicNameValuePair("tablonId", tablonSelected.getId()+""));
-
-	    			
-			HttpResponse response = null;
-			HttpEntity resEntity = null;
-			String res = null;
-			try {
-				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l, "utf-8");
-				httppost.setEntity(data);
-		
-				response = httpclient.execute(httppost);
-				resEntity = response.getEntity();
-		
-				BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
-				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
-				res = b.readLine().trim();
-				resEntity.consumeContent();
+			if(resultCode == RESULT_OK){
 				
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+							    
+				Uri targetUri = intent.getData();
+				String format = getFormatFromUri(targetUri);
+				
+				File file = new File(getPath(targetUri));
+				
+				AsyncTask<Object, Integer, String> send = new SendMultiMedia(this);
+				send.execute(file,format, tablonSelected.searchHighMessageId()+"");
+				
+				Toast toast2 = Toast.makeText(getApplicationContext(), targetUri.toString() , Toast.LENGTH_SHORT);
+    			toast2.show();
 			}
-	
-			//httpclient.getConnectionManager().shutdown();
-	
-			return res;
 		}
-    
-    }
-    class GetTablon extends AsyncTask<String, Integer, String> {
-    	@Override
-    	protected void onProgressUpdate(Integer... progress) {
-// [... Update progress bar, Notification, or other UI element ...]
-   	}	
-    	
-    	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
-		@Override
-    	protected void onPostExecute(String result) {
-// [... Report results via UI update, Dialog, or notification ...]
-    		/*En principio estaba puesto que soltara un toast*/
-    		
-    		if(result != null){
-    			Context context = getApplicationContext();
-    			Gson gson = new Gson();
-    			
-    			/*ESTO HAY QUE ARREGLARLO, SIMPLEMENTE ES UNA PRUEBA*/
-    			tablones = gson.fromJson(result, new TypeToken<Vector<Tablon>>(){}.getType());
-    			printBar(actionBar,listener);
-    			//tablones.elementAt(1).printTablon(actionBar,listener, tablonSubtitle, ratingBar, layout, context);
-    			/**/
-    		}
-    		if(!predefinedMessage.equals("")){//predefinedMessage Exists
-    			showSendDialog(predefinedMessage);
-    			predefinedMessage = "";//lo reseteo para que no lo coja la siguiente vez
-    		}
-    	}
-
-protected String doInBackground(String... parameter) {
-			int myProgress = 0;
-	// 	[... Perform background processing task, update myProgress ...]
-			publishProgress(myProgress);
-	// 		[... Continue performing background processing task ...]
-	// 	Return the value to be passed to onPostExecute
-			
-			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/getTablon");
-
-			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
-			//Añadimos todos los parámetros que queramos enviar
-			l.add(new BasicNameValuePair("tablonSpace",space));
-    		
-	    			
-			HttpResponse response = null;
-			HttpEntity resEntity = null;
-			String res = null;
-			try {
-				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l, "utf-8");
-				httppost.setEntity(data);
 		
-				response = httpclient.execute(httppost);
-				resEntity = response.getEntity();
-			    
-				/*a ver si funciona*/
-				res = EntityUtils.toString(resEntity, HTTP.UTF_8);
-				//BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
-				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
-			    //res = b.readLine().trim();
-				//resEntity.consumeContent();
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-				//tv.setText("No ha funcionado");
-			}
-	
-			//httpclient.getConnectionManager().shutdown();
-	
-			return res;
-					
-			
-		}
-	
-	
 	}
+	
+	
+	//Example Uri : content://media/external/images/media/305283
+	//content://media/external/images/video/305283
+	//content://media/external/images/audio/305283
+	public String getFormatFromUri(Uri uri){
+		String format = "";
+		String uriString = uri.toString();
+		if(uriString.contains("video")){
+			format = "1";
+		}else if(uriString.contains("audio")){
+			format = "2";
+		}
+		
+		return format;
+		
+	}
+	
+    /*returns the path of the Uri you pass*/
+	public String getPath(Uri uri) {
+	    String[] projection = { MediaStore.Images.Media.DATA };
+	    Cursor cursor = managedQuery(uri, projection, null, null, null);
+	    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+	    cursor.moveToFirst();
+	    return cursor.getString(column_index);
+	}
+	
+    
+    
+	
 
-	private void sendScroll(){
+	public void sendScroll(){
         final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
@@ -385,7 +312,7 @@ protected String doInBackground(String... parameter) {
         }).start();
     }
 	
-	private void showSendDialog(String predefinedMessage) {
+	public void showSendDialog(String predefinedMessage) {
 
 		  FragmentManager fm = getSupportFragmentManager();
 	      SendMessageDialog messageDialog = new SendMessageDialog();
@@ -397,220 +324,6 @@ protected String doInBackground(String... parameter) {
 	      
 		
 }
-
-	class SendMessage extends AsyncTask<String, Integer, String> {
-    	@Override
-    	protected void onProgressUpdate(Integer... progress) {
-// [... Update progress bar, Notification, or other UI element ...]
-   	}	
-    	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
-		@Override
-    	protected void onPostExecute(String result) {
-    		if (result != null){//no le ha llegado al servidor
-    		/*este método hace lo mismo que el onpostexecute de getAfterMessages --> REFACTOR */
-    			Context context = getApplicationContext();
-    			Gson gson = new Gson();
-    			Tablon tablonReceived = gson.fromJson(result, Tablon.class);
-    			if(!tablonReceived.getAllMsg().isEmpty()){
-    				tablonSelected.printSomeMessages(tablonReceived.getAllMsg() ,layout ,context);	
-    				tablonSelected.setSomeMsg(tablonReceived.getAllMsg());
-    				sendScroll();
-    			}
-    		}
-    	}
-
-   protected String doInBackground(String... parameter) {
-			int myProgress = 0;
-	// 	[... Perform background processing task, update myProgress ...]
-			publishProgress(myProgress);
-	// 		[... Continue performing background processing task ...]
-	// 	Return the value to be passed to onPostExecute
-
-			
-
-			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendMessageMobile");
-
-			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
-			//Añadimos todos los parámetros que queramos enviar
-			
-			l.add(new BasicNameValuePair("tablonId", tablonSelected.getId()+""));
-			//l.add(new BasicNameValuePair("tablonSpace", tablon.getSpaceId()));
-			l.add(new BasicNameValuePair("message", parameter[0] ));
-			l.add(new BasicNameValuePair("messageId", parameter[1]));
-			
-			HttpResponse response = null;
-			HttpEntity resEntity = null;
-			String res = null;
-			try {
-				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l,"utf-8");
-				
-				httppost.setEntity(data);
-		
-				response = httpclient.execute(httppost);
-				Log.i("javi", "checkpoint1");
-				resEntity = response.getEntity();
-				BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
-				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
-				res = b.readLine().trim();
-				resEntity.consumeContent();
-				Log.i("javi", "checkpoint2");
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	
-			//httpclient.getConnectionManager().shutdown();
-	
-			return res;
-		}
-	
-	
-	}
-
-	class GetMoreMessages extends AsyncTask<String, Integer, String> {
-    	@Override
-    	protected void onProgressUpdate(Integer... progress) {
-// [... Update progress bar, Notification, or other UI element ...]
-   	}	
-    	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
-		@Override
-    	protected void onPostExecute(String result) {
-// [... Report results via UI update, Dialog, or notification ...]
-    		/*En principio estaba puesto que soltara un toast*/
-    		
-    		if(result != null){
-    			Context context = getApplicationContext();
-    			Gson gson = new Gson();
-    			Tablon tablonReceived = gson.fromJson(result, Tablon.class);
-    			if(!tablonReceived.getAllMsg().isEmpty()){
-    				tablonSelected.printSomeMessages(tablonReceived.getAllMsg() ,layout ,context);	
-    				tablonSelected.setSomeMsg(tablonReceived.getAllMsg());
-    				sendScroll();
-    			}else{
-					int duration = Toast.LENGTH_SHORT;
-					Toast toast = Toast.makeText(context, "No hay más mensajes que mostrar.", duration);
-    				toast.show();
-    			}
-    		}
-    	}
-
-protected String doInBackground(String... parameter) {
-			int myProgress = 0;
-	// 	[... Perform background processing task, update myProgress ...]
-			publishProgress(myProgress);
-	// 		[... Continue performing background processing task ...]
-	// 	Return the value to be passed to onPostExecute
-			
-			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/getAfterMessagesMobile");
-
-			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
-			//Añadimos todos los parámetros que queramos enviar
-			l.add(new BasicNameValuePair("tablonId", tablonSelected.getId()+""));
-			l.add(new BasicNameValuePair("messageId",parameter[0]));
-
-	    			
-			HttpResponse response = null;
-			HttpEntity resEntity = null;
-			String res = null;
-			try {
-				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l, "utf-8");
-				httppost.setEntity(data);
-		
-				response = httpclient.execute(httppost);
-				resEntity = response.getEntity();
-			    
-				/*a ver si funciona*/
-				res = EntityUtils.toString(resEntity, HTTP.UTF_8);
-
-				//BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
-				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
-			    //res = b.readLine().trim();
-				//resEntity.consumeContent();
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-				//tv.setText("No ha funcionado");
-			}
-	
-			//httpclient.getConnectionManager().shutdown();
-	
-			return res;
-					
-			
-		}
-	
-	
-	}
-	
-    class Logout extends AsyncTask<String, Integer, String> {
-    	@Override
-    	protected void onProgressUpdate(Integer... progress) {
-// [... Update progress bar, Notification, or other UI element ...]
-   	}	
-    	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
-		@Override
-    	protected void onPostExecute(String result) {
-    		
-    		Context context = getApplicationContext();
-			int duration = Toast.LENGTH_SHORT;
-			Toast toast;
-			
-    		if (result == null){//no le ha llegado al servidor
-    			toast = Toast.makeText(context, "No ha sido posible conectar con el servidor.", duration);
-				toast.show();
-    		}
-    		else if(result.equals("ok")){
-    			toast = Toast.makeText(context, "Usuario desconectado.", duration);
-				toast.show();
-				Intent intent = new Intent(TablonActivity.this, MainActivity.class);
-			    startActivity(intent);
-			    finish();
-    		}
-    	}
-
-   protected String doInBackground(String... parameter) {
-			int myProgress = 0;
-	// 	[... Perform background processing task, update myProgress ...]
-			publishProgress(myProgress);
-	// 		[... Continue performing background processing task ...]
-	// 	Return the value to be passed to onPostExecute
-
-			
-
-			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/logoutMobile");
-
-			Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
-			//Añadimos todos los parámetros que queramos enviar
-					
-			HttpResponse response = null;
-			HttpEntity resEntity = null;
-			String res = null;
-			try {
-				UrlEncodedFormEntity data = new UrlEncodedFormEntity(l,"utf-8");
-				httppost.setEntity(data);
-		
-				response = httpclient.execute(httppost);
-				resEntity = response.getEntity();
-				BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
-				//Leeríamos la respuesta y haríamos algo con ella, en este caso únicamente leemos la primera linea
-				res = b.readLine().trim();
-				resEntity.consumeContent();
-				
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	
-			//httpclient.getConnectionManager().shutdown();
-	
-			return res;
-		}
-	
-	
-	}
     
     
 	protected void onSaveInstanceState(Bundle savedInstanceState){	
@@ -640,7 +353,11 @@ protected String doInBackground(String... parameter) {
 	public void onFinishEditDialog(String inputText) {
 
     	String higherMessageId = tablonSelected.searchHighMessageId()+"";
-		new SendMessage().execute(inputText, higherMessageId);
+    	int format = 0;//texto
+    	
+		AsyncTask<String, Integer, String> sendMessage = new SendMessage(this);
+		sendMessage.execute(inputText,format+"", higherMessageId);
+		
 		messageSended = new Message();
 
 		Gson gson = new Gson();
