@@ -14,6 +14,7 @@ public class Tablon {
 	private int visibility;
 	private Vector <User> targetUsers = new Vector<User>();
 	private Vector <Message> msg = new Vector<Message>();
+	private int lastMessageId;
 	private String rate;
 
 	public void setId(int id){
@@ -106,6 +107,17 @@ public class Tablon {
 	public int getPermission (){
 		
 		return permission;
+	}
+
+	public void setLastMessageId(int lastMessageId){
+		
+		this.lastMessageId = lastMessageId;
+		
+	}
+	
+	public int getLastMessageId (){
+		
+		return lastMessageId;
 	}
 
 	public void setVisibility(int visibility){

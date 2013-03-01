@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -42,17 +43,16 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
 		@Override
     	protected void onPostExecute(String result) {
     		if (result != null){//no le ha llegado al servidor
-    		/*este método hace lo mismo que el onpostexecute de getAfterMessages --> REFACTOR */
-    		/*	Context context = getApplicationContext();
-    			Gson gson = new Gson();
-    			Tablon tablonReceived = gson.fromJson(result, Tablon.class);
-    			if(!tablonReceived.getAllMsg().isEmpty()){
-    				tablonSelected.printSomeMessages(tablonReceived.getAllMsg() ,layout ,context);	
-    				tablonSelected.setSomeMsg(tablonReceived.getAllMsg());
-    				sendScroll();
+    			/*este método hace lo mismo que el onpostexecute de getAfterMessages --> REFACTOR */
+    				Context context = activity.context;
+    				Gson gson = new Gson();
+    				Tablon tablonReceived = gson.fromJson(result, Tablon.class);
+    				if(!tablonReceived.getAllMsg().isEmpty()){
+    					activity.tablonSelected.printSomeMessages(tablonReceived.getAllMsg() ,activity.layout ,context);	
+    					activity.tablonSelected.setSomeMsg(tablonReceived.getAllMsg());
+    					activity.sendScroll();
+    				}
     			}
-    			*/
-    		}
     	}
 
    protected String doInBackground(Object... parameter) {
@@ -91,14 +91,19 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
 				MultipartEntity entity = new MultipartEntity();
 				
 				entity.addPart("format", new StringBody((String)parameter[1]));
-                entity.addPart("image", new FileBody((File)parameter[0]));  
-                //entity.addPart("messageId", new StringBody((String)parameter[0]));
-                entity.addPart("messageId", new StringBody(activity.tablonSelected.getId()+""));
+		        entity.addPart("image", new FileBody((File)parameter[0]));  
+		        entity.addPart("messageId", new StringBody((String)parameter[2]));
+		        entity.addPart("tablonId", new StringBody(activity.tablonSelected.getId()+""));
                          
                 httppost.setEntity(entity); 
                
 				response = activity.httpclient.execute(httppost);
 				
+				resEntity = response.getEntity();
+				BufferedReader b = new BufferedReader(new InputStreamReader(resEntity.getContent()));
+				
+				res = b.readLine().trim();
+				resEntity.consumeContent();
 
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();

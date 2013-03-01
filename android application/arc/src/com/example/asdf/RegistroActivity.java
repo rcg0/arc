@@ -85,8 +85,7 @@ public class RegistroActivity extends Activity {
 		
 		
 	}
-    
-    
+
 
 	private void callTablonActivity(String contents){
 		intent2= new Intent(RegistroActivity.this, TablonActivity.class);

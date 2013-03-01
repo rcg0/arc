@@ -359,7 +359,7 @@ public class DataBaseManager{
 			Connection conn = openConnectionPool();
 			/*select * from TablonMessage INNER JOIN Message ON TablonMessage.message_id = Message.id INNER JOIN User ON Message.user_id = User.id WHERE TablonMessage.id = ?;*/
 			/***********************************************PARAMETRIZACIÓN*************************************************/
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Message INNER JOIN User ON Message.user_id=User.id WHERE tablon_id = ?;"); 
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM Message INNER JOIN User ON Message.user_id=User.id WHERE tablon_id = ? ORDER BY dateTime ASC;"); 
 			statement.setInt(1, idTablon);
 			/****************************************************************************************************************/
 
@@ -370,6 +370,7 @@ public class DataBaseManager{
 				m.setId(rs.getInt("id"));
 				m.setMsg(rs.getString("message"));
 				m.setVisibility(rs.getInt("visibility"));
+				m.setFormat(rs.getInt("format"));
 				//m.setDate(rs.getTimestamp("dateTime"));//peta aquí
 				u.setId(rs.getInt("Message.user_id"));
 				u.setNick(rs.getString("User.nick"));
@@ -503,6 +504,7 @@ public class DataBaseManager{
 				m.setMsg(rs.getString("Message.message"));
 				//System.out.println("visibility:"+rs.getInt("visibility"));
 				m.setVisibility(rs.getInt("visibility"));
+				m.setFormat(rs.getInt("Message.format"));
 				//m.setDate(rs.getTimestamp("dateTime"));//peta aquí
 				u.setId(rs.getInt("Message.user_id"));
 				u.setName(rs.getString("User.name"));

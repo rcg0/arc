@@ -14,8 +14,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import javax.imageio.ImageIO;
  
-import sun.misc.BASE64Decoder;
-
 
 public class SendMessageMobile extends HttpServlet {
   /**
@@ -56,20 +54,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 			//msg.setVisibility();
 			System.out.println("El mensaje que he enviado ha sido el siguiente: "+ msg.getMsg());
 		}
-		else if(msg.getFormat() == 1){//if image
-
-			/*Random r = new Random();
-			java.util.Date date= new java.util.Date();
-			new Timestamp(date.getTime());
-
-			byte[] imageByteArray = Base64.decode(message);
-			FileOutputStream f = new FileOutputStream("/home/apt/jrafael/apache-tomcat-6.0.35/webapps/arc-server-v3/IMG/pruebaaaa.jpg");
-			f.write(imageByteArray);
-			f.close();
-						System.out.println("El mensaje que he enviado ha sido una imagen");
-			//Base64.decodeToFile(message, "IMG/test.jpg");
-			//System.out.println("la ruta es: "+"usersImages/"+new Timestamp(date.getTime())+""+r.nextInt()+".png");
-			*/
+		/*else if(msg.getFormat() == 1){//if image
 
 
        			BASE64Decoder decoder = new BASE64Decoder();
@@ -91,7 +76,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 		         // write the image
 		        ImageIO.write(image, "png", f);
       			System.out.println("El mensaje que he enviado ha sido una imagen");
-		}
+		}*/
 	}
 
 

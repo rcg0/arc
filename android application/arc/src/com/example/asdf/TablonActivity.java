@@ -40,6 +40,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -67,6 +68,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class TablonActivity extends SherlockFragmentActivity implements SendMessageDialogListener{
+	
+	Context context = this;
 	
 	TextView tablonSubtitle;
 	public TabListener listener;
@@ -101,13 +104,12 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
         actionBar.setDisplayShowTitleEnabled(false);
         
         listener = new TabListener() {
-			
-			
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
     			tablonSelected = tablones.elementAt(tab.getPosition());
-    			tablonSelected.printTablon(tablonSubtitle, ratingBar, layout, getApplicationContext());
+    			
+    			tablonSelected.printTablon(tablonSubtitle, ratingBar, layout, context);//getApplicationContext());
     			sendScroll();
 			}
 
@@ -257,26 +259,34 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 				File file = new File(getPath(targetUri));
 				
 				AsyncTask<Object, Integer, String> send = new SendMultiMedia(this);
-				send.execute(file,format, tablonSelected.searchHighMessageId()+"");
+				send.execute(file,format,tablonSelected.searchHighMessageId()+"");
 				
-				Toast toast2 = Toast.makeText(getApplicationContext(), targetUri.toString() , Toast.LENGTH_SHORT);
+				/*Toast toast2 = Toast.makeText(getApplicationContext(), targetUri.toString() , Toast.LENGTH_SHORT);
     			toast2.show();
+    			*/
 			}
 		}
 		
 	}
 	
-	
-	//Example Uri : content://media/external/images/media/305283
-	//content://media/external/images/video/305283
-	//content://media/external/images/audio/305283
 	public String getFormatFromUri(Uri uri){
 		String format = "";
 		String uriString = uri.toString();
-		if(uriString.contains("video")){
-			format = "1";
-		}else if(uriString.contains("audio")){
-			format = "2";
+		int lastIndex = uriString.lastIndexOf(".");
+		String substring = uriString.substring(lastIndex+1);
+		
+		if(substring.equalsIgnoreCase("AAC") || substring.equalsIgnoreCase("MP3") 
+				|| substring.equalsIgnoreCase("WMA") || substring.equalsIgnoreCase("WAV")
+				|| substring.equalsIgnoreCase("MIDI")){
+			format = "2";//audio
+		}else if(substring.equalsIgnoreCase("JPEG") || substring.equalsIgnoreCase("PNG") 
+				|| substring.equalsIgnoreCase("JPG") || substring.equalsIgnoreCase("BMP")
+				|| substring.equalsIgnoreCase("GIF")){
+			format = "1";//imagen
+		}else if(substring.equalsIgnoreCase("avi") || substring.equalsIgnoreCase("mov") 
+				|| substring.equalsIgnoreCase("3gp") || substring.equalsIgnoreCase("m4v")
+				|| substring.equalsIgnoreCase("wmv")){
+			format = "3";//video
 		}
 		
 		return format;

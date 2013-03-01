@@ -2,10 +2,14 @@ package com.example.asdf;
 
 
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -188,6 +192,8 @@ public class Tablon {
 		l.setOrientation(LinearLayout.HORIZONTAL);			
 		TextView author = new TextView(context);
 		TextView text = new TextView(context);
+
+		int lastIndex = message.getMsg().lastIndexOf("/");
 		
 		if(message.getFormat() == 0){//texto
 			text.setText(message.getMsg());
@@ -198,16 +204,55 @@ public class Tablon {
 			author.setTypeface(null, Typeface.BOLD);
 			author.setTextColor(Color.BLACK);
 
-			l.addView(author);
-			l.addView(text);
-			layout.addView(l);
 		}
 		else if(message.getFormat() == 1){//image
 			
+			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
 			
+			setAsLink(text,"www.google.es", "He compartido una imagen","http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
+			text.setMovementMethod(LinkMovementMethod.getInstance());
 			
+			author.setText(message.getCreator().getNick()+ ": ");
+			author.setPadding(30, 0, 0, 0);
+			author.setTypeface(null, Typeface.BOLD);
+			author.setTextColor(Color.BLACK);
+			
+		}else if(message.getFormat() == 2){//audio
+			
+			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
+			
+			setAsLink(text,"www.google.es","He compartido un clip de audio","http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
+			text.setMovementMethod(LinkMovementMethod.getInstance());
+			
+			author.setText(message.getCreator().getNick()+ ": ");
+			author.setPadding(30, 0, 0, 0);
+			author.setTypeface(null, Typeface.BOLD);
+			author.setTextColor(Color.BLACK);	
+		
+		}else if(message.getFormat() == 3){//video
+			
+			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
+			setAsLink(text,"www.google.es","He compartido un clip de video", "http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
+			text.setMovementMethod(LinkMovementMethod.getInstance());
+			
+			author.setText(message.getCreator().getNick()+ ": ");
+			author.setPadding(30, 0, 0, 0);
+			author.setTypeface(null, Typeface.BOLD);
+			author.setTextColor(Color.BLACK);	
 		}
+		
+		
+		l.addView(author);
+		l.addView(text);
+		layout.addView(l);
 	}
+	
+	private void setAsLink(TextView view, String url, String message, String startUrl){
+        Pattern pattern = Pattern.compile(url);
+        Linkify.addLinks(view, pattern, "http://");
+        //view.setText(Html.fromHtml("<a href='http://"+url+"'>He compartido una imagen</a>"));
+        view.setText(Html.fromHtml("<a href="+startUrl+">"+message+"</a>"));
+    }
 	
 	/*returns the highmessageid or -1 if there isn't messages*/
 	public int searchHighMessageId(){
