@@ -39,7 +39,7 @@ class GetMoreMessages extends AsyncTask<String, Integer, String> {
 		/*En principio estaba puesto que soltara un toast*/
 		
 		if(result != null){
-			Context context = activity.getApplicationContext();
+			Context context = activity.context;//"this" and "getApplicationContext are not the same"
 			Gson gson = new Gson();
 			Tablon tablonReceived = gson.fromJson(result, Tablon.class);
 			if(!tablonReceived.getAllMsg().isEmpty()){

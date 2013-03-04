@@ -57,17 +57,27 @@ public class SendMessageDialog extends DialogFragment{
 	 
 	 public SendMessageDialog() {
 	        // Empty constructor required for DialogFragment
+		 
 	 }
 	
+	 public void onActivityCreated (Bundle savedInstanceState){
+		 
+		 super.onActivityCreated(savedInstanceState);
+		 
+		 
+	 }
+	 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+    	
         View view = inflater.inflate(R.layout.fragment_send_message, container);
         
         Bundle bundle = getArguments();
         
-        mEditText = (EditText) view.findViewById(R.id.txt_msg);
-        sendButton = (Button) view.findViewById(R.id.button1);
+        mEditText = (EditText)view.findViewById(R.id.txt_msg);
+	    sendButton = (Button) view.findViewById(R.id.buttonEnviar);
+		 
         
         mEditText.setText(bundle.getString("predefinedMessage"));
         // Show soft keyboard automatically
