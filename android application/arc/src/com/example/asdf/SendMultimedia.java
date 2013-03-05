@@ -48,7 +48,7 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
     				Gson gson = new Gson();
     				Tablon tablonReceived = gson.fromJson(result, Tablon.class);
     				if(!tablonReceived.getAllMsg().isEmpty()){
-    					activity.tablonSelected.printSomeMessages(tablonReceived.getAllMsg() ,activity.layout ,context);	
+    					activity.tablonSelected.printSomeMessages(tablonReceived.getAllMsg() ,activity.layout ,context, activity);	
     					activity.tablonSelected.setSomeMsg(tablonReceived.getAllMsg());
     					activity.sendScroll();
     				}

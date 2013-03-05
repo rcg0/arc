@@ -109,7 +109,7 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 				// TODO Auto-generated method stub
     			tablonSelected = tablones.elementAt(tab.getPosition());
     			
-    			tablonSelected.printTablon(tablonSubtitle, ratingBar, layout, context);//getApplicationContext());
+    			tablonSelected.printTablon(tablonSubtitle, ratingBar, layout, context, TablonActivity.this);//getApplicationContext());
     			sendScroll();
 			}
 

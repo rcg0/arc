@@ -5,11 +5,14 @@ import java.util.Vector;
 import java.util.regex.Pattern;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -166,68 +169,69 @@ public class Tablon {
 		}
 	}
 	
-	public void printTablon(TextView tablonSubtitle, RatingBar ratingBar, LinearLayout layout,Context context){
+	public void printTablon(TextView tablonSubtitle, RatingBar ratingBar, LinearLayout layout,Context context, TablonActivity tablonActivity){
 		
 		Vector<Message> messages = this.getAllMsg();
 		
 		layout.removeAllViews();
 		//tablonSubtitle.setText(this.getSubtitle());
 		
-		printSomeMessages(messages, layout, context);
+		printSomeMessages(messages, layout, context, tablonActivity);
 		printRate(ratingBar);
 		
 	}
 	
-	public void printSomeMessages(Vector<Message> messages, LinearLayout layout,Context context){
+	public void printSomeMessages(Vector<Message> messages, LinearLayout layout,Context context,  TablonActivity tablonActivity){
 		
 		for(int i = 0; i<messages.size(); i++){	
 			//this.printMessage(messages.elementAt(i).getCreator().getNick(),messages.elementAt(i).getMsg(),layout,context);
-			this.printMessage(messages.elementAt(i),layout,context);
+			this.printMessage(messages.elementAt(i),layout,context, tablonActivity);
 		}
 	}
 	
-	public void printMessage(Message message, LinearLayout layout,Context context){
+	public void printMessage(Message message, LinearLayout layout, Context context,  TablonActivity tablonActivity){
 		
 		LinearLayout l = new LinearLayout(context);
 		l.setOrientation(LinearLayout.HORIZONTAL);			
 		TextView author = new TextView(context);
 		TextView text = new TextView(context);
 
+		ImageView image = null;
+		
 		int lastIndex = message.getMsg().lastIndexOf("/");
 		
 		if(message.getFormat() == 0){//texto
 			text.setText(message.getMsg());
 			text.setTextColor(Color.BLACK);
 		
-			author.setText(message.getCreator().getNick()+ ": ");
-			author.setPadding(30, 0, 0, 0);
-			author.setTypeface(null, Typeface.BOLD);
-			author.setTextColor(Color.BLACK);
 
 		}
 		else if(message.getFormat() == 1){//image
 			
-			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
+			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccionar el link que lleve al archivo
+			image = new ImageView(context);
+			image.setImageResource(R.drawable.arc_logo);
 			
+			//Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+			//jpgView.setImageDrawable(bitmap);
+			
+			AsyncTask<ImageView, Void, Bitmap> getImage = new GetImage(tablonActivity);
+			image.setTag(name);
+			getImage.execute(image);
+			//layout.addView(image);
+			
+			/*
 			setAsLink(text,"www.google.es", "He compartido una imagen","http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
 			text.setMovementMethod(LinkMovementMethod.getInstance());
+			*/
 			
-			author.setText(message.getCreator().getNick()+ ": ");
-			author.setPadding(30, 0, 0, 0);
-			author.setTypeface(null, Typeface.BOLD);
-			author.setTextColor(Color.BLACK);
 			
 		}else if(message.getFormat() == 2){//audio
 			
 			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
 			
 			setAsLink(text,"www.google.es","He compartido un clip de audio","http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
-			text.setMovementMethod(LinkMovementMethod.getInstance());
-			
-			author.setText(message.getCreator().getNick()+ ": ");
-			author.setPadding(30, 0, 0, 0);
-			author.setTypeface(null, Typeface.BOLD);
-			author.setTextColor(Color.BLACK);	
+			text.setMovementMethod(LinkMovementMethod.getInstance());	
 		
 		}else if(message.getFormat() == 3){//video
 			
@@ -235,16 +239,23 @@ public class Tablon {
 			setAsLink(text,"www.google.es","He compartido un clip de video", "http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
 			text.setMovementMethod(LinkMovementMethod.getInstance());
 			
-			author.setText(message.getCreator().getNick()+ ": ");
-			author.setPadding(30, 0, 0, 0);
-			author.setTypeface(null, Typeface.BOLD);
-			author.setTextColor(Color.BLACK);	
 		}
 		
+		author.setText(message.getCreator().getNick()+ ": ");
+		author.setPadding(30, 0, 0, 0);
+		author.setTypeface(null, Typeface.BOLD);
+		author.setTextColor(Color.BLACK);
 		
 		l.addView(author);
 		l.addView(text);
+		
+		if(image != null){
+			l.addView(image);
+		}
+		
 		layout.addView(l);
+
+		
 	}
 	
 	private void setAsLink(TextView view, String url, String message, String startUrl){

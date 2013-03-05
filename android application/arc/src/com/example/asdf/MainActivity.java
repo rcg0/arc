@@ -1,6 +1,7 @@
 package com.example.asdf;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Vector;
@@ -22,6 +23,7 @@ import org.apache.http.protocol.HttpContext;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -54,6 +56,14 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+	
+		/*create the folder first time we access to this activity.*/
+		if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+	        Log.d("MyApp", "No SDCARD");
+		} else {
+	    File directory = new File(Environment.getExternalStorageDirectory()+File.separator+"ARC Content");
+	    directory.mkdirs();
+		}
 		
 		buttonAccede = (Button)findViewById(R.id.button1);
 		buttonRegistrate = (Button)findViewById(R.id.button2);
