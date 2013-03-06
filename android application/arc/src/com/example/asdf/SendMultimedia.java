@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.actionbarsherlock.view.Window;
 import com.google.gson.Gson;
 
 class SendMultiMedia extends AsyncTask<Object, Integer, String> {
@@ -56,13 +57,12 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
     	}
 
    protected String doInBackground(Object... parameter) {
-			int myProgress = 0;
-	// 	[... Perform background processing task, update myProgress ...]
-			publishProgress(myProgress);
-	// 		[... Continue performing background processing task ...]
-	// 	Return the value to be passed to onPostExecute
+			
+	   		/*int myProgress =+ 2;
 
-			 
+			//Normalize our progress along the progress bar's scale
+            int progress = (Window.PROGRESS_END - Window.PROGRESS_START) / 100 * myProgress;
+            activity.setSupportProgress(progress);*/
 
 			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendImage");
 

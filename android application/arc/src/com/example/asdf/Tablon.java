@@ -1,6 +1,7 @@
 package com.example.asdf;
 
 
+import java.io.File;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
@@ -12,10 +13,15 @@ import android.os.AsyncTask;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 
@@ -196,7 +202,8 @@ public class Tablon {
 		TextView author = new TextView(context);
 		TextView text = new TextView(context);
 
-		ImageView image = null;
+		ImageButton imageButton = null;
+		Button button = null;
 		
 		int lastIndex = message.getMsg().lastIndexOf("/");
 		
@@ -209,15 +216,35 @@ public class Tablon {
 		else if(message.getFormat() == 1){//image
 			
 			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccionar el link que lleve al archivo
-			image = new ImageView(context);
-			image.setImageResource(R.drawable.arc_logo);
+			imageButton = new ImageButton(context);
+			imageButton.setImageResource(R.drawable.arc_logo);
 			
-			//Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-			//jpgView.setImageDrawable(bitmap);
+			File file = new File(context.getExternalFilesDir(null), name);
+				
+			Context context1 = tablonActivity.getApplicationContext();
+	   	 	int duration = Toast.LENGTH_SHORT;
+	   	 	Toast toast = Toast.makeText(context1, name, duration);
+	   	 	toast.show();
 			
-			AsyncTask<ImageView, Void, Bitmap> getImage = new GetImage(tablonActivity);
-			image.setTag(name);
-			getImage.execute(image);
+			if(file.exists()){//file exists
+				Context context11 = tablonActivity.getApplicationContext();
+		   	 	int duration1 = Toast.LENGTH_SHORT;
+		   	 	Toast toast1 = Toast.makeText(context11, "existe el archivo", duration1);
+		   	 	toast1.show();
+				
+			}else {
+				/*Context context1 = tablonActivity.getApplicationContext();
+		   	 	int duration = Toast.LENGTH_SHORT;
+		   	 	Toast toast = Toast.makeText(context1, " no existe el archivo, tengo que pedirlo", duration);
+		   	 	toast.show();
+		   	 	*/
+		   	 	AsyncTask<ImageView, Void, Bitmap> getImage = new GetImage(tablonActivity);
+				imageButton.setTag(name);
+				getImage.execute(imageButton);	
+			}
+		   	 	
+		   	 	
+			
 			//layout.addView(image);
 			
 			/*
@@ -229,16 +256,32 @@ public class Tablon {
 		}else if(message.getFormat() == 2){//audio
 			
 			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
-			
+			/*
 			setAsLink(text,"www.google.es","He compartido un clip de audio","http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
 			text.setMovementMethod(LinkMovementMethod.getInstance());	
-		
+			 */
+			button = new Button(context);
+			button.setText("Descargar audio");
+			
+			button.setOnClickListener(new View.OnClickListener() {
+		        public void onClick(View v) {
+		            Log.d("gm", "Tapped ");
+		        }
+		    });
+			
 		}else if(message.getFormat() == 3){//video
 			
 			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
-			setAsLink(text,"www.google.es","He compartido un clip de video", "http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
-			text.setMovementMethod(LinkMovementMethod.getInstance());
+			/*setAsLink(text,"www.google.es","He compartido un clip de video", "http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
+			text.setMovementMethod(LinkMovementMethod.getInstance());*/
+			button = new Button(context);
+			button.setText("Descargar video");
 			
+			button.setOnClickListener(new View.OnClickListener() {
+		        public void onClick(View v) {
+		            Log.d("gm", "Tapped ");
+		        }
+		    });
 		}
 		
 		author.setText(message.getCreator().getNick()+ ": ");
@@ -249,8 +292,11 @@ public class Tablon {
 		l.addView(author);
 		l.addView(text);
 		
-		if(image != null){
-			l.addView(image);
+		if(imageButton != null){
+			l.addView(imageButton);
+		}
+		if(button != null){
+			l.addView(button);
 		}
 		
 		layout.addView(l);

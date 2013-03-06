@@ -38,12 +38,12 @@ import com.google.gson.Gson;
  * Si no encuentro la imagen en la galleria la pido, y la guardo.
  * 
  * */
-class GetImage extends AsyncTask<ImageView, Void, Bitmap> {
+class GetVideo extends AsyncTask<ImageView, Void, Bitmap> {
 	
 	  public ImageView imageView;
 	  public TablonActivity activity;	
 
-	    public GetImage(TablonActivity a)
+	    public GetVideo(TablonActivity a)
 	    {
 	        activity = a;
 	    }
@@ -52,7 +52,7 @@ class GetImage extends AsyncTask<ImageView, Void, Bitmap> {
 		@Override
     	protected void onPostExecute(Bitmap result) {
     		//imageView.setImageBitmap(result);
-    	String stringUri = MediaStore.Images.Media.insertImage(activity.getContentResolver(), result, imageView.getTag().toString(), "");
+    	/*String stringUri = MediaStore.Images.Media.insertImage(activity.getContentResolver(), result, imageView.getTag().toString(), "");
     	Uri uri = Uri.parse(stringUri);
     	
     	Context context = activity.getApplicationContext();
@@ -61,18 +61,18 @@ class GetImage extends AsyncTask<ImageView, Void, Bitmap> {
    	 	toast.show();
     	
    	 	Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(activity.getContentResolver(), Long.parseLong(uri.getLastPathSegment()), 3, null);//type = 1 -> MINI_KIND -> 512x384
-   	 	imageView.setImageBitmap(thumbnail);
+   	 	imageView.setImageBitmap(thumbnail);*/
     	}
 
    protected Bitmap doInBackground(ImageView... parameter) {
-	
-			this.imageView = parameter[0];
+	   		return null;
+			/*this.imageView = parameter[0];
 			 
 			return downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageView.getTag());
-			
+			*/
 		}
    
-   private Bitmap downloadImage(String url) {
+   private Bitmap downloadVideo(String url) {
 	    //---------------------------------------------------
 	    Bitmap bm = null;
 	    try {
@@ -81,7 +81,7 @@ class GetImage extends AsyncTask<ImageView, Void, Bitmap> {
 	        conn.connect();
 	        InputStream is = conn.getInputStream();
 	        BufferedInputStream bis = new BufferedInputStream(is);
-	        bm = BitmapFactory.decodeStream(bis);
+	        //bm = Factory.decodeStream(bis);
 	        bis.close();
 	        is.close();
 	    } catch (IOException e) {
