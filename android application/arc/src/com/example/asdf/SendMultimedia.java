@@ -41,10 +41,6 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
 	    	activity.setProgressBarIndeterminateVisibility(true); 
         }
 	    
-    	@Override
-    	protected void onProgressUpdate(Integer... progress) {
-// [... Update progress bar, Notification, or other UI element ...]
-   	}	
     	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
 		@Override
     	protected void onPostExecute(String result) {
@@ -73,8 +69,6 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
 			HttpEntity resEntity = null;
 			String res = null;
 			try {
-				//UrlEncodedFormEntity data = new UrlEncodedFormEntity(l,"utf-8");
-				
 				 
 				MultipartEntity entity = new MultipartEntity();
 				
@@ -98,9 +92,7 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-	
-			//httpclient.getConnectionManager().shutdown();
-	
+		
 			return res;
 		}
 }

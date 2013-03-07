@@ -195,7 +195,7 @@ public class Tablon {
 		}
 	}
 	
-	public void printMessage(Message message, LinearLayout layout, Context context,  TablonActivity tablonActivity){
+	public void printMessage(Message message, LinearLayout layout, Context context,  final TablonActivity tablonActivity){
 		
 		LinearLayout l = new LinearLayout(context);
 		l.setOrientation(LinearLayout.HORIZONTAL);			
@@ -203,7 +203,8 @@ public class Tablon {
 		TextView text = new TextView(context);
 
 		ImageButton imageButton = null;
-		Button button = null;
+		final Button button = null;
+		final Button button2 = new Button(context);
 		
 		int lastIndex = message.getMsg().lastIndexOf("/");
 		
@@ -238,7 +239,7 @@ public class Tablon {
 		   	 	Toast toast = Toast.makeText(context1, " no existe el archivo, tengo que pedirlo", duration);
 		   	 	toast.show();
 		   	 	*/
-		   	 	AsyncTask<ImageView, Void, Bitmap> getImage = new GetImage(tablonActivity);
+		   	 	AsyncTask<ImageButton, Void, Bitmap> getImage = new GetImage(tablonActivity);
 				imageButton.setTag(name);
 				getImage.execute(imageButton);	
 			}
@@ -260,10 +261,10 @@ public class Tablon {
 			setAsLink(text,"www.google.es","He compartido un clip de audio","http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
 			text.setMovementMethod(LinkMovementMethod.getInstance());	
 			 */
-			button = new Button(context);
-			button.setText("Descargar audio");
+			Button button1 = new Button(context);
+			button1.setText("Descargar audio");
 			
-			button.setOnClickListener(new View.OnClickListener() {
+			button1.setOnClickListener(new View.OnClickListener() {
 		        public void onClick(View v) {
 		            Log.d("gm", "Tapped ");
 		        }
@@ -271,15 +272,17 @@ public class Tablon {
 			
 		}else if(message.getFormat() == 3){//video
 			
-			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
+			final String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
 			/*setAsLink(text,"www.google.es","He compartido un clip de video", "http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
 			text.setMovementMethod(LinkMovementMethod.getInstance());*/
-			button = new Button(context);
-			button.setText("Descargar video");
-			
-			button.setOnClickListener(new View.OnClickListener() {
+			button2.setText("Descargar video :"+ name);
+			button2.setTag(name);
+			button2.setOnClickListener(new View.OnClickListener() {
 		        public void onClick(View v) {
-		            Log.d("gm", "Tapped ");
+
+		        	AsyncTask<Button, Void, Bitmap> getImage = new GetVideo(tablonActivity);
+					getImage.execute(button2);	
+		        
 		        }
 		    });
 		}
@@ -295,21 +298,14 @@ public class Tablon {
 		if(imageButton != null){
 			l.addView(imageButton);
 		}
-		if(button != null){
-			l.addView(button);
+		if(button2.getTag() != null){
+			l.addView(button2);
 		}
 		
 		layout.addView(l);
 
 		
 	}
-	
-	private void setAsLink(TextView view, String url, String message, String startUrl){
-        Pattern pattern = Pattern.compile(url);
-        Linkify.addLinks(view, pattern, "http://");
-        //view.setText(Html.fromHtml("<a href='http://"+url+"'>He compartido una imagen</a>"));
-        view.setText(Html.fromHtml("<a href="+startUrl+">"+message+"</a>"));
-    }
 	
 	/*returns the highmessageid or -1 if there isn't messages*/
 	public int searchHighMessageId(){

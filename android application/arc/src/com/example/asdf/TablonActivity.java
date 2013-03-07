@@ -185,7 +185,6 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
             
             case R.id.new_picture:
             	
-            	//intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Media.EXTERNAL_CONTENT_URI);
             	intent = new Intent(Intent.ACTION_GET_CONTENT);
             	intent.setType("image/* video/* audio/*");
             	startActivityForResult(intent, 1);
@@ -193,7 +192,7 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
             	return true;
                         
             case R.id.camera_access:
-            	//Toast.makeText(getApplicationContext(), "De momento nada...", Toast.LENGTH_LONG).show();
+
             	intent = new Intent("com.google.zxing.client.android.SCAN");
         		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
         		startActivityForResult(intent, 0);		
@@ -219,15 +218,7 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 		   
 		if (requestCode == 0) {//camera
 		      if (resultCode == RESULT_OK) {
-		         String contents = intent.getStringExtra("SCAN_RESULT");
-		         String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-		         
-		         /*debug*/
-		         /*Context context = getApplicationContext();
-		    	 int duration = Toast.LENGTH_SHORT;
-		    	 Toast toast = Toast.makeText(context, contents, duration);
-		    	 toast.show();*/
-		         /******/
+		        String contents = intent.getStringExtra("SCAN_RESULT");
 		    	 
 		        Intent intent2= new Intent(TablonActivity.this, TablonActivity.class);
 		 		intent2.putExtra("jsonUser", jsonUser);
@@ -251,10 +242,6 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 				
 				AsyncTask<Object, Integer, String> send = new SendMultiMedia(this);
 				send.execute(file,format,tablonSelected.searchHighMessageId()+"");
-				
-				/*Toast toast2 = Toast.makeText(getApplicationContext(), targetUri.toString() , Toast.LENGTH_SHORT);
-    			toast2.show();
-    			*/
 			}
 		}
 		
@@ -322,8 +309,6 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 	      messageDialog.setArguments(args);
 	  
 	      messageDialog.show(fm, "fragment_edit_name");
-	      
-		
 }
     
     
@@ -363,7 +348,6 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 
 		Gson gson = new Gson();
 		User user = gson.fromJson(jsonUser, User.class);
-		//String nick = user.getNick();
 		
 		messageSended.setCreator(user);
 		messageSended.setMsg(inputText);		

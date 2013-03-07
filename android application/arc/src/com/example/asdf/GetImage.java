@@ -23,12 +23,15 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -38,9 +41,9 @@ import com.google.gson.Gson;
  * Si no encuentro la imagen en la galleria la pido, y la guardo.
  * 
  * */
-class GetImage extends AsyncTask<ImageView, Void, Bitmap> {
+class GetImage extends AsyncTask<ImageButton, Void, Bitmap> {
 	
-	  public ImageView imageView;
+	  public ImageButton imageButton;
 	  public TablonActivity activity;	
 
 	    public GetImage(TablonActivity a)
@@ -52,23 +55,35 @@ class GetImage extends AsyncTask<ImageView, Void, Bitmap> {
 		@Override
     	protected void onPostExecute(Bitmap result) {
     		//imageView.setImageBitmap(result);
-    	String stringUri = MediaStore.Images.Media.insertImage(activity.getContentResolver(), result, imageView.getTag().toString(), "");
-    	Uri uri = Uri.parse(stringUri);
     	
-    	Context context = activity.getApplicationContext();
-   	 	int duration = Toast.LENGTH_SHORT;
-   	 	Toast toast = Toast.makeText(context, stringUri, duration);
-   	 	toast.show();
+    		String stringUri = MediaStore.Images.Media.insertImage(activity.getContentResolver(), result, imageButton.getTag().toString(), "");
+    		final Uri uri = Uri.parse(stringUri);
     	
-   	 	Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(activity.getContentResolver(), Long.parseLong(uri.getLastPathSegment()), 3, null);//type = 1 -> MINI_KIND -> 512x384
-   	 	imageView.setImageBitmap(thumbnail);
+    		Context context = activity.getApplicationContext();
+   	 		int duration = Toast.LENGTH_SHORT;
+   	 		Toast toast = Toast.makeText(context, stringUri, duration);
+   	 		toast.show();
+    	
+   	 		Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(activity.getContentResolver(), Long.parseLong(uri.getLastPathSegment()), 3, null);//type = 1 -> MINI_KIND -> 512x384
+   	 		imageButton.setImageBitmap(thumbnail);
+   	 		
+   	 		imageButton.setOnClickListener(new View.OnClickListener() {
+	        public void onClick(View v) {
+
+	        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+	        	activity.context.startActivity(intent);
+	        	
+
+	        	
+	        }
+   	 		});
+   	 		
     	}
 
-   protected Bitmap doInBackground(ImageView... parameter) {
+   protected Bitmap doInBackground(ImageButton... parameter) {
 	
-			this.imageView = parameter[0];
-			 
-			return downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageView.getTag());
+			this.imageButton = parameter[0];
+			return downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageButton.getTag());
 			
 		}
    
@@ -88,7 +103,6 @@ class GetImage extends AsyncTask<ImageView, Void, Bitmap> {
 	        Log.e("Hub","Error getting the image from server : " + e.getMessage().toString());
 	    } 
 	    return bm;
-	    //---------------------------------------------------
 	}
 }
 	
