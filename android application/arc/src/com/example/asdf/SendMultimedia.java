@@ -36,6 +36,11 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
 	        activity = a;
 	    }
 
+	    
+	    protected void onPreExecute() {
+	    	activity.setProgressBarIndeterminateVisibility(true); 
+        }
+	    
     	@Override
     	protected void onProgressUpdate(Integer... progress) {
 // [... Update progress bar, Notification, or other UI element ...]
@@ -54,32 +59,15 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
     					activity.sendScroll();
     				}
     			}
+            activity.setProgressBarIndeterminateVisibility(false);
+            
     	}
 
    protected String doInBackground(Object... parameter) {
 			
-	   		/*int myProgress =+ 2;
-
-			//Normalize our progress along the progress bar's scale
-            int progress = (Window.PROGRESS_END - Window.PROGRESS_START) / 100 * myProgress;
-            activity.setSupportProgress(progress);*/
+	   		activity.setProgressBarIndeterminateVisibility(true);
 
 			HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendImage");
-
-			/*Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
-			//Añadimos todos los parámetros que queramos enviar
-			
-			
-			/*l.add(new BasicNameValuePair("tablonId", activity.tablonSelected.getId()+""));
-			//l.add(new BasicNameValuePair("tablonSpace", tablon.getSpaceId()));
-			
-			l.add(new BasicNameValuePair("message", (String)parameter[0] ));
-			
-			
-			l.add(new BasicNameValuePair("format", (String)parameter[1]));
-			l.add(new BasicNameValuePair("messageId", (String)parameter[2]));
-			*/
-			
 			
 			HttpResponse response = null;
 			HttpEntity resEntity = null;

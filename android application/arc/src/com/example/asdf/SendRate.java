@@ -26,6 +26,11 @@ class SendRate extends AsyncTask<String, Integer, String> {
         activity = a;
     }
 	
+    
+    protected void onPreExecute() {
+        activity.setProgressBarIndeterminateVisibility(true); 
+    }
+    
 	@Override
 	protected void onProgressUpdate(Integer... progress) {
 //[... Update progress bar, Notification, or other UI element ...]
@@ -53,15 +58,10 @@ class SendRate extends AsyncTask<String, Integer, String> {
 		toast = Toast.makeText(context, message , duration);
 		toast.show();
 		
-		
+		activity.setProgressBarIndeterminateVisibility(false);
 	}
 
 protected String doInBackground(String... parameter) {
-		int myProgress = 0;
-// 	[... Perform background processing task, update myProgress ...]
-		publishProgress(myProgress);
-// 		[... Continue performing background processing task ...]
-// 	Return the value to be passed to onPostExecute
 
 		HttpPost httppost = new HttpPost("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/sendRateMobile");
 		

@@ -27,6 +27,11 @@ class GetMoreMessages extends AsyncTask<String, Integer, String> {
     {
         activity = a;
     }
+    
+    protected void onPreExecute() {
+        activity.setProgressBarIndeterminateVisibility(true); 
+    }
+	  
 	
 	@Override
 	protected void onProgressUpdate(Integer... progress) {
@@ -52,6 +57,7 @@ class GetMoreMessages extends AsyncTask<String, Integer, String> {
 				toast.show();
 			}
 		}
+		activity.setProgressBarIndeterminateVisibility(false);
 	}
 
 protected String doInBackground(String... parameter) {

@@ -1,22 +1,10 @@
 package com.example.asdf;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Vector;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -38,15 +26,12 @@ import com.example.asdf.MyDefaultHttpClient;
 import com.example.asdf.R;
 import com.example.asdf.Tablon;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import android.annotation.SuppressLint;
-import android.app.Application;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -54,19 +39,14 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Base64;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 public class TablonActivity extends SherlockFragmentActivity implements SendMessageDialogListener{
 	
@@ -87,6 +67,7 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 	MyDefaultHttpClient myDefaultHttp;
 	public HttpClient httpclient = null;
 	
+	ProgressDialog firstDialog = null;
 	
 	String qrdecodified = null;//format space,predefinedMessage
 	public String space = null;
@@ -98,13 +79,20 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_PROGRESS);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        
+        
         setContentView(R.layout.activity_tablon);
         
+        firstDialog = new ProgressDialog(this);
+        firstDialog.setMessage("Cargando...");
+        firstDialog.setCanceledOnTouchOutside(false);//by touch outside
+        firstDialog.setCancelable(false);//by back key
         
         actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(false);
+        setProgressBarIndeterminateVisibility(false);
         
         listener = new TabListener() {
 			@Override
@@ -158,7 +146,7 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
     		predefinedMessage = qr[1];
     	}
     	
-    	AsyncTask<String, Integer, String> getTablon = new GetTablon(this);
+    	AsyncTask<String, Integer, String> getTablon = new GetTablon(this, firstDialog);
     	getTablon.execute();
 
         
