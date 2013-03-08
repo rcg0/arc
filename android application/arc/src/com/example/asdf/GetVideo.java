@@ -25,12 +25,16 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -42,97 +46,96 @@ import com.google.gson.Gson;
  * Si no encuentro la imagen en la galleria la pido, y la guardo.
  * 
  * */
-class GetVideo extends AsyncTask<Button, Void, Bitmap> {
+class GetVideo extends AsyncTask<Object, Void, Void> {
 	
 	  public Button button;
+	  public ImageButton imageButton;
+	  
 	  public TablonActivity activity;	
 
 	    public GetVideo(TablonActivity a)
 	    {
 	        activity = a;
+	    
+	    }
+	    
+
+	    protected void onPreExecute() {
+	        activity.setSupportProgressBarIndeterminateVisibility(true); 
 	    }
 
     	@SuppressLint({ "NewApi", "NewApi", "NewApi" })
-		@Override
-    	protected void onPostExecute(Bitmap result) {
-    		//imageView.setImageBitmap(result);
-    	/*String stringUri = MediaStore.Images.Media.insertImage(activity.getContentResolver(), result, imageView.getTag().toString(), "");
-    	Uri uri = Uri.parse(stringUri);
+		protected void onPostExecute(Void result) {
+    		
+    	final Uri uri = Uri.parse(Environment.getExternalStorageDirectory()+"/ARC/"+button.getTag());
+    	    	
+    	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+button.getTag());
+    	Bitmap bMap = ThumbnailUtils.createVideoThumbnail(file.getAbsolutePath(), MediaStore.Video.Thumbnails.MICRO_KIND);
     	
-    	Context context = activity.getApplicationContext();
-   	 	int duration = Toast.LENGTH_SHORT;
-   	 	Toast toast = Toast.makeText(context, stringUri, duration);
+    	
+    	button.setVisibility(4);//INVISIBLE
+    	imageButton.setVisibility(0);//VISIBLE
+    	imageButton.setImageBitmap(bMap);
+    	
+    	imageButton.setOnClickListener(new View.OnClickListener() {
+	        public void onClick(View v) {
+	        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+	        	intent.setDataAndType(uri, "video/*");
+	        	activity.startActivity(intent);
+	        }
+	    });   
+    	
+   	 	Toast toast = Toast.makeText(activity.getApplicationContext(), "Archivo "+button.getTag()+" descargado", Toast.LENGTH_SHORT);
    	 	toast.show();
     	
-   	 	Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(activity.getContentResolver(), Long.parseLong(uri.getLastPathSegment()), 3, null);//type = 1 -> MINI_KIND -> 512x384
-   	 	imageView.setImageBitmap(thumbnail);*/
+   	 	
+        activity.setSupportProgressBarIndeterminateVisibility(false);
+   	 	
     	}
 
-   protected Bitmap doInBackground(Button... parameter) {
+   protected Void doInBackground(Object... parameter) {
 	   		
 			
-	   		this.button = parameter[0];
-			 
-			try {
-				return downloadVideo("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+button.getTag());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	   		this.button = (Button)parameter[0];
+	   		this.imageButton = (ImageButton)parameter[1];
+	   		
+			downloadData("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+button.getTag());
+			
 			return null;
 			
 		}
    
-   private Bitmap downloadVideo(String url) throws IOException {
-	    //---------------------------------------------------
-	   final int TIMEOUT_CONNECTION = 5000;//5sec
-	   final int TIMEOUT_SOCKET = 30000;//30sec
+   
+   private void downloadData(String url){
+	    try{
+	    	
+	        URL URL  = new URL(url);
+	        URLConnection conn = URL.openConnection();
+	        conn.connect();
 
+	        InputStream is = URL.openStream();
 
-	               URL url1 = null;
-				try {
-					url1 = new URL(url);
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	               long startTime = System.currentTimeMillis();
-	              // Log.i(TAG, "image download beginning: "+imageURL);
+	        File testDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
+	        if(!testDirectory.exists()){
+	        	testDirectory.mkdir();
+	        }
 
-	               //Open a connection to that URL.
-	               URLConnection ucon = url1.openConnection();
+	        FileOutputStream fos = new FileOutputStream(testDirectory+"/"+button.getTag());
 
-	               //this timeout affects how long it takes for the app to realize there's a connection problem
-	               ucon.setReadTimeout(TIMEOUT_CONNECTION);
-	               ucon.setConnectTimeout(TIMEOUT_SOCKET);
+	        byte data[] = new byte[1024];
 
+	        int count = 0;
+	        
+	        while ((count=is.read(data)) != -1)
+	        {
+	            fos.write(data, 0, count);
+	        }
 
-	               //Define InputStreams to read from the URLConnection.
-	               // uses 3KB download buffer
-	               InputStream is = ucon.getInputStream();
-	               BufferedInputStream inStream = new BufferedInputStream(is, 1024 * 5);
-	               //FileOutputStream outStream = new FileOutputStream(file);
-	               //byte[] buff = new byte[5 * 1024];
+	        is.close();
+	        fos.close();
 
-	               //Read bytes (and store them) until there is nothing more to read(-1)
-	               //int len;
-	               /*while ((len = inStream.read(buff)) != -1)
-	               {
-	                   outStream.write(buff,0,len);
-	               }
-
-	               //clean up
-	               outStream.flush();*/
-	               /*outStream.close();*/
-	               try {
-					inStream.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return null;
-
-	               //Log.i(TAG, "download completed in " + ((System.currentTimeMillis() - startTime) / 1000)+ " sec");5
-	}
+	    }catch(Exception e){
+	        e.printStackTrace();
+	    }
+   }
 }
-	

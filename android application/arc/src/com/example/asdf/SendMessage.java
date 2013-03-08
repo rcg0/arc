@@ -29,7 +29,7 @@ class SendMessage extends AsyncTask<String, Integer, String> {
 	  }
 	  
 	  protected void onPreExecute() {
-          activity.setProgressBarIndeterminateVisibility(true); 
+          activity.setSupportProgressBarIndeterminateVisibility(true); 
       }
 	  
 	  
@@ -51,7 +51,7 @@ class SendMessage extends AsyncTask<String, Integer, String> {
 				activity.sendScroll();
 			}
 		}
-        activity.setProgressBarIndeterminateVisibility(false);
+        activity.setSupportProgressBarIndeterminateVisibility(false);
 	}
 
 protected String doInBackground(String... parameter) {

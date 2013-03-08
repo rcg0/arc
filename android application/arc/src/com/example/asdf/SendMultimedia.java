@@ -38,7 +38,7 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
 
 	    
 	    protected void onPreExecute() {
-	    	activity.setProgressBarIndeterminateVisibility(true); 
+	    	activity.setSupportProgressBarIndeterminateVisibility(true); 
         }
 	    
     	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
@@ -55,7 +55,7 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
     					activity.sendScroll();
     				}
     			}
-            activity.setProgressBarIndeterminateVisibility(false);
+            activity.setSupportProgressBarIndeterminateVisibility(false);
             
     	}
 

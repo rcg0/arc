@@ -202,8 +202,7 @@ public class Tablon {
 		TextView author = new TextView(context);
 		TextView text = new TextView(context);
 
-		ImageButton imageButton = null;
-		final Button button = null;
+		final ImageButton imageButton = new ImageButton(context);
 		final Button button2 = new Button(context);
 		
 		int lastIndex = message.getMsg().lastIndexOf("/");
@@ -217,7 +216,7 @@ public class Tablon {
 		else if(message.getFormat() == 1){//image
 			
 			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccionar el link que lleve al archivo
-			imageButton = new ImageButton(context);
+
 			imageButton.setImageResource(R.drawable.arc_logo);
 			
 			File file = new File(context.getExternalFilesDir(null), name);
@@ -243,16 +242,6 @@ public class Tablon {
 				imageButton.setTag(name);
 				getImage.execute(imageButton);	
 			}
-		   	 	
-		   	 	
-			
-			//layout.addView(image);
-			
-			/*
-			setAsLink(text,"www.google.es", "He compartido una imagen","http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
-			text.setMovementMethod(LinkMovementMethod.getInstance());
-			*/
-			
 			
 		}else if(message.getFormat() == 2){//audio
 			
@@ -275,13 +264,16 @@ public class Tablon {
 			final String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
 			/*setAsLink(text,"www.google.es","He compartido un clip de video", "http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
 			text.setMovementMethod(LinkMovementMethod.getInstance());*/
-			button2.setText("Descargar video :"+ name);
+			button2.setText("Descargar video: "+ name);
 			button2.setTag(name);
+			imageButton.setTag(name);		
+			imageButton.setVisibility(4);//INVISIBLE
+			
 			button2.setOnClickListener(new View.OnClickListener() {
 		        public void onClick(View v) {
-
-		        	AsyncTask<Button, Void, Bitmap> getImage = new GetVideo(tablonActivity);
-					getImage.execute(button2);	
+		        	
+		        	AsyncTask<Object, Void, Void> getImage = new GetVideo(tablonActivity);
+					getImage.execute(button2, imageButton);	
 		        
 		        }
 		    });
@@ -295,7 +287,7 @@ public class Tablon {
 		l.addView(author);
 		l.addView(text);
 		
-		if(imageButton != null){
+		if(imageButton.getTag() != null){
 			l.addView(imageButton);
 		}
 		if(button2.getTag() != null){

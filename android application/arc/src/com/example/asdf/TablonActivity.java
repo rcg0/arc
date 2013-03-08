@@ -92,7 +92,7 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
         actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(false);
-        setProgressBarIndeterminateVisibility(false);
+        setSupportProgressBarIndeterminateVisibility(false);
         
         listener = new TabListener() {
 			@Override

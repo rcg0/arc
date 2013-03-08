@@ -1,38 +1,28 @@
 package com.example.asdf;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Vector;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.FileEntity;
-import org.apache.http.message.BasicNameValuePair;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -72,9 +62,7 @@ class GetImage extends AsyncTask<ImageButton, Void, Bitmap> {
 
 	        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 	        	activity.context.startActivity(intent);
-	        	
-
-	        	
+	     
 	        }
    	 		});
    	 		
@@ -95,14 +83,42 @@ class GetImage extends AsyncTask<ImageButton, Void, Bitmap> {
 	        URLConnection conn = aURL.openConnection();
 	        conn.connect();
 	        InputStream is = conn.getInputStream();
+	        
+	        File testDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
+	        if(!testDirectory.exists()){
+	        	testDirectory.mkdir();
+	        }
+	        	        
 	        BufferedInputStream bis = new BufferedInputStream(is);
 	        bm = BitmapFactory.decodeStream(bis);
 	        bis.close();
 	        is.close();
+	        
+	        saveBitmap(bm);
+	        
 	    } catch (IOException e) {
 	        Log.e("Hub","Error getting the image from server : " + e.getMessage().toString());
 	    } 
 	    return bm;
 	}
+   
+   public void saveBitmap(Bitmap bm)
+   {
+       try
+       {
+           String mBaseFolderPath = Environment.getExternalStorageDirectory()+"/ARC/";
+           String mFilePath = mBaseFolderPath + imageButton.getTag();
+
+           FileOutputStream stream = new FileOutputStream(mFilePath);
+           bm.compress(CompressFormat.JPEG, 100, stream);
+           stream.flush();
+           stream.close();
+       }
+       catch(Exception e)
+       {
+           Log.e("Could not save", e.toString());
+       }
+   }
+   
 }
 	

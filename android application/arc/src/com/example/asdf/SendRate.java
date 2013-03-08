@@ -28,7 +28,7 @@ class SendRate extends AsyncTask<String, Integer, String> {
 	
     
     protected void onPreExecute() {
-        activity.setProgressBarIndeterminateVisibility(true); 
+        activity.setSupportProgressBarIndeterminateVisibility(true); 
     }
     
 	@Override
@@ -58,7 +58,7 @@ class SendRate extends AsyncTask<String, Integer, String> {
 		toast = Toast.makeText(context, message , duration);
 		toast.show();
 		
-		activity.setProgressBarIndeterminateVisibility(false);
+		activity.setSupportProgressBarIndeterminateVisibility(false);
 	}
 
 protected String doInBackground(String... parameter) {
