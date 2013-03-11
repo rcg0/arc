@@ -66,20 +66,33 @@ class GetVideo extends AsyncTask<Object, Void, Void> {
 
     	@SuppressLint({ "NewApi", "NewApi", "NewApi" })
 		protected void onPostExecute(Void result) {
-    		
+    	
+    	File xternal = Environment.getExternalStorageDirectory();
+    	
     	final Uri uri = Uri.parse(Environment.getExternalStorageDirectory()+"/ARC/"+button.getTag());
     	    	
     	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+button.getTag());
-    	Bitmap bMap = ThumbnailUtils.createVideoThumbnail(file.getAbsolutePath(), MediaStore.Video.Thumbnails.MICRO_KIND);
     	
+    	String path = file.getAbsolutePath();
+    	
+    	Bitmap bMap = ThumbnailUtils.createVideoThumbnail(file.getAbsolutePath(), MediaStore.Video.Thumbnails.MICRO_KIND);//null
+    	//bmap = null -> .wmv not supported, i'm going to test with another format
+    
     	
     	button.setVisibility(4);//INVISIBLE
     	imageButton.setVisibility(0);//VISIBLE
-    	imageButton.setImageBitmap(bMap);
+    	
+    	if(bMap == null){
+			imageButton.setImageResource(R.drawable.arc_logo);
+
+    	}else{
+    		
+    		imageButton.setImageBitmap(bMap);
+    	}
     	
     	imageButton.setOnClickListener(new View.OnClickListener() {
 	        public void onClick(View v) {
-	        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+	        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);	        	
 	        	intent.setDataAndType(uri, "video/*");
 	        	activity.startActivity(intent);
 	        }

@@ -56,14 +56,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-	
-		/*create the folder first time we access to this activity.*/
-		if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-	        Log.d("MyApp", "No SDCARD");
-		} else {
-	    File directory = new File(Environment.getExternalStorageDirectory()+File.separator+"ARC Content");
-	    directory.mkdirs();
-		}
 		
 		buttonAccede = (Button)findViewById(R.id.button1);
 		buttonRegistrate = (Button)findViewById(R.id.button2);
