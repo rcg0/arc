@@ -48,13 +48,6 @@ class GetImage extends AsyncTask<ImageButton, Void, Bitmap> {
     		//imageView.setImageBitmap(result);
     	
     		String stringUri = MediaStore.Images.Media.insertImage(activity.getContentResolver(), result, imageButton.getTag().toString(), "");
-    		
-    	
-    		/*Context context = activity.getApplicationContext();
-   	 		int duration = Toast.LENGTH_SHORT;
-   	 		Toast toast = Toast.makeText(context, stringUri, duration);
-   	 		toast.show();
-    		*/
    	 		
     		Bitmap thumbnail = ThumbnailUtils.extractThumbnail(result, 200, 200);
    	 		//final Uri uri = Uri.parse(Environment.getExternalStorageDirectory()+"/ARC/"+ imageButton.getTag());
@@ -82,21 +75,28 @@ class GetImage extends AsyncTask<ImageButton, Void, Bitmap> {
 	        
 	        Bitmap bitmap = null;
 	        
-	        for(int i = 0; i < sdDirList.length; i++){
+	        /*condicion especial, si no hay archivos descargo
+	         * */
+	        if(sdDirList.length == 0){
+	        	bitmap = downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageButton.getTag());
+	        }
+	        else{
+	        	for(int i = 0; i < sdDirList.length; i++){
 	    		
-	        	String file = sdDirList[i].toString();
-	        	int lastIndex = file.lastIndexOf("/");
-				String name = file.substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccionar el link que lleve al archivo
-				String realName = imageButton.getTag().toString();
-	        	if(name.compareTo(realName) == 0){
+	        		String file = sdDirList[i].toString();
+	        		int lastIndex = file.lastIndexOf("/");
+	        		String name = file.substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccionar el link que lleve al archivo
+	        		String realName = imageButton.getTag().toString();
+	        		if(name.compareTo(realName) == 0){
 	        		
-	        		bitmap = BitmapFactory.decodeFile(file);
+	        			bitmap = BitmapFactory.decodeFile(file);
 	        		
-	        		return bitmap;
+	        			return bitmap;
 	        		
-	        	}else{
-	        		if(i == sdDirList.length -1){//si no existe descargo
-	        			bitmap = downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageButton.getTag());
+	        		}else{
+	        			if(i == sdDirList.length -1){//si no existe descargo
+	        				bitmap = downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageButton.getTag());
+	        			}
 	        		}
 	        	}
 	        }
@@ -118,9 +118,6 @@ private Bitmap downloadImage(String url) {
 	        InputStream is = conn.getInputStream();
 	        
 	        File testDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
-	        if(!testDirectory.exists()){
-	        	testDirectory.mkdir();
-	        }
 	        	        
 	        BufferedInputStream bis = new BufferedInputStream(is);
 	        bm = BitmapFactory.decodeStream(bis);

@@ -113,6 +113,7 @@ class GetVideo extends AsyncTask<Object, Void, Void> {
 	   		this.imageButton = (ImageButton)parameter[1];
 	   		
 			downloadData("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+button.getTag());
+	   		
 			
 			return null;
 			
@@ -129,9 +130,6 @@ class GetVideo extends AsyncTask<Object, Void, Void> {
 	        InputStream is = URL.openStream();
 
 	        File testDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
-	        if(!testDirectory.exists()){
-	        	testDirectory.mkdir();
-	        }
 
 	        FileOutputStream fos = new FileOutputStream(testDirectory+"/"+button.getTag());
 

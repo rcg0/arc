@@ -2,6 +2,11 @@ package com.example.asdf;
 
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Vector;
 
 import org.apache.http.client.HttpClient;
@@ -35,6 +40,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
@@ -236,16 +242,63 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 				
 							    
 				Uri targetUri = intent.getData();
+				/**/
 				String format = getFormatFromUri(targetUri);
-				
+				if(format.compareTo("") == 0){
+					
+					format = getFormatFromUriContainsIfContainsFormat(targetUri);
+					
+				}
+				/**/
 				File file = new File(getPath(targetUri));
-				
+				File fileDst = new File(Environment.getExternalStorageDirectory()+"/ARC/"+file.getName());
+				try {
+					copy(file, fileDst);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				/**/
 				AsyncTask<Object, Integer, String> send = new SendMultiMedia(this);
 				send.execute(file,format,tablonSelected.searchHighMessageId()+"");
 			}
 		}
 		
 	}
+	
+	public void copy(File src, File dst) throws IOException {
+	    InputStream in = new FileInputStream(src);
+	    OutputStream out = new FileOutputStream(dst);
+
+	    // Transfer bytes from in to out
+	    byte[] buf = new byte[1024];
+	    int len;
+	    while ((len = in.read(buf)) > 0) {
+	        out.write(buf, 0, len);
+	    }
+	    in.close();
+	    out.close();
+	}
+
+	
+	public String getFormatFromUriContainsIfContainsFormat(Uri uri){
+		String format = "";
+		String uriString = uri.toString();
+		
+		if(uriString.contains("images")){
+			format = "1";
+		}
+		else if(uriString.contains("audio")){
+			format = "2";
+		}
+		else if(uriString.contains("video")){
+			format = "3";
+		}
+		
+		return format;
+		
+	}
+	
 	
 	public String getFormatFromUri(Uri uri){
 		String format = "";

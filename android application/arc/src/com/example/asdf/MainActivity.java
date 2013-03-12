@@ -57,6 +57,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		 File testDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
+	     if(!testDirectory.exists()){
+	       	testDirectory.mkdir();
+	     }
+		
 		buttonAccede = (Button)findViewById(R.id.button1);
 		buttonRegistrate = (Button)findViewById(R.id.button2);
 	    

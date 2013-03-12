@@ -6,10 +6,16 @@ import java.util.Vector;
 import java.util.regex.Pattern;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -210,17 +216,15 @@ public class Tablon {
 		if(message.getFormat() == 0){//texto
 			text.setText(message.getMsg());
 			text.setTextColor(Color.BLACK);
-		
-
-		}
-		else if(message.getFormat() == 1){//image
+			
+		}else if(message.getFormat() == 1){//image
 			
 			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccionar el link que lleve al archivo
 
 			imageButton.setImageResource(R.drawable.arc_logo);
 			
 			File file = new File(context.getExternalFilesDir(null), name);
-				
+			
 			Context context1 = tablonActivity.getApplicationContext();
 	   	 	int duration = Toast.LENGTH_SHORT;
 	   	 	Toast toast = Toast.makeText(context1, name, duration);
@@ -233,11 +237,7 @@ public class Tablon {
 		   	 	toast1.show();
 				
 			}else {
-				/*Context context1 = tablonActivity.getApplicationContext();
-		   	 	int duration = Toast.LENGTH_SHORT;
-		   	 	Toast toast = Toast.makeText(context1, " no existe el archivo, tengo que pedirlo", duration);
-		   	 	toast.show();
-		   	 	*/
+			
 		   	 	AsyncTask<ImageButton, Void, Bitmap> getImage = new GetImage(tablonActivity);
 				imageButton.setTag(name);
 				getImage.execute(imageButton);	
@@ -261,22 +261,62 @@ public class Tablon {
 			
 		}else if(message.getFormat() == 3){//video
 			
-			final String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
-			/*setAsLink(text,"www.google.es","He compartido un clip de video", "http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
-			text.setMovementMethod(LinkMovementMethod.getInstance());*/
-			button2.setText("Descargar video: "+ name);
+			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo
+		
 			button2.setTag(name);
 			imageButton.setTag(name);		
 			imageButton.setVisibility(4);//INVISIBLE
 			
-			button2.setOnClickListener(new View.OnClickListener() {
-		        public void onClick(View v) {
-		        	
-		        	AsyncTask<Object, Void, Void> getImage = new GetVideo(tablonActivity);
-					getImage.execute(button2, imageButton);	
-		        
-		        }
-		    });
+
+	   		File fileDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
+	        File[] sdDirList = fileDirectory.listFiles(); 
+	        
+	        for(int i = 0; i < sdDirList.length; i++){
+	    		
+	        	String fileUri = sdDirList[i].toString();
+	        	int fileLastIndex = fileUri.lastIndexOf("/");
+	        	String file = fileUri.substring(fileLastIndex+1);
+	   	        	
+				if(name.compareTo(file) == 0){//si existe ya el archivo: 1. cojo su bitmap y lo pongo, el listener llevará al video directamente
+	        		
+					final Uri uri = Uri.parse(Environment.getExternalStorageDirectory()+"/ARC/"+imageButton.getTag());
+			    	Bitmap bMap = ThumbnailUtils.createVideoThumbnail(sdDirList[i].getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);//null
+
+
+			    	button2.setVisibility(4);//INVISIBLE
+			    	imageButton.setVisibility(0);//VISIBLE
+			    	
+		    		imageButton.setImageBitmap(bMap);
+
+					imageButton.setOnClickListener(new View.OnClickListener() {
+        		        public void onClick(View v) {
+        		        	
+        		        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);	        	
+        		        	intent.setDataAndType(uri, "video/*");
+        		        	tablonActivity.startActivity(intent);
+        		        
+        		        }
+        		    });
+						
+	        		
+	        	}else if(i == sdDirList.length-1){
+	        		//si no existe el boton descargará
+	        			
+	        			button2.setText("Descargar video: "+ name);
+	        			
+	        			button2.setOnClickListener(new View.OnClickListener() {
+	        		        public void onClick(View v) {
+	        		        	
+	        		        	AsyncTask<Object, Void, Void> getVideo = new GetVideo(tablonActivity);
+	        					getVideo.execute(button2, imageButton);	
+	        		        
+	        		        }
+	        		    });
+	        			
+	        	}
+	        }
+	   		
+			
 		}
 		
 		author.setText(message.getCreator().getNick()+ ": ");
@@ -295,7 +335,6 @@ public class Tablon {
 		}
 		
 		layout.addView(l);
-
 		
 	}
 	

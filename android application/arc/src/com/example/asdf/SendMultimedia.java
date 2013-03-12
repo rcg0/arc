@@ -69,10 +69,12 @@ class SendMultiMedia extends AsyncTask<Object, Integer, String> {
 			HttpEntity resEntity = null;
 			String res = null;
 			try {
-				 
+				
+				String format = parameter[1].toString();
+				
 				MultipartEntity entity = new MultipartEntity();
 				
-				entity.addPart("format", new StringBody((String)parameter[1]));
+				entity.addPart("format", new StringBody(format));
 		        entity.addPart("image", new FileBody((File)parameter[0]));  
 		        entity.addPart("messageId", new StringBody((String)parameter[2]));
 		        entity.addPart("tablonId", new StringBody(activity.tablonSelected.getId()+""));
