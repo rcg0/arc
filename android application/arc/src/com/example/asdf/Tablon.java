@@ -210,6 +210,7 @@ public class Tablon {
 
 		final ImageButton imageButton = new ImageButton(context);
 		final Button button2 = new Button(context);
+		final Button button1 = new Button(context);
 		
 		int lastIndex = message.getMsg().lastIndexOf("/");
 		
@@ -246,18 +247,50 @@ public class Tablon {
 		}else if(message.getFormat() == 2){//audio
 			
 			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
-			/*
-			setAsLink(text,"www.google.es","He compartido un clip de audio","http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+name);			
-			text.setMovementMethod(LinkMovementMethod.getInstance());	
-			 */
-			Button button1 = new Button(context);
-			button1.setText("Descargar audio");
+
+	   		File fileDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
+	        File[] sdDirList = fileDirectory.listFiles(); 
+	        
+	        for(int i = 0; i < sdDirList.length; i++){
+	    		
+	        	String fileUri = sdDirList[i].toString();
+	        	int fileLastIndex = fileUri.lastIndexOf("/");
+	        	String file = fileUri.substring(fileLastIndex+1);
+	   	        	
+				if(name.compareTo(file) == 0){
+	        	
+					button2.setText("Escuchar clip de audio: "+name);
+					button2.setTag(name);
+
+					button2.setOnClickListener(new View.OnClickListener() {
+						public void onClick(View v) {
+        		        	
+        		        	Intent intent = new Intent();	     
+        		        	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+button2.getTag());
+        		        	intent.setDataAndType(Uri.fromFile(file), "audio/*");
+        		        	intent.setAction(Intent.ACTION_VIEW);
+        		        	tablonActivity.startActivity(intent);
+        		        }
+        		    });
+						
+	        		
+	        	}else if(i == sdDirList.length-1){
+	        		//si no existe el boton descargará
+	        			
+	        			button2.setText("Descargar clip de audio: "+ name);
+	        			
+	        			button2.setOnClickListener(new View.OnClickListener() {
+	        		        public void onClick(View v) {
+
+	        		        	AsyncTask<Object, Void, Void> getAudio = new GetAudio(tablonActivity);
+	        					getAudio.execute(button2);	
+	        					
+	        		        }
+	        		    });
+	        			
+	        	}
+	        }
 			
-			button1.setOnClickListener(new View.OnClickListener() {
-		        public void onClick(View v) {
-		            Log.d("gm", "Tapped ");
-		        }
-		    });
 			
 		}else if(message.getFormat() == 3){//video
 			
@@ -279,9 +312,7 @@ public class Tablon {
 	   	        	
 				if(name.compareTo(file) == 0){//si existe ya el archivo: 1. cojo su bitmap y lo pongo, el listener llevará al video directamente
 	        		
-					final Uri uri = Uri.parse(Environment.getExternalStorageDirectory()+"/ARC/"+imageButton.getTag());
 			    	Bitmap bMap = ThumbnailUtils.createVideoThumbnail(sdDirList[i].getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);//null
-
 
 			    	button2.setVisibility(4);//INVISIBLE
 			    	imageButton.setVisibility(0);//VISIBLE
@@ -291,8 +322,11 @@ public class Tablon {
 					imageButton.setOnClickListener(new View.OnClickListener() {
         		        public void onClick(View v) {
         		        	
-        		        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);	        	
-        		        	intent.setDataAndType(uri, "video/*");
+        		        	
+        		        	Intent intent = new Intent();	     
+        		        	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+imageButton.getTag());
+        		        	intent.setDataAndType(Uri.fromFile(file), "video/*");
+        		        	intent.setAction(Intent.ACTION_VIEW);
         		        	tablonActivity.startActivity(intent);
         		        
         		        }
@@ -333,6 +367,7 @@ public class Tablon {
 		if(button2.getTag() != null){
 			l.addView(button2);
 		}
+		
 		
 		layout.addView(l);
 		

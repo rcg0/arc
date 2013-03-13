@@ -296,7 +296,6 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 		}
 		
 		return format;
-		
 	}
 	
 	

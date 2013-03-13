@@ -46,14 +46,13 @@ import com.google.gson.Gson;
  * Si no encuentro la imagen en la galleria la pido, y la guardo.
  * 
  * */
-class GetVideo extends AsyncTask<Object, Void, Void> {
+class GetAudio extends AsyncTask<Object, Void, Void> {
 	
 	  public Button button;
-	  public ImageButton imageButton;
 	  
 	  public TablonActivity activity;	
 
-	    public GetVideo(TablonActivity a)
+	    public GetAudio(TablonActivity a)
 	    {
 	        activity = a;
 	    
@@ -75,26 +74,14 @@ class GetVideo extends AsyncTask<Object, Void, Void> {
     	
     	String path = file.getAbsolutePath();
     	
-    	Bitmap bMap = ThumbnailUtils.createVideoThumbnail(file.getAbsolutePath(), MediaStore.Video.Thumbnails.MICRO_KIND);//null
-    	//bmap = null -> .wmv not supported, i'm going to test with another format
-    
     	
-    	button.setVisibility(4);//INVISIBLE
-    	imageButton.setVisibility(0);//VISIBLE
-    	
-    	if(bMap == null){
-			imageButton.setImageResource(R.drawable.arc_logo);
-
-    	}else{
-    		
-    		imageButton.setImageBitmap(bMap);
-    	}
-    	
-    	imageButton.setOnClickListener(new View.OnClickListener() {
+    	button.setText("Escuchar clip de audio: "+button.getTag());
+    	    	
+    	button.setOnClickListener(new View.OnClickListener() {
 	        public void onClick(View v) {
 	        	Intent intent = new Intent();	     
-	        	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+imageButton.getTag());
-	        	intent.setDataAndType(Uri.fromFile(file), "video/*");
+	        	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+button.getTag());
+	        	intent.setDataAndType(Uri.fromFile(file), "audio/*");
 	        	intent.setAction(Intent.ACTION_VIEW);
 	        	activity.startActivity(intent);
 	        }
@@ -112,11 +99,9 @@ class GetVideo extends AsyncTask<Object, Void, Void> {
 	   		
 			
 	   		this.button = (Button)parameter[0];
-	   		this.imageButton = (ImageButton)parameter[1];
 	   		
 			downloadData("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+button.getTag());
-	   		
-			
+	   	
 			return null;
 			
 		}
