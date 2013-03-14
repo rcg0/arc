@@ -74,11 +74,12 @@ class GetImage extends AsyncTask<ImageButton, Void, Bitmap> {
 	        File[] sdDirList = fileDirectory.listFiles(); 
 	        
 	        Bitmap bitmap = null;
+	        FileHelper fileHelper = new FileHelper();
 	        
 	        /*condicion especial, si no hay archivos descargo
 	         * */
 	        if(sdDirList.length == 0){
-	        	bitmap = downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageButton.getTag());
+	        	bitmap = fileHelper.downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageButton.getTag(), imageButton);
 	        }
 	        else{
 	        	for(int i = 0; i < sdDirList.length; i++){
@@ -95,7 +96,7 @@ class GetImage extends AsyncTask<ImageButton, Void, Bitmap> {
 	        		
 	        		}else{
 	        			if(i == sdDirList.length -1){//si no existe descargo
-	        				bitmap = downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageButton.getTag());
+	        				bitmap = fileHelper.downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageButton.getTag(), imageButton);
 	        			}
 	        		}
 	        	}
@@ -107,48 +108,6 @@ class GetImage extends AsyncTask<ImageButton, Void, Bitmap> {
 		}
    
 
-
-private Bitmap downloadImage(String url) {
-	    //---------------------------------------------------
-	    Bitmap bm = null;
-	    try {
-	        URL aURL = new URL(url);
-	        URLConnection conn = aURL.openConnection();
-	        conn.connect();
-	        InputStream is = conn.getInputStream();
-	        
-	        File testDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
-	        	        
-	        BufferedInputStream bis = new BufferedInputStream(is);
-	        bm = BitmapFactory.decodeStream(bis);
-	        bis.close();
-	        is.close();
-	        
-	        saveBitmap(bm);
-	        
-	    } catch (IOException e) {
-	        Log.e("Hub","Error getting the image from server : " + e.getMessage().toString());
-	    } 
-	    return bm;
-	}
-   
-   public void saveBitmap(Bitmap bm)
-   {
-       try
-       {
-           String mBaseFolderPath = Environment.getExternalStorageDirectory()+"/ARC/";
-           String mFilePath = mBaseFolderPath + imageButton.getTag();
-
-           FileOutputStream stream = new FileOutputStream(mFilePath);
-           bm.compress(CompressFormat.JPEG, 100, stream);
-           stream.flush();
-           stream.close();
-       }
-       catch(Exception e)
-       {
-           Log.e("Could not save", e.toString());
-       }
-   }
    
 }
 	

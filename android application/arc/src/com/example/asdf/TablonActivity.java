@@ -50,6 +50,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -62,8 +63,10 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 	public TabListener listener;
 	public ActionBar actionBar;
 	RatingBar ratingBar;
-	LinearLayout layout;
+	RelativeLayout mainLayout;
+	LinearLayout messagesLayout;
 	ScrollView sv;
+	
 	public Vector<Tablon> tablones;
 	
 	Tablon tablon;
@@ -100,14 +103,15 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
         actionBar.setDisplayShowTitleEnabled(false);
         setSupportProgressBarIndeterminateVisibility(false);
         
+        ratingBar = new RatingBar(context);
+
         listener = new TabListener() {
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
     			tablonSelected = tablones.elementAt(tab.getPosition());
-    			
-    			tablonSelected.printTablon(tablonSubtitle, ratingBar, layout, context, TablonActivity.this);//getApplicationContext());
-    			sendScroll();
+    			tablonSelected.printTablon(TablonActivity.this);
+    			tablonSelected.sendScroll(TablonActivity.this);
 			}
 
 			@Override
@@ -123,27 +127,18 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 			}
 		};
 		
+		mainLayout = (RelativeLayout)findViewById(R.id.mainLayout);
 		tablonSubtitle = (TextView)findViewById(R.id.subtitle);
-		ratingBar = (RatingBar)findViewById(R.id.ratingBar1);
-		layout = (LinearLayout)findViewById(R.id.messageLayout);
+		messagesLayout = (LinearLayout)findViewById(R.id.messageLayout);
 		sv = (ScrollView) findViewById(R.id.scrollView1);
     	
+		
+		
     	jsonUser = getIntent().getStringExtra("jsonUser");
     	
 		myDefaultHttp = ((MyDefaultHttpClient)getApplicationContext());
         httpclient = myDefaultHttp.getHttpClient();
 		
-        this.ratingBar.setOnTouchListener(new OnTouchListener() {
-			
-			public boolean onTouch(View v, MotionEvent event) {
-
-		        if (event.getAction() == MotionEvent.ACTION_UP) {
-		        	AsyncTask<String, Integer, String> sendRate =new SendRate(TablonActivity.this);//lanzo el hilo
-		        	sendRate.execute();
-		        }
-				return false;
-			}
-		});
         
         qrdecodified = getIntent().getStringExtra("qrdecodified");
     	String [] qr = qrdecodified.split(",");
@@ -151,11 +146,12 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
     	if(qr.length == 2){
     		predefinedMessage = qr[1];
     	}
+
+    	
     	
     	AsyncTask<String, Integer, String> getTablon = new GetTablon(this, firstDialog);
     	getTablon.execute();
 
-        
     }    
 
     
@@ -239,21 +235,20 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 		else if(requestCode == 1){//multimedia
 			
 			if(resultCode == RESULT_OK){
-				
+				FileHelper fileHelper = new FileHelper();
 							    
 				Uri targetUri = intent.getData();
-				/**/
-				String format = getFormatFromUri(targetUri);
+				
+				String format = fileHelper.getFormatFromUri(targetUri);
 				if(format.compareTo("") == 0){
-					
-					format = getFormatFromUriContainsIfContainsFormat(targetUri);
+					format = fileHelper.getFormatFromUriContainsIfContainsFormat(targetUri);
 					
 				}
 				/**/
 				File file = new File(getPath(targetUri));
 				File fileDst = new File(Environment.getExternalStorageDirectory()+"/ARC/"+file.getName());
 				try {
-					copy(file, fileDst);
+					fileHelper.copy(file, fileDst);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -266,62 +261,8 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 		
 	}
 	
-	public void copy(File src, File dst) throws IOException {
-	    InputStream in = new FileInputStream(src);
-	    OutputStream out = new FileOutputStream(dst);
 
-	    // Transfer bytes from in to out
-	    byte[] buf = new byte[1024];
-	    int len;
-	    while ((len = in.read(buf)) > 0) {
-	        out.write(buf, 0, len);
-	    }
-	    in.close();
-	    out.close();
-	}
 
-	
-	public String getFormatFromUriContainsIfContainsFormat(Uri uri){
-		String format = "";
-		String uriString = uri.toString();
-		
-		if(uriString.contains("images")){
-			format = "1";
-		}
-		else if(uriString.contains("audio")){
-			format = "2";
-		}
-		else if(uriString.contains("video")){
-			format = "3";
-		}
-		
-		return format;
-	}
-	
-	
-	public String getFormatFromUri(Uri uri){
-		String format = "";
-		String uriString = uri.toString();
-		int lastIndex = uriString.lastIndexOf(".");
-		String substring = uriString.substring(lastIndex+1);
-		
-		if(substring.equalsIgnoreCase("AAC") || substring.equalsIgnoreCase("MP3") 
-				|| substring.equalsIgnoreCase("WMA") || substring.equalsIgnoreCase("WAV")
-				|| substring.equalsIgnoreCase("MIDI")){
-			format = "2";//audio
-		}else if(substring.equalsIgnoreCase("JPEG") || substring.equalsIgnoreCase("PNG") 
-				|| substring.equalsIgnoreCase("JPG") || substring.equalsIgnoreCase("BMP")
-				|| substring.equalsIgnoreCase("GIF")){
-			format = "1";//imagen
-		}else if(substring.equalsIgnoreCase("avi") || substring.equalsIgnoreCase("mov") 
-				|| substring.equalsIgnoreCase("3gp") || substring.equalsIgnoreCase("m4v")
-				|| substring.equalsIgnoreCase("wmv")){
-			format = "3";//video
-		}
-		
-		return format;
-		
-	}
 	
     /*returns the path of the Uri you pass*/
 	public String getPath(Uri uri) {
@@ -336,22 +277,6 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
     
 	
 
-	public void sendScroll(){
-        final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {Thread.sleep(100);} catch (InterruptedException e) {}
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        sv.fullScroll(View.FOCUS_DOWN);
-                    }
-                });
-            }
-        }).start();
-    }
-	
 	public void showSendDialog(String predefinedMessage) {
 
 		  FragmentManager fm = getSupportFragmentManager();
@@ -367,14 +292,18 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 	protected void onSaveInstanceState(Bundle savedInstanceState){	
 		super.onSaveInstanceState(savedInstanceState);
 
-		savedInstanceState.putFloat("rateValue", ratingBar.getRating());
+		if(ratingBar != null){
+			savedInstanceState.putFloat("rateValue", ratingBar.getRating());
+		}
 		savedInstanceState.putString("jsonUser", jsonUser);
 	}
 	
 	protected void onRestoreInstanceState(Bundle savedInstanceState){
 		super.onRestoreInstanceState(savedInstanceState);
 		
-		ratingBar.setRating(savedInstanceState.getFloat("rateValue"));
+		if(ratingBar != null){
+			ratingBar.setRating(savedInstanceState.getFloat("rateValue"));
+		}
 		jsonUser = savedInstanceState.getString("jsonUser");
 		predefinedMessage = "";
 	}

@@ -2,8 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
-
+    tools:context=".MainActivity" 
+	android:id="@+id/mainLayout">
+    
    
     <ScrollView
         android:id="@+id/scrollView1"
@@ -14,7 +15,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/ratingBar1"
         android:fillViewport="true"
-        android:scrollY="1000dp" >
+        android:scrollY="1500dp" >
 
         <LinearLayout
             android:id="@+id/messageLayout"
@@ -36,13 +37,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView2"
-        android:layout_centerHorizontal="true" />
-
-    <RatingBar
-        android:id="@+id/ratingBar1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

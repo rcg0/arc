@@ -48,9 +48,9 @@ class GetMoreMessages extends AsyncTask<String, Integer, String> {
 			Gson gson = new Gson();
 			Tablon tablonReceived = gson.fromJson(result, Tablon.class);
 			if(!tablonReceived.getAllMsg().isEmpty()){
-				activity.tablonSelected.printSomeMessages(tablonReceived.getAllMsg() ,activity.layout ,context, activity);	
+				activity.tablonSelected.printSomeMessages(tablonReceived.getAllMsg() ,activity.messagesLayout ,context, activity);	
 				activity.tablonSelected.setSomeMsg(tablonReceived.getAllMsg());
-				activity.sendScroll();
+				activity.tablonSelected.sendScroll(activity);
 			}else{
 				int duration = Toast.LENGTH_SHORT;
 				Toast toast = Toast.makeText(context, "No hay más mensajes que mostrar.", duration);

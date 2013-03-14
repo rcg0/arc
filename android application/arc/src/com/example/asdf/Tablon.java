@@ -15,17 +15,22 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -181,22 +186,29 @@ public class Tablon {
 		}
 	}
 	
-	public void printTablon(TextView tablonSubtitle, RatingBar ratingBar, LinearLayout layout,Context context, TablonActivity tablonActivity){
+	public void printTablon(TablonActivity tablonActivity){
 		
 		Vector<Message> messages = this.getAllMsg();
 		
-		layout.removeAllViews();
+		tablonActivity.mainLayout.removeView(tablonActivity.ratingBar);		
+		tablonActivity.messagesLayout.removeAllViews();
+
+
+
+
 		//tablonSubtitle.setText(this.getSubtitle());
+		if(this.rate != null){//rate is an configurable element by tablon
+			printRate(tablonActivity.ratingBar, tablonActivity);
+		}
+	
 		
-		printSomeMessages(messages, layout, context, tablonActivity);
-		printRate(ratingBar);
+		printSomeMessages(messages, tablonActivity.messagesLayout, tablonActivity.context, tablonActivity);
 		
 	}
 	
 	public void printSomeMessages(Vector<Message> messages, LinearLayout layout,Context context,  TablonActivity tablonActivity){
 		
 		for(int i = 0; i<messages.size(); i++){	
-			//this.printMessage(messages.elementAt(i).getCreator().getNick(),messages.elementAt(i).getMsg(),layout,context);
 			this.printMessage(messages.elementAt(i),layout,context, tablonActivity);
 		}
 	}
@@ -385,13 +397,52 @@ public class Tablon {
 		return result; 
 	}
 	
-	public void printRate(RatingBar ratingBar){
+	public void printRate(RatingBar ratingBar, final TablonActivity tablonActivity){
+
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		
+		ratingBar.setId(R.id.ratingBar1);
+		tablonActivity.mainLayout.addView(ratingBar, params);
+
+		
+
+		ratingBar.setOnTouchListener(new OnTouchListener() {
+			
+			public boolean onTouch(View v, MotionEvent event) {
+
+		        if (event.getAction() == MotionEvent.ACTION_UP) {
+		        	AsyncTask<String, Integer, String> sendRate =new SendRate(tablonActivity);//lanzo el hilo
+		        	sendRate.execute();
+		        }
+				return false;
+			}
+		});
 		
 		float rate = Float.parseFloat(this.rate);
 		ratingBar.setRating(rate);
+		
 	}
 	
 	public void printRate(RatingBar ratingBar, float rate){
 		ratingBar.setRating(rate);
 	}
+	
+
+	public void sendScroll(final TablonActivity tablonActivity){
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {Thread.sleep(130);} catch (InterruptedException e) {}
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        tablonActivity.sv.fullScroll(View.FOCUS_DOWN);
+                    }
+                });
+            }
+        }).start();
+    }
+	
 }

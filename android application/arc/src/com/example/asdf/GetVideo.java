@@ -114,41 +114,12 @@ class GetVideo extends AsyncTask<Object, Void, Void> {
 	   		this.button = (Button)parameter[0];
 	   		this.imageButton = (ImageButton)parameter[1];
 	   		
-			downloadData("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+button.getTag());
+	   		FileHelper fileHelper = new FileHelper();
+	   		
+			fileHelper.downloadData("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+button.getTag(), button);
 	   		
 			
 			return null;
 			
 		}
-   
-   
-   private void downloadData(String url){
-	    try{
-	    	
-	        URL URL  = new URL(url);
-	        URLConnection conn = URL.openConnection();
-	        conn.connect();
-
-	        InputStream is = URL.openStream();
-
-	        File testDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
-
-	        FileOutputStream fos = new FileOutputStream(testDirectory+"/"+button.getTag());
-
-	        byte data[] = new byte[1024];
-
-	        int count = 0;
-	        
-	        while ((count=is.read(data)) != -1)
-	        {
-	            fos.write(data, 0, count);
-	        }
-
-	        is.close();
-	        fos.close();
-
-	    }catch(Exception e){
-	        e.printStackTrace();
-	    }
-   }
 }

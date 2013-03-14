@@ -37,17 +37,12 @@ class GetTablon extends AsyncTask<String, Integer, String> {
 	    protected void onPreExecute() {
 	        dialog.show(); 
 	    }
-	    
-		@Override
-    	protected void onProgressUpdate(Integer... progress) {
-// [... Update progress bar, Notification, or other UI element ...]
-   	}	
+
     	
     	@SuppressLint({ "NewApi", "NewApi", "NewApi" }) //ojo con esto
 		@Override
     	protected void onPostExecute(String result) {
-// [... Report results via UI update, Dialog, or notification ...]
-    		/*En principio estaba puesto que soltara un toast*/
+
     		
     		if(result != null){
     			Context context = activity.getApplicationContext();
