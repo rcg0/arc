@@ -170,9 +170,45 @@ function showContents(){
     insertAfter(firstNode, espacio);//inserta un espacio
 
     //father.insertBefore(espacio, father.firstChild);
-    
-    var text=document.createTextNode(msg.msg);
-    //alert(msg.msg);
+    var text;
+    var lastIndex;
+    var name;
+
+    if(msg.format == 0){
+	     text=document.createTextNode(msg.msg);
+    }else if(msg.format == 1){
+
+	     lastIndex  = msg.msg.lastIndexOf("/");
+	     name = msg.msg.substring(lastIndex+1);
+       
+       text = document.createElement("a");
+       text.href = "user-content/"+name;
+
+	     myimage = document.createElement("img");
+	     myimage.src = "user-content/"+name;
+       myimage.setAttribute("width", "50%"); 
+       myimage.setAttribute("height", "20%"); 
+       
+
+       text.appendChild(myimage);
+
+   }else if(msg.format == 2){
+      lastIndex = msg.msg.lastIndexOf("/");
+      name = msg.msg.substring(lastIndex+1);
+      text = document.createElement("audio");
+      
+      text.setAttribute('src', "user-content/"+name); 
+      text.setAttribute('controls', true); 
+      text.setAttribute('preload', true);
+
+    }else if(msg.format == 3){
+       lastIndex = msg.msg.lastIndexOf("/");
+       name = msg.msg.substring(lastIndex+1);
+	     text = document.createElement('video');
+	     text.src = "user-content/"+name;
+       text.setAttribute('controls', 'controls');
+    }
+
     var autor = document.createTextNode(msg.creator.nick+":");
     var nuevoDiv = document.createElement("div");
     
@@ -181,7 +217,12 @@ function showContents(){
     var p2 = document.createElement("p");
     var b = document.createElement("b");
     b.appendChild(autor);
+    
+    
     p2.appendChild(text);
+
+    
+
     p.appendChild(b);
     var a = document.createElement("a");
     var img = document.createElement("img");
@@ -192,7 +233,9 @@ function showContents(){
     //img.onClick = "removeMessage("+msg.id+")";
     a.appendChild(img);
     nuevoDiv.appendChild(p);
+
     nuevoDiv.appendChild(p2);
+
     nuevoDiv.appendChild(a);
     //father.insertBefore(nuevoDiv, firstNode);//tengo que insertar antes del segundo nodo, la imagen es el primer nodo!
     nuevoDiv.id=msg.id;
@@ -201,7 +244,6 @@ function showContents(){
     insertAfter(espacio,nuevoDiv);
     //alert(" id: "+ msg.id+ " mensaje: "+ msg.msg + " autor: " + msg.creator.name);
     insertAfter(nuevoDiv, espacio);//inserta un espacio
-
 
   }
   
@@ -234,6 +276,7 @@ function showContents(){
 
     var tablon = document.getElementById("tablonId").text;
     form.tablonId.value = tablon;
+    form.format.value = "0";
     //alert(tablon);
     form.action = "sendMessage";
     form.submit();

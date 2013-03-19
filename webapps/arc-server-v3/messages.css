@@ -145,7 +145,7 @@ left:100%;
 
 input[type="Radio"]{ display: none; }
 
-label#label_foto{
+#foto{
   position: relative;
   display: inline-block;
   height: 48px;
@@ -156,7 +156,7 @@ label#label_foto{
 
 }
 
-label#label_video{
+#video{
   display: inline-block;
   height: 48px;
   background: url(IMG/video.png)  no-repeat;
@@ -166,7 +166,7 @@ label#label_video{
 
 
 }
-label#label_audio{
+#audio{
   display: inline-block;
   width:15%;
   height: 48px;

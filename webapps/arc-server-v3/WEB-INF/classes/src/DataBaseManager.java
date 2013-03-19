@@ -447,7 +447,7 @@ public class DataBaseManager{
 				Message m = new Message();
 				User u = new User();
 				m.setId(rs.getInt("id"));
-
+				m.setFormat(Integer.parseInt(rs.getString("format")));
 				//System.out.println(rs.getString("Message.message"));
 				m.setMsg(rs.getString("Message.message"));
 				//System.out.println("visibility:"+rs.getInt("visibility"));
@@ -550,7 +550,7 @@ public class DataBaseManager{
 				Message m = new Message();
 				User u = new User();
 				m.setId(rs.getInt("id"));
-
+				m.setFormat(Integer.parseInt(rs.getString("format")));
 				System.out.println(rs.getString("Message.message"));
 				m.setMsg(rs.getString("Message.message"));
 

@@ -77,7 +77,28 @@ Vector<Message> msgs = tablon.getAllMsg();
 <%System.out.println("msgs.size()="+msgs.size());%>
 
 	 <div id="<%=msgs.elementAt(j).getId()%>" class="mensaje"><p><b><%=msgs.elementAt(j).getCreator().getNick()%></b>:
-	  <p><%=msgs.elementAt(j).getMsg()%></p>
+	  <p>
+		<%String msg = msgs.elementAt(j).getMsg();
+		int format = msgs.elementAt(j).getFormat();
+		if(format==0){%><%=msg%><%}%>
+		<%if(format==1){
+			int lastIndex = msg.lastIndexOf("/");
+			String name = msg.substring(lastIndex+1);
+
+
+		%><a href = "user-content/<%=name%>"><img src="user-content/<%=name%>" height="20%" width = "50%"></a><%}%>
+		<%if(format==2){
+			int lastIndex = msg.lastIndexOf("/");
+			String name = msg.substring(lastIndex+1);
+
+		%><audio src="user-content/<%=name%>" height="20%" width = "50%" controls="controls" preload=""></audio><%}%>
+		<%if(format==3){
+			int lastIndex = msg.lastIndexOf("/");
+			String name = msg.substring(lastIndex+1);
+
+
+		%><video src="user-content/<%=name%>" controls></video><%}%>
+	  </p>
 	<img class="delete" src="IMG/delete.jpg" onClick="removeMessage(<%=msgs.elementAt(j).getId()%>)">
 	</div>
 <p></p>
@@ -91,6 +112,7 @@ Vector<Message> msgs = tablon.getAllMsg();
      
      <form id="form_envio" method="post" onSubmit="sendMessage()" >
         <input name="tablonId" type="hidden" value=""> 
+        <input name="format" type="hidden" value=""> 
 
         <input type = "radio" id="privado" name="visibility" value="1"  checked>
 
@@ -107,13 +129,18 @@ Vector<Message> msgs = tablon.getAllMsg();
         <input id="enviar" type="image" src ="IMG/enviar.png"/>      
           <textarea autofocus type="text" id="escribiendo_mensaje" name="mensaje">
         </textarea>
+      </form>   
+        <form id = "envio_multimedia" method = "post" >
         <div id="multimedia">
-          <input type = "radio" id="foto"  name="format" value="1" checked>
-            <label id="label_foto" for="foto" class = "notopaque"><span></span></label>
-          <input type = "radio" id="video"  name="format" value="2">
-            <label id="label_video" for="video" class = "notopaque"><span></span></label>
-          <input type = "radio" id="audio"  name="format"  value="3">
-            <label id="label_audio" for="audio" class = "notopaque"><span></span></label>
+
+
+
+          <input type = "file" id="foto">
+           <!-- <label id="label_foto" for="foto" class = "notopaque"><span></span></label> -->
+          <input type = "file" id="video">
+            <!-- <label id="label_video" for="video" class = "notopaque"><span></span></label> -->
+          <input type = "file" id="audio">
+            <!--<label id="label_audio" for="audio" class = "notopaque"><span></span></label> -->
         </div>
       </form> 
 
