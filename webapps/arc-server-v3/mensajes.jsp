@@ -130,17 +130,21 @@ Vector<Message> msgs = tablon.getAllMsg();
           <textarea autofocus type="text" id="escribiendo_mensaje" name="mensaje">
         </textarea>
       </form>   
-        <form id = "envio_multimedia" method = "post" >
+
+
         <div id="multimedia">
+	        <form id = "envio_multimedia" method = "post"  enctype = "multipart/form-data" onSubmit="sendMultimedia()">
+	          <input name="tablonId" type="hidden" value=""> 
+	          <input name="format" type="hidden" value=""> 
 
 
-
-          <input type = "file" id="foto">
-           <!-- <label id="label_foto" for="foto" class = "notopaque"><span></span></label> -->
+	          <input name="file" type = "file">
+	          <input type = "submit">
+           <!-- <label id="label_foto" for="foto" class = "notopaque"><span></span></label>
           <input type = "file" id="video">
-            <!-- <label id="label_video" for="video" class = "notopaque"><span></span></label> -->
+          <label id="label_video" for="video" class = "notopaque"><span></span></label> 
           <input type = "file" id="audio">
-            <!--<label id="label_audio" for="audio" class = "notopaque"><span></span></label> -->
+         	<label id="label_audio" for="audio" class = "notopaque"><span></span></label> -->
         </div>
       </form> 
 

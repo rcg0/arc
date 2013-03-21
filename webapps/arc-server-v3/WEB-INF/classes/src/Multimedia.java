@@ -37,24 +37,25 @@ public class Multimedia{
 		        String fieldName = fileItem.getFieldName();
 		        System.out.println("The field name is: "+fieldName);
             
-            	if(fieldName.equals("image")) {
+            	if(fieldName.equals("image") || fieldName.equals("file")) {
             
                 	String fileName = request.getRealPath("") + "/user-content/"+ fileItem.getName();
-					String fileNameWithoutBlanks = fileName.replace(" ","-");			
-					System.out.println("String fileName : "+ fileNameWithoutBlanks);
-					message.setMsg(fileNameWithoutBlanks);
-					writeMultimediaToDisk(fileNameWithoutBlanks, fileItem);
+			System.out.println(fileName);
+			String fileNameWithoutBlanks = fileName.replace(" ","-");			
+			System.out.println("String fileName : "+ fileNameWithoutBlanks);
+			message.setMsg(fileNameWithoutBlanks);
+			writeMultimediaToDisk(fileNameWithoutBlanks, fileItem);
 	                System.out.println("writeMultimediaToDisk success");
 		   	
             	}else if(fieldName.equals("format")){
             	
-					int format = Integer.parseInt(fileItem.getString());
+					int format = Integer.parseInt(fileItem.getString().trim());
 					message.setFormat(format);
 					System.out.println("El valor que ha llegado es : "+format);
 
-				}else if(fieldName.equals("tablonId")){//cambiar por "tablonId" en cliente y aquí
+				}else if(fieldName.equals("tablonId")){
             		
-            		int tablonId = Integer.parseInt(fileItem.getString());
+            		int tablonId = Integer.parseInt(fileItem.getString().trim());
             		tablon.setId(tablonId);
 					System.out.println("El valor que ha llegado es : "+tablonId);
 

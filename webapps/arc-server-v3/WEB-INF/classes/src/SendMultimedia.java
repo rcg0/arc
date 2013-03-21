@@ -11,14 +11,14 @@ import java.util.List;
  import java.io.*;
 
 
-public class SendImage extends HttpServlet {
+public class SendMultimedia extends HttpServlet {
   /**
 	 * 
 	 */
 public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-	String nextServlet = "/getAfterMessagesMobile"; //Servlet destino
+	String nextServlet = "/getTablones"; //Servlet destino
 
 	HttpSession session = request.getSession(false);
 	User sessionUser = (User)session.getAttribute("user");
@@ -29,14 +29,14 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	
 	Tablon tablon;
 	Message message;
-	
+
 	tablon = multimedia.receiveMultimedia(request);
+
 	message = tablon.getAllMsg().elementAt(0);
 	message.setCreator(sessionUser);
 	long writeMessageId = tablon.sendMessage(message);
 
-	System.out.println("asdfasdfasdf");
-	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextServlet+"?messageId="+tablon.getLastMessageId()+"&tablonId="+tablon.getId());
+	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextServlet+"?tablonId="+tablon.getId());
 	dispatcher.forward(request,response);
 
 }  

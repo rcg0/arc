@@ -285,6 +285,59 @@ function showContents(){
     
   }
   
+	function sendMultimedia(){
+
+   	var form = document.getElementById("envio_multimedia");
+
+		var tablon = document.getElementById("tablonId").text;
+
+		form.tablonId.value = tablon;
+
+		var format = document.getElementById("format");
+
+		form.format.value = getFormatFromFile(form);
+		
+		form.action = "sendMultimedia";
+
+    if(form.format.value != -1){//-1 formato no válido
+		form.submit();
+    }
+	}
+
+
+function getFormatFromFile(oForm) {
+
+    var lastIndex;
+    var formatString;
+    var format = -1;
+    var arrInputs = oForm.getElementsByTagName("input");
+
+    for (var i = 0; i < arrInputs.length; i++) {
+        var oInput = arrInputs[i];
+        if (oInput.type == "file") {
+            var sFileName = oInput.value;
+            if (sFileName.length > 0) {
+              lastIndex  = sFileName.lastIndexOf(".");
+              formatString = sFileName.substring(lastIndex+1, sFileName.length);
+              formatString = formatString.toLowerCase();
+              if(formatString == "jpg" || formatString == "jpeg" || formatString == "bmp" || formatString == "png" || formatString == "gif"){
+                format = 1;
+              }else if(formatString == "aac" || formatString == "mp3" || formatString == "wma" || formatString == "wav" || formatString == "midi"){
+                format = 2;
+              }else if(formatString == "avi" || formatString == "mov" || formatString == "3gp" || formatString == "m4v" || formatString == "wmv" || formatString == "mp4"){
+                format = 3;
+              }else{
+                alert("El formato no es válido");
+              }
+
+                
+            }
+        }
+    }
+
+    return format;
+}
+
 
 function removeTablon(){
 

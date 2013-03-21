@@ -184,7 +184,14 @@ public class Tablon {
 
 	public long sendMessage(Message message){
 		DataBaseManager manager = new DataBaseManager();
-		message.setMsg(manager.sanitizer(message.getMsg()));//saneo la cadena antes de pasarla a la base de datos.
+		String msg = "";
+		if(message.getFormat() == 0){
+
+			message.setMsg(manager.sanitizer(message.getMsg()));//saneo la cadena antes de pasarla a la base de datos.
+		}else{
+			message.setMsg(message.getMsg());
+		}	
+
 		return manager.createMessage(message, this.getId());
 	}
 
