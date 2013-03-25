@@ -37,6 +37,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,11 +49,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class TablonActivity extends SherlockFragmentActivity implements SendMessageDialogListener{
@@ -200,7 +203,21 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
         		startActivityForResult(intent, 0);		
             	
             	return true;
-            	 
+            
+            case R.id.device_camera_access:
+            	
+            	intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            	startActivityForResult(intent, 4);  
+
+            	return true;
+            	
+            case R.id.device_video_camera_access:
+            	
+            	intent = new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
+            	startActivityForResult(intent, 5);  
+
+            	return true;
+            	
             case R.id.logout:
 
             	AsyncTask<String, Integer, String> logout = new Logout(this);
@@ -258,7 +275,54 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 				send.execute(file,format,tablonSelected.searchHighMessageId()+"");
 			}
 		}
+		if(requestCode == 4){//capture photo
+			if(resultCode == RESULT_OK){
+			
+				Bitmap bitmap = (Bitmap) intent.getExtras().get("data"); 
+
+				FileHelper fileHelper = new FileHelper();
+				ImageButton imageButton = new ImageButton(context);
+
+				imageButton.setTag(Long.toHexString(Double.doubleToLongBits(Math.random())));//totally random
+				
+				fileHelper.saveBitmap(bitmap, imageButton);
+		    
+				String format = "1";//imagen
 		
+				File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+imageButton.getTag());
+			
+				AsyncTask<Object, Integer, String> send = new SendMultiMedia(this);
+				send.execute(file,format,tablonSelected.searchHighMessageId()+"");
+			
+			}
+		}
+		if(requestCode == 5){//capture video
+			if(resultCode == RESULT_OK){
+		
+			      Uri targetUri = intent.getData();
+			      
+			      FileHelper fileHelper = new FileHelper();
+				    					
+				  String format = fileHelper.getFormatFromUri(targetUri);
+				  if(format.compareTo("") == 0){
+					format = fileHelper.getFormatFromUriContainsIfContainsFormat(targetUri);
+						
+			   	  }
+					
+				  File file = new File(getPath(targetUri));
+				  File fileDst = new File(Environment.getExternalStorageDirectory()+"/ARC/"+file.getName());
+				  try {
+						fileHelper.copy(file, fileDst);
+				  } catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					/**/
+					AsyncTask<Object, Integer, String> send = new SendMultiMedia(this);
+					send.execute(file,format,tablonSelected.searchHighMessageId()+"");
+			
+			}
+		}
 	}
 	
 

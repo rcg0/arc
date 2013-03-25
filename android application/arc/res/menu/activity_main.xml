@@ -3,28 +3,39 @@
       <item android:id="@+id/menu_update"
           android:icon="@drawable/navigation_refresh"
           android:title="ACTUALIZAR"
-          android:showAsAction="always" />
+          android:showAsAction="ifRoom|withText" />
       
       <item android:id="@+id/menu_write"
           android:title="ESCRIBIR"
           android:icon="@drawable/content_edit"
-          android:showAsAction="always" />
+          android:showAsAction="ifRoom|withText" />
 
       <item android:id="@+id/new_picture"
           android:title="IMAGEN"
           android:icon="@drawable/new_attachment"
-          android:showAsAction="always" />
+          android:showAsAction="ifRoom|withText" />
       
       
       <item android:id="@+id/camera_access"
           android:title="ESCANEAR"
           android:icon="@drawable/device_access_switch_video"
-          android:showAsAction="always" />
+          android:showAsAction="ifRoom|withText" />
 
+      <item android:id="@+id/device_camera_access"
+          android:title="FOTO"
+          android:icon="@drawable/device_access_camera"
+          android:showAsAction="ifRoom|withText" />
+      
+      <item android:id="@+id/device_video_camera_access"
+          android:title="VIDEO"
+          android:icon="@drawable/device_access_video"
+          android:showAsAction="ifRoom|withText" />
+      
       <item android:id="@+id/logout"
           android:title="SALIR"
           android:icon="@drawable/logout"
-          android:showAsAction="always" />
+          android:showAsAction="ifRoom|withText" />
+      
       
 
 </menu>
