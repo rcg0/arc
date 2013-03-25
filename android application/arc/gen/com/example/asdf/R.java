@@ -835,19 +835,20 @@ containing a value of this type.
         public static final int progress_primary_example=0x7f02006a;
         public static final int progress_secondary_example=0x7f02006b;
         public static final int selectable_background_example=0x7f02006c;
-        public static final int share_via_barcode=0x7f02006d;
-        public static final int shopper_icon=0x7f02006e;
-        public static final int spinner_ab_default_example=0x7f02006f;
-        public static final int spinner_ab_disabled_example=0x7f020070;
-        public static final int spinner_ab_focused_example=0x7f020071;
-        public static final int spinner_ab_pressed_example=0x7f020072;
-        public static final int spinner_background_ab_example=0x7f020073;
-        public static final int tab_indicator_ab_example=0x7f020074;
-        public static final int tab_selected_example=0x7f020075;
-        public static final int tab_selected_focused_example=0x7f020076;
-        public static final int tab_selected_pressed_example=0x7f020077;
-        public static final int tab_unselected_focused_example=0x7f020078;
-        public static final int tab_unselected_pressed_example=0x7f020079;
+        public static final int send_now=0x7f02006d;
+        public static final int share_via_barcode=0x7f02006e;
+        public static final int shopper_icon=0x7f02006f;
+        public static final int spinner_ab_default_example=0x7f020070;
+        public static final int spinner_ab_disabled_example=0x7f020071;
+        public static final int spinner_ab_focused_example=0x7f020072;
+        public static final int spinner_ab_pressed_example=0x7f020073;
+        public static final int spinner_background_ab_example=0x7f020074;
+        public static final int tab_indicator_ab_example=0x7f020075;
+        public static final int tab_selected_example=0x7f020076;
+        public static final int tab_selected_focused_example=0x7f020077;
+        public static final int tab_selected_pressed_example=0x7f020078;
+        public static final int tab_unselected_focused_example=0x7f020079;
+        public static final int tab_unselected_pressed_example=0x7f02007a;
     }
     public static final class id {
         public static final int Spinner01=0x7f060040;
@@ -1004,17 +1005,18 @@ containing a value of this type.
         public static final int activity_tablon=0x7f030016;
         public static final int bookmark_picker_list_item=0x7f030017;
         public static final int capture=0x7f030018;
-        public static final int encode=0x7f030019;
-        public static final int fragment_send_message=0x7f03001a;
-        public static final int help=0x7f03001b;
-        public static final int history_list_item=0x7f03001c;
-        public static final int search_book_contents=0x7f03001d;
-        public static final int search_book_contents_header=0x7f03001e;
-        public static final int search_book_contents_list_item=0x7f03001f;
-        public static final int share=0x7f030020;
-        public static final int sherlock_spinner_dropdown_item=0x7f030021;
-        public static final int sherlock_spinner_item=0x7f030022;
-        public static final int tablon_activity=0x7f030023;
+        public static final int collapsible_edittext=0x7f030019;
+        public static final int encode=0x7f03001a;
+        public static final int fragment_send_message=0x7f03001b;
+        public static final int help=0x7f03001c;
+        public static final int history_list_item=0x7f03001d;
+        public static final int search_book_contents=0x7f03001e;
+        public static final int search_book_contents_header=0x7f03001f;
+        public static final int search_book_contents_list_item=0x7f030020;
+        public static final int share=0x7f030021;
+        public static final int sherlock_spinner_dropdown_item=0x7f030022;
+        public static final int sherlock_spinner_item=0x7f030023;
+        public static final int tablon_activity=0x7f030024;
     }
     public static final class menu {
         public static final int activity_main=0x7f0e0000;

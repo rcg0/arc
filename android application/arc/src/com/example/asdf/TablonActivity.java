@@ -56,9 +56,13 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.actionbarsherlock.view.ActionMode;
 
 
 public class TablonActivity extends SherlockFragmentActivity implements SendMessageDialogListener{
+	
+    ActionMode mMode;
+
 	
 	Context context = this;
 	
@@ -157,6 +161,33 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 
     }    
 
+    private final class ActionModeToSendMessage implements ActionMode.Callback {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+
+            menu.add("EditText").setActionView(R.layout.collapsible_edittext).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+            menu.add("Ok").setIcon(R.drawable.send_now).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            //Toast.makeText(ActionModes.this, "Got click: " + item, Toast.LENGTH_SHORT).show();
+            mode.finish();
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+        }
+    }
     
     
     @Override
@@ -184,7 +215,8 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
             	
             case R.id.menu_write:
 
-            	showSendDialog(predefinedMessage);
+                mMode = startActionMode(new ActionModeToSendMessage());
+
             	
             	return true;
             
