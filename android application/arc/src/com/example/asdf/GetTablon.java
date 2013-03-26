@@ -53,10 +53,11 @@ class GetTablon extends AsyncTask<String, Integer, String> {
     			//tablones.elementAt(1).printTablon(actionBar,listener, tablonSubtitle, ratingBar, layout, context);
     			/**/
     		}
+    		/*MIRAR COMO SE PODRÍA HACER ESTO CON LO NUEVO
     		if(!activity.predefinedMessage.equals("")){//predefinedMessage Exists
     			activity.showSendDialog(activity.predefinedMessage);
     			activity.predefinedMessage = "";//lo reseteo para que no lo coja la siguiente vez
-    		}
+    		}*/
     		dialog.dismiss();
     	}
 

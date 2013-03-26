@@ -36,6 +36,7 @@ import com.google.gson.Gson;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -49,6 +50,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -59,7 +61,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.view.ActionMode;
 
 
-public class TablonActivity extends SherlockFragmentActivity implements SendMessageDialogListener{
+public class TablonActivity extends SherlockFragmentActivity{
 	
     ActionMode mMode;
 
@@ -166,9 +168,7 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 
             menu.add("EditText").setActionView(R.layout.collapsible_edittext).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-            menu.add("Ok").setIcon(R.drawable.send_now).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
+            
             return true;
         }
 
@@ -216,7 +216,32 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
             case R.id.menu_write:
 
                 mMode = startActionMode(new ActionModeToSendMessage());
+                int doneButtonId = Resources.getSystem().getIdentifier("action_mode_close_button", "id", "android");
+                View doneButton = findViewById(doneButtonId);
+                doneButton.setOnClickListener(new View.OnClickListener() {
 
+                    @Override
+                    public void onClick(View v) {
+
+                    	String higherMessageId = tablonSelected.searchHighMessageId()+"";
+                    	int format = 0;//texto
+                    	EditText editText = (EditText)findViewById(R.id.editTextSend);
+                    	String inputText = editText.getText().toString();
+
+                		AsyncTask<String, Integer, String> sendMessage = new SendMessage(TablonActivity.this);
+                		sendMessage.execute(inputText,format+"", higherMessageId);
+                		/**/
+                		messageSended = new Message();
+
+                		Gson gson = new Gson();
+                		User user = gson.fromJson(jsonUser, User.class);
+                		
+                		messageSended.setCreator(user);
+                		messageSended.setMsg(inputText);
+                		/**/
+                		mMode.finish();
+                    }
+                });
             	
             	return true;
             
@@ -371,19 +396,6 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 	
     
     
-	
-
-	public void showSendDialog(String predefinedMessage) {
-
-		  FragmentManager fm = getSupportFragmentManager();
-	      SendMessageDialog messageDialog = new SendMessageDialog();
-	      Bundle args = new Bundle();
-	      args.putString("predefinedMessage", predefinedMessage);
-	      messageDialog.setArguments(args);
-	  
-	      messageDialog.show(fm, "fragment_edit_name");
-}
-    
     
 	protected void onSaveInstanceState(Bundle savedInstanceState){	
 		super.onSaveInstanceState(savedInstanceState);
@@ -412,23 +424,7 @@ public class TablonActivity extends SherlockFragmentActivity implements SendMess
 	    startActivity(intent);
 	}
 
-	@Override
-	public void onFinishEditDialog(String inputText) {
-
-    	String higherMessageId = tablonSelected.searchHighMessageId()+"";
-    	int format = 0;//texto
-    	
-		AsyncTask<String, Integer, String> sendMessage = new SendMessage(this);
-		sendMessage.execute(inputText,format+"", higherMessageId);
-		
-		messageSended = new Message();
-
-		Gson gson = new Gson();
-		User user = gson.fromJson(jsonUser, User.class);
-		
-		messageSended.setCreator(user);
-		messageSended.setMsg(inputText);		
-	}
+	
 	
 	public void printBar(ActionBar actionBar,TabListener listener){
 		
