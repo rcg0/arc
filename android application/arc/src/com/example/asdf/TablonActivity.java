@@ -24,8 +24,6 @@ import com.actionbarsherlock.view.Window;
 import com.example.asdf.MainActivity;
 import com.example.asdf.TablonActivity;
 import com.example.asdf.User;
-import com.example.asdf.SendMessageDialog;
-import com.example.asdf.SendMessageDialog.SendMessageDialogListener;
 import com.example.asdf.Message;
 import com.example.asdf.MyDefaultHttpClient;
 import com.example.asdf.R;
@@ -33,6 +31,7 @@ import com.example.asdf.Tablon;
 import com.google.gson.Gson;
 
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -61,6 +60,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.view.ActionMode;
 
 
+@SuppressLint("NewApi")
 public class TablonActivity extends SherlockFragmentActivity{
 	
     ActionMode mMode;
@@ -199,7 +199,8 @@ public class TablonActivity extends SherlockFragmentActivity{
         
     }
     
-    @Override
+    @SuppressLint("NewApi")
+	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	
     	Intent intent;
@@ -272,6 +273,13 @@ public class TablonActivity extends SherlockFragmentActivity{
             	
             	intent = new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
             	startActivityForResult(intent, 5);  
+
+            	return true;
+            	
+            case R.id.device_access_mic:
+            	
+            	intent = new Intent(TablonActivity.this, AudioRecorderActivity.class);
+            	startActivityForResult(intent, 6);
 
             	return true;
             	
@@ -378,6 +386,18 @@ public class TablonActivity extends SherlockFragmentActivity{
 					AsyncTask<Object, Integer, String> send = new SendMultiMedia(this);
 					send.execute(file,format,tablonSelected.searchHighMessageId()+"");
 			
+				}
+			
+		}
+		if(requestCode == 6){//audio recorder
+			
+			if(resultCode == RESULT_OK){
+				
+				File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+intent.getStringExtra("recordName"));
+				String format = "2" ;
+				AsyncTask<Object, Integer, String> send = new SendMultiMedia(this);
+				send.execute(file,format,tablonSelected.searchHighMessageId()+"");
+				
 			}
 		}
 	}

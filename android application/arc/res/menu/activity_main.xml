@@ -34,6 +34,12 @@
           android:icon="@drawable/device_access_video"
           android:showAsAction="ifRoom|withText" />
       
+      <item android:id="@+id/device_access_mic"
+          android:title="GRABADORA"
+          android:icon="@drawable/device_access_mic"
+          android:showAsAction="ifRoom|withText" />
+      
+      
       <item android:id="@+id/logout"
           android:title="SALIR"
           android:icon="@drawable/logout"
