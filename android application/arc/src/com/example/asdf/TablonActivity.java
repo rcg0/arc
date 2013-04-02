@@ -393,7 +393,7 @@ public class TablonActivity extends SherlockFragmentActivity{
 			
 			if(resultCode == RESULT_OK){
 				
-				File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+intent.getStringExtra("recordName"));
+				File file = new File(intent.getStringExtra("recordName"));//incluye la ruta
 				String format = "2" ;
 				AsyncTask<Object, Integer, String> send = new SendMultiMedia(this);
 				send.execute(file,format,tablonSelected.searchHighMessageId()+"");

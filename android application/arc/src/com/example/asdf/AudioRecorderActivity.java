@@ -111,7 +111,7 @@ public class AudioRecorderActivity extends Activity
             	}else{
             		
             		mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() +
-            				"/ARC/"+ filename.getText().toString()+".3gp";    
+            				"/ARC/"+ filename.getText().toString()+".aac";    
             	
             		onRecord(mStartRecording);
             		if (mStartRecording) {

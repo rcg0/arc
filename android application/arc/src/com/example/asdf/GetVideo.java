@@ -75,7 +75,7 @@ class GetVideo extends AsyncTask<Object, Void, Void> {
     	
     	String path = file.getAbsolutePath();
     	
-    	Bitmap bMap = ThumbnailUtils.createVideoThumbnail(file.getAbsolutePath(), MediaStore.Video.Thumbnails.MICRO_KIND);//null
+    	Bitmap bMap = ThumbnailUtils.createVideoThumbnail(file.getAbsolutePath(), MediaStore.Video.Thumbnails.MICRO_KIND);
     	//bmap = null -> .wmv not supported, i'm going to test with another format
     
     	

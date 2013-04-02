@@ -1015,15 +1015,16 @@ containing a value of this type.
         public static final int collapsible_edittext=0x7f03001a;
         public static final int encode=0x7f03001b;
         public static final int fragment_recorder=0x7f03001c;
-        public static final int help=0x7f03001d;
-        public static final int history_list_item=0x7f03001e;
-        public static final int search_book_contents=0x7f03001f;
-        public static final int search_book_contents_header=0x7f030020;
-        public static final int search_book_contents_list_item=0x7f030021;
-        public static final int share=0x7f030022;
-        public static final int sherlock_spinner_dropdown_item=0x7f030023;
-        public static final int sherlock_spinner_item=0x7f030024;
-        public static final int tablon_activity=0x7f030025;
+        public static final int fragment_send_message=0x7f03001d;
+        public static final int help=0x7f03001e;
+        public static final int history_list_item=0x7f03001f;
+        public static final int search_book_contents=0x7f030020;
+        public static final int search_book_contents_header=0x7f030021;
+        public static final int search_book_contents_list_item=0x7f030022;
+        public static final int share=0x7f030023;
+        public static final int sherlock_spinner_dropdown_item=0x7f030024;
+        public static final int sherlock_spinner_item=0x7f030025;
+        public static final int tablon_activity=0x7f030026;
     }
     public static final class menu {
         public static final int activity_main=0x7f0e0000;

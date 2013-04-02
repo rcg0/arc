@@ -233,28 +233,26 @@ public class Tablon {
 		}else if(message.getFormat() == 1){//image
 			
 			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccionar el link que lleve al archivo
-
 			imageButton.setImageResource(R.drawable.arc_logo);
 			
-			File file = new File(context.getExternalFilesDir(null), name);
+			//File file = new File(context.getExternalFilesDir(null), name);
+			File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+name);
 			
-			Context context1 = tablonActivity.getApplicationContext();
-	   	 	int duration = Toast.LENGTH_SHORT;
-	   	 	Toast toast = Toast.makeText(context1, name, duration);
-	   	 	toast.show();
 			
-			if(file.exists()){//file exists
-				Context context11 = tablonActivity.getApplicationContext();
-		   	 	int duration1 = Toast.LENGTH_SHORT;
-		   	 	Toast toast1 = Toast.makeText(context11, "existe el archivo", duration1);
-		   	 	toast1.show();
+			/*if(file.exists()){//file exists
 				
-			}else {
-			
+				String absolutePath = file.getAbsolutePath();
+
+				
+    			Bitmap bitmap = BitmapFactory.decodeFile(absolutePath);
+    			imageButton.setImageBitmap(bitmap);
+		    	
+			}else {*/
+				
 		   	 	AsyncTask<ImageButton, Void, Bitmap> getImage = new GetImage(tablonActivity);
 				imageButton.setTag(name);
 				getImage.execute(imageButton);	
-			}
+			/*}*/
 			
 		}else if(message.getFormat() == 2){//audio
 			
@@ -285,6 +283,7 @@ public class Tablon {
         		        }
         		    });
 						
+					break;
 	        		
 	        	}else if(i == sdDirList.length-1){
 	        		//si no existe el boton descargará
