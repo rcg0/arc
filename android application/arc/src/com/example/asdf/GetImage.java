@@ -49,7 +49,7 @@ class GetImage extends AsyncTask<ImageButton, Void, Bitmap> {
     	
     		String stringUri = MediaStore.Images.Media.insertImage(activity.getContentResolver(), result, imageButton.getTag().toString(), "");
    	 		
-    		Bitmap thumbnail = ThumbnailUtils.extractThumbnail(result, 200, 200);
+    		Bitmap thumbnail = ThumbnailUtils.extractThumbnail(result, 96, 96);
    	 		//final Uri uri = Uri.parse(Environment.getExternalStorageDirectory()+"/ARC/"+ imageButton.getTag());
     		final Uri uri = Uri.parse(stringUri);
     		

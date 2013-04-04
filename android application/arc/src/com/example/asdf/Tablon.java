@@ -1,12 +1,21 @@
 package com.example.asdf;
 
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -236,72 +245,95 @@ public class Tablon {
 			imageButton.setImageResource(R.drawable.arc_logo);
 			
 			//File file = new File(context.getExternalFilesDir(null), name);
-			File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+name);
+			//File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+name);
+			
+			String path = Environment.getExternalStorageDirectory()+File.separator+"ARC"+File.separator+name;
 			
 			
-			/*if(file.exists()){//file exists
+			final File imgFile = new File(path);
+			
+			if(imgFile.exists()){
+		
+				final Uri uri;
+				String uriString = null;
 				
-				String absolutePath = file.getAbsolutePath();
+				try {
+					uriString = android.provider.MediaStore.Images.Media.insertImage(tablonActivity.getContentResolver(),	imgFile.getAbsolutePath(), null, null);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				uri = Uri.parse(uriString);
+				
+			    FileInputStream in;
+				
+			    try {
+					in = new FileInputStream(imgFile);
 
-				
-    			Bitmap bitmap = BitmapFactory.decodeFile(absolutePath);
-    			imageButton.setImageBitmap(bitmap);
+				     // Note that the buffer size is in bytes, so 24 in your question is very low
+				     BufferedInputStream buf = new BufferedInputStream(in, 8192);
+				     Bitmap bMap = BitmapFactory.decodeStream(buf);
+				     Bitmap resizedBitmap = Bitmap.createScaledBitmap(bMap, 96, 96, false);
+				     imageButton.setImageBitmap(resizedBitmap);
+   					 imageButton.setTag(name);//si no tiene tag no se pinta
+   					 
+   					imageButton.setOnClickListener(new View.OnClickListener() {
+   				        public void onClick(View v) {
+
+   				        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+   				        	tablonActivity.context.startActivity(intent);
+
+   				        }
+   			   	 		});
+
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		    	
-			}else {*/
+			}else {
 				
 		   	 	AsyncTask<ImageButton, Void, Bitmap> getImage = new GetImage(tablonActivity);
 				imageButton.setTag(name);
 				getImage.execute(imageButton);	
-			/*}*/
+			}
 			
 		}else if(message.getFormat() == 2){//audio
 			
 			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccinar el link que lleve al archivo
 
 	   		File fileDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
-	        File[] sdDirList = fileDirectory.listFiles(); 
-	        
-	        for(int i = 0; i < sdDirList.length; i++){
-	    		
-	        	String fileUri = sdDirList[i].toString();
-	        	int fileLastIndex = fileUri.lastIndexOf("/");
-	        	String file = fileUri.substring(fileLastIndex+1);
-	   	        	
-				if(name.compareTo(file) == 0){
-	        	
-					button2.setText("Escuchar clip de audio: "+name);
-					button2.setTag(name);
+	   		
+	   		File existFile = new File(Environment.getExternalStorageDirectory()+"/ARC/"+name);
+	   		
+	   		if(existFile.exists()){
+	   			button2.setText("Escuchar clip de audio: "+name);
+				button2.setTag(name);
 
-					button2.setOnClickListener(new View.OnClickListener() {
-						public void onClick(View v) {
-        		        	
-        		        	Intent intent = new Intent();	     
-        		        	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+button2.getTag());
-        		        	intent.setDataAndType(Uri.fromFile(file), "audio/*");
-        		        	intent.setAction(Intent.ACTION_VIEW);
-        		        	tablonActivity.startActivity(intent);
-        		        }
-        		    });
-						
-					break;
-	        		
-	        	}else if(i == sdDirList.length-1){
-	        		//si no existe el boton descargará
-	        			
-	        			button2.setText("Descargar clip de audio: "+ name);
-	        			
-	        			button2.setOnClickListener(new View.OnClickListener() {
-	        		        public void onClick(View v) {
+				button2.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+    		        	
+    		        	Intent intent = new Intent();	     
+    		        	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+button2.getTag());
+    		        	intent.setDataAndType(Uri.fromFile(file), "audio/*");
+    		        	intent.setAction(Intent.ACTION_VIEW);
+    		        	tablonActivity.startActivity(intent);
+    		        }
+    		    });
+	   		}else{
+	   			button2.setText("Descargar clip de audio: "+ name);
+    			button2.setTag(name);
+    			button2.setOnClickListener(new View.OnClickListener() {
+    		        public void onClick(View v) {
 
-	        		        	AsyncTask<Object, Void, Void> getAudio = new GetAudio(tablonActivity);
-	        					getAudio.execute(button2);	
-	        					
-	        		        }
-	        		    });
-	        			
-	        	}
-	        }
-			
+    		        	AsyncTask<Object, Void, Void> getAudio = new GetAudio(tablonActivity);
+    					getAudio.execute(button2);	
+    					
+    		        }
+    		    });
+	   			
+	   		}
+	   		
 			
 		}else if(message.getFormat() == 3){//video
 			
@@ -313,55 +345,43 @@ public class Tablon {
 			
 
 	   		File fileDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
-	        File[] sdDirList = fileDirectory.listFiles(); 
 	        
-	        for(int i = 0; i < sdDirList.length; i++){
-	    		
-	        	String fileUri = sdDirList[i].toString();
-	        	int fileLastIndex = fileUri.lastIndexOf("/");
-	        	String file = fileUri.substring(fileLastIndex+1);
-	   	        	
-				if(name.compareTo(file) == 0){//si existe ya el archivo: 1. cojo su bitmap y lo pongo, el listener llevará al video directamente
-	        		
-			    	Bitmap bMap = ThumbnailUtils.createVideoThumbnail(sdDirList[i].getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);//null
-
-			    	button2.setVisibility(4);//INVISIBLE
-			    	imageButton.setVisibility(0);//VISIBLE
-			    	
-		    		imageButton.setImageBitmap(bMap);
-
-					imageButton.setOnClickListener(new View.OnClickListener() {
-        		        public void onClick(View v) {
-        		        	
-        		        	
-        		        	Intent intent = new Intent();	     
-        		        	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+imageButton.getTag());
-        		        	intent.setDataAndType(Uri.fromFile(file), "video/*");
-        		        	intent.setAction(Intent.ACTION_VIEW);
-        		        	tablonActivity.startActivity(intent);
-        		        
-        		        }
-        		    });
-						
-	        		
-	        	}else if(i == sdDirList.length-1){
-	        		//si no existe el boton descargará
-	        			
-	        			button2.setText("Descargar video: "+ name);
-	        			
-	        			button2.setOnClickListener(new View.OnClickListener() {
-	        		        public void onClick(View v) {
-	        		        	
-	        		        	AsyncTask<Object, Void, Void> getVideo = new GetVideo(tablonActivity);
-	        					getVideo.execute(button2, imageButton);	
-	        		        
-	        		        }
-	        		    });
-	        			
-	        	}
-	        }
+	   		File fileExists = new File(Environment.getExternalStorageDirectory()+"/ARC/"+name);
 	   		
-			
+	   		if(fileExists.exists()){
+	   			Bitmap bMap = ThumbnailUtils.createVideoThumbnail(fileExists.getAbsolutePath(), MediaStore.Video.Thumbnails.MICRO_KIND);//null
+
+		    	button2.setVisibility(4);//INVISIBLE
+		    	imageButton.setVisibility(0);//VISIBLE
+		    	
+	    		imageButton.setImageBitmap(bMap);
+
+				imageButton.setOnClickListener(new View.OnClickListener() {
+    		        public void onClick(View v) {
+    		        	
+    		        	
+    		        	Intent intent = new Intent();	     
+    		        	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+imageButton.getTag());
+    		        	intent.setDataAndType(Uri.fromFile(file), "video/*");
+    		        	intent.setAction(Intent.ACTION_VIEW);
+    		        	tablonActivity.startActivity(intent);
+    		        
+    		        }
+    		    });
+				
+	   		}else{
+	   			button2.setText("Descargar video: "+ name);
+    			
+    			button2.setOnClickListener(new View.OnClickListener() {
+    		        public void onClick(View v) {
+    		        	
+    		        	AsyncTask<Object, Void, Void> getVideo = new GetVideo(tablonActivity);
+    					getVideo.execute(button2, imageButton);	
+    		        
+    		        }
+    		    });
+	   		}
+	   					
 		}
 		
 		author.setText(message.getCreator().getNick()+ ": ");
@@ -384,6 +404,8 @@ public class Tablon {
 		
 	}
 	
+	
+		
 	/*returns the highmessageid or -1 if there isn't messages*/
 	public int searchHighMessageId(){
 		
