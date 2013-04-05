@@ -45,12 +45,11 @@ class GetImage extends AsyncTask<ImageButton, Void, Bitmap> {
     	@SuppressLint({ "NewApi", "NewApi", "NewApi" })
 		@Override
     	protected void onPostExecute(Bitmap result) {
-    		//imageView.setImageBitmap(result);
     	
     		String stringUri = MediaStore.Images.Media.insertImage(activity.getContentResolver(), result, imageButton.getTag().toString(), "");
    	 		
     		Bitmap thumbnail = ThumbnailUtils.extractThumbnail(result, 96, 96);
-   	 		//final Uri uri = Uri.parse(Environment.getExternalStorageDirectory()+"/ARC/"+ imageButton.getTag());
+
     		final Uri uri = Uri.parse(stringUri);
     		
    	 		imageButton.setImageBitmap(thumbnail);
@@ -69,38 +68,10 @@ class GetImage extends AsyncTask<ImageButton, Void, Bitmap> {
    protected Bitmap doInBackground(ImageButton... parameter) {
 	
 			this.imageButton = parameter[0];
-			
-	        File fileDirectory = new File(Environment.getExternalStorageDirectory()+"/ARC/");
-	        File[] sdDirList = fileDirectory.listFiles(); 
 	        
-	        Bitmap bitmap = null;
-	        FileHelper fileHelper = new FileHelper();
-	        
-	        /*condicion especial, si no hay archivos descargo
-	         * */
-	        if(sdDirList.length == 0){
-	        	bitmap = fileHelper.downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageButton.getTag(), imageButton);
-	        }
-	        else{
-	        	for(int i = 0; i < sdDirList.length; i++){
-	    		
-	        		String file = sdDirList[i].toString();
-	        		int lastIndex = file.lastIndexOf("/");
-	        		String name = file.substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo para confeccionar el link que lleve al archivo
-	        		String realName = imageButton.getTag().toString();
-	        		if(name.compareTo(realName) == 0){
-	        		
-	        			bitmap = BitmapFactory.decodeFile(file);
-	        		
-	        			return bitmap;
-	        		
-	        		}else{
-	        			if(i == sdDirList.length -1){//si no existe descargo
-	        				bitmap = fileHelper.downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageButton.getTag(), imageButton);
-	        			}
-	        		}
-	        	}
-	        }
+			FileHelper fileHelper = new FileHelper();
+
+			Bitmap	bitmap = fileHelper.downloadImage("http://bruckner.gast.it.uc3m.es:8080/arc-server-v3/user-content/"+imageButton.getTag(), imageButton);
 
 			return bitmap;
 			

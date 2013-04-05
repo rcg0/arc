@@ -50,6 +50,7 @@ class GetVideo extends AsyncTask<Object, Void, Void> {
 	
 	  public Button button;
 	  public ImageButton imageButton;
+	  public ImageHelper imageHelper;
 	  
 	  public TablonActivity activity;	
 
@@ -66,18 +67,16 @@ class GetVideo extends AsyncTask<Object, Void, Void> {
 
     	@SuppressLint({ "NewApi", "NewApi", "NewApi" })
 		protected void onPostExecute(Void result) {
-    	
-    	File xternal = Environment.getExternalStorageDirectory();
-    	
-    	final Uri uri = Uri.parse(Environment.getExternalStorageDirectory()+"/ARC/"+button.getTag());
     	    	
     	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+button.getTag());
     	
-    	String path = file.getAbsolutePath();
-    	
     	Bitmap bMap = ThumbnailUtils.createVideoThumbnail(file.getAbsolutePath(), MediaStore.Video.Thumbnails.MICRO_KIND);
     	//bmap = null -> .wmv not supported, i'm going to test with another format
-    
+    	imageHelper = new ImageHelper();
+    	
+    	Bitmap bMapPlay = BitmapFactory.decodeResource(activity.getResources(), R.drawable.play);
+    	
+    	Bitmap videoBitmap = imageHelper.overlay(bMap, bMapPlay);
     	
     	button.setVisibility(4);//INVISIBLE
     	imageButton.setVisibility(0);//VISIBLE
@@ -87,7 +86,7 @@ class GetVideo extends AsyncTask<Object, Void, Void> {
 
     	}else{
     		
-    		imageButton.setImageBitmap(bMap);
+    		imageButton.setImageBitmap(videoBitmap);
     	}
     	
     	imageButton.setOnClickListener(new View.OnClickListener() {

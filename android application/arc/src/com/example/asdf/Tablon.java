@@ -353,12 +353,17 @@ public class Tablon {
 
 		    	button2.setVisibility(4);//INVISIBLE
 		    	imageButton.setVisibility(0);//VISIBLE
+		    	/**/
+		    	ImageHelper imageHelper = new ImageHelper();
 		    	
-	    		imageButton.setImageBitmap(bMap);
-
+		    	Bitmap bMapPlay = BitmapFactory.decodeResource(tablonActivity.getResources(), R.drawable.play);
+		    	
+		    	Bitmap videoBitmap = imageHelper.overlay(bMap, bMapPlay);
+		    	
+	    		imageButton.setImageBitmap(videoBitmap);
+	    		/**/
 				imageButton.setOnClickListener(new View.OnClickListener() {
     		        public void onClick(View v) {
-    		        	
     		        	
     		        	Intent intent = new Intent();	     
     		        	File file = new File(Environment.getExternalStorageDirectory()+"/ARC/"+imageButton.getTag());

@@ -2,49 +2,45 @@
 
       <item android:id="@+id/menu_update"
           android:icon="@drawable/navigation_refresh"
-          android:title="ACTUALIZAR"
-          android:showAsAction="ifRoom|withText" />
+          android:title="Actualizar mensajes"
+          android:showAsAction="ifRoom" />
       
       <item android:id="@+id/menu_write"
-          android:title="ESCRIBIR"
+          android:title="Escribir"
           android:icon="@drawable/content_edit"
-          android:showAsAction="ifRoom|withText" /> 
-          <!-- android:actionLayout="@layout/collapsible_edittext" -->
-          
-          
+          android:showAsAction="ifRoom" />           
 
       <item android:id="@+id/new_picture"
-          android:title="IMAGEN"
+          android:title="Adjuntar archivo"
           android:icon="@drawable/new_attachment"
-          android:showAsAction="ifRoom|withText" />
+          android:showAsAction="ifRoom" />
       
       
       <item android:id="@+id/camera_access"
-          android:title="ESCANEAR"
+          android:title="Escanear Código QR"
           android:icon="@drawable/device_access_switch_video"
-          android:showAsAction="ifRoom|withText" />
+          android:showAsAction="ifRoom" />
 
       <item android:id="@+id/device_camera_access"
-          android:title="FOTO"
+          android:title="Cámara de fotos"
           android:icon="@drawable/device_access_camera"
-          android:showAsAction="ifRoom|withText" />
+          android:showAsAction="ifRoom" />
       
       <item android:id="@+id/device_video_camera_access"
-          android:title="VIDEO"
+          android:title="Grabadora de vídeo"
           android:icon="@drawable/device_access_video"
-          android:showAsAction="ifRoom|withText" />
+          android:showAsAction="ifRoom" />
       
       <item android:id="@+id/device_access_mic"
-          android:title="GRABADORA"
+          android:title="Grabadora de sonido"
           android:icon="@drawable/device_access_mic"
-          android:showAsAction="ifRoom|withText" />
+          android:showAsAction="ifRoom" />
       
       
       <item android:id="@+id/logout"
-          android:title="SALIR"
+          android:title="Desconectar"
           android:icon="@drawable/logout"
-          android:showAsAction="ifRoom|withText" />
+          android:showAsAction="ifRoom" />
       
       
-
 </menu>

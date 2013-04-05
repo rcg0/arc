@@ -99,7 +99,6 @@ public class TablonActivity extends SherlockFragmentActivity{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         
-        
         setContentView(R.layout.activity_tablon);
         
         firstDialog = new ProgressDialog(this);
@@ -111,6 +110,7 @@ public class TablonActivity extends SherlockFragmentActivity{
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(false);
         setSupportProgressBarIndeterminateVisibility(false);
+
         
         ratingBar = new RatingBar(context);
 
