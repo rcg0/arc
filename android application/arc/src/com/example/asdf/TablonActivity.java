@@ -218,7 +218,12 @@ public class TablonActivity extends SherlockFragmentActivity{
 
                 mMode = startActionMode(new ActionModeToSendMessage());
                 int doneButtonId = Resources.getSystem().getIdentifier("action_mode_close_button", "id", "android");
+                EditText editTextSend = (EditText)findViewById(R.id.editTextSend);
+                editTextSend.requestFocus();
                 View doneButton = findViewById(doneButtonId);
+                if(doneButton == null){
+                	doneButton = findViewById(R.id.abs__action_mode_close_button); 
+                }
                 doneButton.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -231,7 +236,7 @@ public class TablonActivity extends SherlockFragmentActivity{
 
                 		AsyncTask<String, Integer, String> sendMessage = new SendMessage(TablonActivity.this);
                 		sendMessage.execute(inputText,format+"", higherMessageId);
-                		/**/
+                		
                 		messageSended = new Message();
 
                 		Gson gson = new Gson();
@@ -239,11 +244,11 @@ public class TablonActivity extends SherlockFragmentActivity{
                 		
                 		messageSended.setCreator(user);
                 		messageSended.setMsg(inputText);
-                		/**/
+                		
                 		mMode.finish();
                     }
                 });
-            	
+            
             	return true;
             
             case R.id.new_picture:
