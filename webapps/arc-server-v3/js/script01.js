@@ -140,12 +140,16 @@ function showContents(){
 
         
         tablon =  JSON.parse(xhr.responseText);
-       
 
-        for(var i=0; i<tablon.msg.length; i++){
+        if(tablon.msg.length > 0){
 
-          createDivMessage(tablon.msg[i]);
+          for(var i=0; i<tablon.msg.length; i++){
 
+            createDivMessage(tablon.msg[i]);
+
+          }
+        }else{
+          alert("No hay mensajes anteriores.");
         }
       }
 

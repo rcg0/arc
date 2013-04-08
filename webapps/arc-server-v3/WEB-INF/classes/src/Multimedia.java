@@ -27,6 +27,12 @@ public class Multimedia{
 		Tablon tablon = new Tablon();
 		tablon.setMsg(message);
 
+		if(servletFileUpload == null){
+		System.out.println("servletFileUpload es null");
+		}else{
+		System.out.println("servletFileUpload no es null");		
+		}
+
 		try {
         	List fileItems = servletFileUpload.parseRequest(request);
         	Iterator iterator = fileItems.iterator();
@@ -40,11 +46,11 @@ public class Multimedia{
             	if(fieldName.equals("image") || fieldName.equals("file")) {
             
                 	String fileName = request.getRealPath("") + "/user-content/"+ fileItem.getName();
-			System.out.println(fileName);
-			String fileNameWithoutBlanks = fileName.replace(" ","-");			
-			System.out.println("String fileName : "+ fileNameWithoutBlanks);
-			message.setMsg(fileNameWithoutBlanks);
-			writeMultimediaToDisk(fileNameWithoutBlanks, fileItem);
+					System.out.println(fileName);
+					String fileNameWithoutBlanks = fileName.replace(" ","-");			
+					System.out.println("String fileName : "+ fileNameWithoutBlanks);
+					message.setMsg(fileNameWithoutBlanks);
+					writeMultimediaToDisk(fileNameWithoutBlanks, fileItem);
 	                System.out.println("writeMultimediaToDisk success");
 		   	
             	}else if(fieldName.equals("format")){
