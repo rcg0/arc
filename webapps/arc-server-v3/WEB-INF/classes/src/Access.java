@@ -7,6 +7,13 @@ import javax.servlet.http.*;
 import java.lang.String.*;
 import java.util.Vector;
 
+import com.unboundid.ldap.sdk.LDAPConnection;
+import com.unboundid.ldap.sdk.LDAPConnectionOptions;
+import com.unboundid.ldap.sdk.LDAPException;
+import com.unboundid.ldap.sdk.ResultCode;
+import com.unboundid.ldap.sdk.SearchResult;
+import com.unboundid.ldap.sdk.SearchScope;
+
 public class Access extends HttpServlet {
   /**
 	 * 
@@ -23,7 +30,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	String [ ] names= nameAndMore.split("\\ ");
 
 
-	user.setName(names[0]);
+	/*user.setName(names[0]);
 	user.setSurName1(names[1]);
 	user.setSurName2(names[2]);
 
@@ -34,27 +41,22 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 		session=request.getSession();
 		session.setAttribute("user",dataBaseUser);
 
-		/*Voy a necesitar saber que tablones modera este usuario en las demás páginas, así que lo averiguo y obtengo sus 'soft tablones'*/
-
-		/*
-		Vector<Tablon> tablones = new Vector<Tablon>();//vector de tablones que incluyen todo salvo los mensajes ya que si no no escalaría
-    
-		
-		Vector<Integer> tablonId = dataBaseUser.getModerators(); //obtengo el vector de enteros de tablones que modera el usuario
-
-		for(int i=0; i<tablonId.size();i++){
-				Tablon tablon= new Tablon();
-				tablones.addElement(tablon.getSoftTablonInformation(tablonId.elementAt(i).intValue()));
-		}
-		session.setAttribute("tablones",tablones);//guardo el soft tablon (sin mensajes :) que sino no escala)
-		*/
-
 	}
-
+	*/
+	String password = request.getParameter("password");
 	
-	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextServlet);
-	dispatcher.forward(request,response);
-
+	try{
+		authenticate(nameAndMore,password);
+		System.out.println("Autenticado");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextServlet);
+		dispatcher.forward(request,response);
+	}
+	catch(Exception e ){
+		System.out.println("No Autenticado");
+		System.out.println(e);
+	}
+	
+	
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -63,4 +65,24 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
     doGet(request,response);
 
     }
+
+    public static boolean authenticate(String username, String password) throws LDAPException {
+    
+    	LDAPConnection ldap = new LDAPConnection("ldap.uc3m.es", 389);
+    	SearchResult sr = ldap.search("ou=Gente,o=Universidad Carlos III,c=es", SearchScope.SUB, "(uid=" + username + ")");
+    	if (sr.getEntryCount() == 0)
+	        return false;
+
+    	String dn = sr.getSearchEntries().get(0).getDN();
+
+    	try {
+	        ldap = new LDAPConnection("ldap.uc3m.es", 389, dn, password);
+        	return true;
+    	}
+    	catch (LDAPException e) {
+        	if (e.getResultCode() == ResultCode.INVALID_CREDENTIALS)
+	            return false;
+        	throw e;
+    	}
+	}
 }
