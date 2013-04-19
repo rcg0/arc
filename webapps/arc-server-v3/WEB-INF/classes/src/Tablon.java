@@ -234,10 +234,10 @@ public class Tablon {
 		return tablon;
 	}
 
-	public Vector<Tablon> getTablonDDBB(String space){
+	public Vector<Tablon> getTablonDDBB(String space, User user){
 		Vector<Tablon> tablones = null;
 		DataBaseManager manager = new DataBaseManager();
-		tablones = manager.getTablon(space);
+		tablones = manager.getTablon(space, user);
 		
 		return tablones;
 	}
@@ -269,6 +269,24 @@ public class Tablon {
 
 	}
 
+	public boolean checkIfUserBelongsToTablon(User user){
 
+		boolean result = false;
+
+		System.out.println("user.getId: "+user.getId());
+		System.out.println("this.targetUsers: "+this.targetUsers.elementAt(0).getId());
+
+		for(int i = 0; i < this.targetUsers.size(); i++){
+			System.out.println("entra en bucle");
+			if(this.targetUsers.elementAt(i).getId() == user.getId()){
+				result = true;
+				System.out.println("coincide!");
+			}
+
+		}
+
+		return result;
+
+	}
 
 }

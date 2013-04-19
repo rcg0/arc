@@ -21,17 +21,16 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 	PrintWriter out = response.getWriter();
 
    	Tablon tablon= new Tablon();	
-	//tablon = tablon.getTablonDDBB(Integer.parseInt(request.getParameter("tablonId")));
-	tablones = tablon.getTablonDDBB(request.getParameter("tablonSpace"));
+   	user = (User)session.getAttribute("user");
+	tablones = tablon.getTablonDDBB(request.getParameter("tablonSpace"), user);
 
 	System.out.println("Nombre de tablón: "+tablones.elementAt(0).getName());
-	//System.out.println("Nombre de tablón: "+tablones.elementAt(1).getName());
-	System.out.println("Size "+tablones.size());
+
 	System.out.println("el parámetro que llega: "+request.getParameter("tablonSpace"));
 	
 	Gson gson = new Gson();
 	System.out.println(gson.toJson(tablones));
-	//System.out.println(tablon.getId());
+
 	out.println(gson.toJson(tablones));
 
   }

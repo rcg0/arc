@@ -52,6 +52,7 @@ public class DataBaseManager{
 	}
 
 
+
 	public User checkUser(User user) {
 		User databaseUser=new User();
 		
@@ -87,6 +88,7 @@ public class DataBaseManager{
 		
 		return databaseUser;
 	}
+
 	
 	/*
 	*Método que recoge a usuarios con nombres o apellidos que empiecen por @param String name
@@ -134,7 +136,7 @@ public class DataBaseManager{
 	}
 
 
-	public Vector<Tablon> getTablon(String space){
+	public Vector<Tablon> getTablon(String space, User user){
 		
 		Vector<Tablon> tablones = new Vector<Tablon>();
 		Tablon tablon = null;
@@ -163,7 +165,14 @@ public class DataBaseManager{
 				tablon.setAllTargetUser(getTablonTargetUsers(idTablon));
 				tablon.setAllUsers(getTablonModerateUsers(idTablon));
 
-				tablones.addElement(tablon);
+				//check if the visibility is the correct, if not, tablon is not added.
+				if(tablon.getVisibility()== 0 || tablon.getVisibility() == 1 
+					|| tablon.checkIfUserBelongsToTablon(user)){//0->anoniymous, 1->public
+					
+					tablones.addElement(tablon);	
+					
+				}
+				
 			}
 			closeConnectionPool(conn);
 
@@ -672,7 +681,8 @@ public class DataBaseManager{
 		try{
 			Connection conn = openConnectionPool();
 			/***********************************************PARAMETRIZACIÓN*************************************************/
-			PreparedStatement statement = conn.prepareStatement("SELECT User.id, User.nick, User.name, User.surname1, User.surname2, UserPermission.permission  FROM TablonTargetUser INNER JOIN User ON TablonTargetUser.user_id = User.id INNER JOIN UserPermission ON UserPermission.user_id = TablonTargetUser.user_id  WHERE TablonTargetUser.tablon_id = ?"); 
+			//PreparedStatement statement = conn.prepareStatement("SELECT User.id, User.nick, User.name, User.surname1, User.surname2, UserPermission.permission  FROM TablonTargetUser INNER JOIN User ON TablonTargetUser.user_id = User.id INNER JOIN UserPermission ON UserPermission.user_id = TablonTargetUser.user_id  WHERE TablonTargetUser.tablon_id = ?"); 
+			PreparedStatement statement = conn.prepareStatement("SELECT User.id, User.nick, User.name, User.surname1, User.surname2, User.work, User.age, User.genre FROM TablonTargetUser INNER JOIN User ON TablonTargetUser.user_id = User.id WHERE TablonTargetUser.tablon_id = ?"); 
 			statement.setInt(1, idTablon);
 			/****************************************************************************************************************/
 
@@ -683,10 +693,16 @@ public class DataBaseManager{
 				u.setId(rs.getInt("User.id"));
 				u.setName(rs.getString("User.name"));
 				u.setNick(rs.getString("User.nick"));
+				u.setWork(rs.getString("User.work"));
+				u.setAge(rs.getString("User.age"));
+				u.setGenre(rs.getString("User.genre"));
 				u.setSurName1(rs.getString("User.surname1"));
 				u.setSurName2(rs.getString("User.surname2"));
-				u.setPermission(rs.getByte("UserPermission.permission"));
+				//u.setPermission(rs.getByte("UserPermission.permission"));
+
 				targetUsers.addElement(u);
+
+				System.out.println("u.getID!!"+u.getId());
 			}
 
 			closeConnectionPool(conn);
@@ -794,12 +810,12 @@ public class DataBaseManager{
 			Connection conn = openConnectionPool();
 			Statement stmt = conn.createStatement();
 			
-			PreparedStatement statement = conn.prepareStatement("INSERT INTO User (name,nick, surname1, surname2) VALUES (?, ?, ?)");
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO User (ldap_identifier) VALUES (?)");
 				
-			statement.setString(1, user.getName());
-			statement.setString(2, user.getNick());
-			statement.setString(3, user.getSurName1());
-			statement.setString(4, user.getSurName2());
+			statement.setString(1, user.getLdapIdentifier());
+			//statement.setString(2, user.getNick());
+			//statement.setString(3, user.getSurName1());
+			//statement.setString(4, user.getSurName2());
 		
 			int aux = statement.executeUpdate();
 			if(aux!=0)
@@ -1112,6 +1128,7 @@ public class DataBaseManager{
 				databaseUser.setAge(rs.getString("age"));
 				databaseUser.setWork(rs.getString("work"));
 				databaseUser.setGenre(rs.getString("genre"));
+				databaseUser.setLdapIdentifier(rs.getString("ldap_identifier"));
 				result = databaseUser;
 			}
 
@@ -1124,10 +1141,45 @@ public class DataBaseManager{
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
 		
+		return result;
+	}
+
+
+	public User existsSameLdapIdentifier(String ldapIdentifier){
+			User result = null;
+			User databaseUser=new User();
+		try{
+			Connection conn = openConnectionPool();
+			/***********************************************PARAMETRIZACIÓN*************************************************/
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM User WHERE ldap_identifier=?"); //AND surname1 = ? AND surname2 = ?");
+			statement.setString(1, ldapIdentifier);
+			/****************************************************************************************************************/
+
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				databaseUser = new User();
+				databaseUser.setId(rs.getInt("id"));
+				databaseUser.setName(rs.getString("name"));
+				databaseUser.setNick(rs.getString("nick"));
+				databaseUser.setSurName1(rs.getString("surname1"));
+				databaseUser.setSurName2(rs.getString("surname2"));
+				databaseUser.setAge(rs.getString("age"));
+				databaseUser.setWork(rs.getString("work"));
+				databaseUser.setGenre(rs.getString("genre"));
+				databaseUser.setLdapIdentifier(rs.getString("ldap_identifier"));
+				result = databaseUser;
+			}
+
+			System.out.println("Lo que hay en la base de datos: ");
+			System.out.println("name:" + databaseUser.getName());
+			closeConnectionPool(conn);
+		}catch(SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
 		
 		return result;
-
-
 	}
 
 		/*mobile register, without name, and surnames*/

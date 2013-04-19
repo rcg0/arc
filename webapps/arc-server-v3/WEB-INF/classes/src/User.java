@@ -5,6 +5,7 @@ import java.util.Vector;
 public class User {
 
   private int id;
+  private String ldapIdentifier;
   private String nick;
   private String name;
   private String surname1;
@@ -28,7 +29,7 @@ public class User {
 	return id;
   }
 
-    public void setNick(String nick){
+  public void setNick(String nick){
 		
 	this.nick=nick;
   }
@@ -38,6 +39,17 @@ public class User {
 	return nick;
 		
   }
+
+	public void setLdapIdentifier(String ldapIdentifier){
+		
+		this.ldapIdentifier=ldapIdentifier;
+  	}	
+
+  	public String getLdapIdentifier(){
+			
+		return ldapIdentifier;
+		
+  	}
 
   public void setName(String name){
 		
@@ -197,12 +209,31 @@ public class User {
 
       }
 
+
+      public User existsSameLdapIdentifier(){
+
+      	User user = null;
+	  	DataBaseManager manager = new DataBaseManager();
+
+	  	user = manager.existsSameLdapIdentifier(this.ldapIdentifier);
+
+      	return user;
+
+      }
+
 	  public int saveRegister(){
 
 	  	DataBaseManager manager = new DataBaseManager();
 
 	  	return manager.saveRegister(this);
 
+
+      }
+
+      public void addUser(){
+
+      	DataBaseManager manager = new DataBaseManager();
+      	manager.addUser(this);
 
       }
 
