@@ -16,7 +16,6 @@
 
 
 	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="messages.css" rel="stylesheet" type="text/css" media="screen" />
 	<link href="mis-tablones.css" rel="stylesheet" type="text/css" media="screen" />
 
 
@@ -148,6 +147,11 @@ e una sección a otra -->
       <p><b>Nombre del tablón:</p></b>
       <input id= "tablon_name" type="text" value=""/>
       <p></p>
+
+      <p><b>Permitir puntuación: </b></p>
+      <input type="checkbox" name="y" value="Sí" required >Sí
+	  
+
       <p><b>Asociar moderadores: </p></b>
 
 

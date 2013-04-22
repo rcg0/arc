@@ -124,10 +124,25 @@ function showContents(){
 
 
 
-  function getMoreMessages(){//el messageId lo obtengo del menor id de los div que ha mostrado el html
+  function getMoreMessages(){//el messageId lo obtengo del menor id de los div que ha mostrado el html o del último mensaje eliminado si no hay mensajes
     
+    var lastMessageIfThereIsNotMore = messageID;//lookup by messageID for more information
+
+
     var divs = document.getElementById("left").getElementsByTagName("div");//todos los divs de la section left
-    var url="getMessages?messageId="+divs[0].id;
+    
+    var messageId;
+    
+    if(divs[0]){//si hay
+      messageId = divs[0].id;
+    }else{//si no hay mensajes
+      messageId =lastMessageIfThereIsNotMore;
+    }
+
+    var tablonId = document.getElementById("tablonId").text;
+    var url="getMessages?messageId="+messageId+"&tablonId="+tablonId;
+    alert(url);
+    
     createAJAXRequest(url, printMessages, true);
 
   }

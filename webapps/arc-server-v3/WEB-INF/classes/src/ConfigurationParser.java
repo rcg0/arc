@@ -1,5 +1,11 @@
 package arc;
 
+import java.io.IOException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -33,8 +39,13 @@ public class ConfigurationParser{
 
 	public boolean requiresLDAP(String path){
 
-		Document document = loadDocument(path);
+		Document document = null;
 
+		try{
+		 document = loadDocument(path);
+		}catch(Exception e){
+			System.out.println("Fail to get Document");
+		}
 		NodeList requirements = getRequirements(document);
 		Boolean result = false;
 		Node node = null;
@@ -48,7 +59,7 @@ public class ConfigurationParser{
 				break;
 			}
 
-			System.out.println(nodo.getTextContent());  
+			System.out.println(node.getTextContent());  
 		}  	
 		return result;
 	}

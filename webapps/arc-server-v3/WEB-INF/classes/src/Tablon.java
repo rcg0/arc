@@ -242,11 +242,11 @@ public class Tablon {
 		return tablones;
 	}
 
-	public Vector<Message> getBeforeMessages(int messageId,int limit){
+	public Vector<Message> getBeforeMessages(int messageId, int tablonId,int limit){
 
 		DataBaseManager manager = new DataBaseManager();
 
-		return manager.getBeforeMessages(messageId,limit);
+		return manager.getBeforeMessages(tablonId, messageId,limit);
 
 
 	}

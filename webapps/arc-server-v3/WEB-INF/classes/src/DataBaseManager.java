@@ -489,9 +489,7 @@ public class DataBaseManager{
 
 	/*Obtiene los mensajes anteriores a un message_id dado*/
 
-	public Vector<Message> getBeforeMessages(int messageId, int limit){
-
-		int tablonId = getTablonIdFromMessageId(messageId);
+	public Vector<Message> getBeforeMessages(int tablonId, int messageId, int limit){
 
 		Vector <Message> msg = new Vector<Message>();
 		try{

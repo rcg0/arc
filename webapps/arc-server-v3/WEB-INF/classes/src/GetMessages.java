@@ -32,8 +32,13 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 
 		if(user!=null){
       		tablon= new Tablon();	
-//			System.out.println("el parámetro que llega: "+request.getParameter("messageId"));
-			Vector<Message> msg = tablon.getBeforeMessages(Integer.parseInt(request.getParameter("messageId")),limit);//id del mensaje, y el limite de mensajes que voy a recuperar
+      		int tablonId = Integer.parseInt(request.getParameter("tablonId"));
+      		int messageId =  Integer.parseInt(request.getParameter("messageId"));
+
+      		System.out.println("tablonId: "+tablonId);
+      		System.out.println("messageId: "+messageId);
+
+			Vector<Message> msg = tablon.getBeforeMessages(messageId, tablonId,limit);//id del mensaje, y el limite de mensajes que voy a recuperar
 			tablon.setAllMsg(msg);
 			Gson gson = new Gson();
 			System.out.println(gson.toJson(tablon));
