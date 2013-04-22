@@ -10,9 +10,8 @@ public class Message {
 	private User creator;
 	private String msg;
 	private int format;
-	//private Byte visibility;
 	private int visibility;
-	//private Vector <User> targetUsers = new Vector<User>();
+	private Vector <User> targetUsers = new Vector<User>();
 	private java.sql.Timestamp date;
 
 	public void setId(int id){
@@ -48,19 +47,27 @@ public class Message {
 		return msg;
 		
 	}
-/*
+
 	public void setTargetUser(User user){
 		
 		targetUsers.addElement(user);
 		
 	}
 	
+	public void setAllTargetUser(Vector<User> u){
+		
+		targetUsers = u;
+		
+		
+	}
+
+
 	public Vector<User> getTargetUsers(){		
 		
 		return 	targetUsers;
 		
 	}
-	*/
+	
 
 	public void setVisibility(int visibility){
 		
@@ -91,5 +98,25 @@ public class Message {
 	public void setDate(java.sql.Timestamp date2) {
 		this.date = date2;
 	}
+
+	public boolean checkIfUserBelongsToMessage(User user){
+
+		boolean result = false;
+
+		if(user != null && this.getTargetUsers().size() > 0){
+			
+			for(int i = 0; i < this.targetUsers.size(); i++){
+
+				if(this.targetUsers.elementAt(i).getId() == user.getId()){
+					result = true;
+				}
+
+			}
+		}
+
+		return result;
+
+	}
+
 	
 }

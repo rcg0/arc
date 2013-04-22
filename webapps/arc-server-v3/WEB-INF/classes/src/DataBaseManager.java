@@ -135,6 +135,10 @@ public class DataBaseManager{
 		return users;
 	}
 
+	/*
+	*@param space is the tablon space, it identifies a set of tablons
+	*@param user is the session user, it is used basically for filter tasking.
+	*/
 
 	public Vector<Tablon> getTablon(String space, User user){
 		
@@ -161,7 +165,7 @@ public class DataBaseManager{
 				tablon.setSpaceId(rs.getString("space"));
 				//tablon.setPermission(rs.getInt("permission"));
 				tablon.setRate(readRateDDBB(tablon));
-				tablon.setAllMsg(getMessagesFromTablon(idTablon));
+				tablon.setAllMsg(getMessagesFromTablon(idTablon, user));
 				tablon.setAllTargetUser(getTablonTargetUsers(idTablon));
 				tablon.setAllUsers(getTablonModerateUsers(idTablon));
 
@@ -213,7 +217,7 @@ public class DataBaseManager{
 				tablon.setVisibility(rs.getInt("visibility"));
 				tablon.setSpaceId(rs.getString("space"));
 				//tablon.setPermission(rs.getInt("permission"));
-				tablon.setAllMsg(getMessagesFromTablon(idTablon));
+				tablon.setAllMsg(getMessagesFromTablon(idTablon, null));//fix it... is not user hasn't be null
 				tablon.setAllTargetUser(getTablonTargetUsers(idTablon));
 				tablon.setAllUsers(getTablonModerateUsers(idTablon));
 			}
@@ -359,8 +363,8 @@ public class DataBaseManager{
 
 
 
-
-	public Vector<Message> getMessagesFromTablon(int idTablon){
+/*DEBUG HERE*/
+	public Vector<Message> getMessagesFromTablon(int idTablon, User user){
 		
 		Vector<Message> msg = new Vector<Message>();
 		
@@ -380,14 +384,21 @@ public class DataBaseManager{
 				m.setMsg(rs.getString("message"));
 				m.setVisibility(rs.getInt("visibility"));
 				m.setFormat(rs.getInt("format"));
+				m.setAllTargetUser(getMessageTargetUsers(m.getId()));
 				//m.setDate(rs.getTimestamp("dateTime"));//peta aquí
 				u.setId(rs.getInt("Message.user_id"));
 				u.setNick(rs.getString("User.nick"));
 				u.setName(rs.getString("User.name"));
 				u.setSurName1(rs.getString("User.surname1"));
 				u.setSurName2(rs.getString("User.surname2"));
+
 				m.setCreator(u);
-				msg.addElement(m);
+
+				if(m.getVisibility() == 0 || m.getVisibility() == 1 || m.checkIfUserBelongsToMessage(user)){
+
+					msg.addElement(m);
+
+				}
 			}
 
 			closeConnectionPool(conn);
@@ -402,6 +413,50 @@ public class DataBaseManager{
 		
 	}
 	
+	public Vector<User> getMessageTargetUsers(int idMessage){
+
+		Vector<User> targetUsers = new Vector<User>();
+		
+		try{
+			Connection conn = openConnectionPool();
+			/***********************************************PARAMETRIZACIÓN*************************************************/
+		
+			PreparedStatement statement = conn.prepareStatement("SELECT User.id, User.nick, User.name, User.surname1, User.surname2, User.work, User.age, User.genre FROM MessageTargetUser INNER JOIN User ON MessageTargetUser.user_id = User.id WHERE MessageTargetUser.message_id = ?"); 
+			statement.setInt(1, idMessage);
+			/***************************	*************************************************************************************/
+			System.out.println("int idMessage: "+idMessage);
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				
+				User u = new User();
+				u.setId(rs.getInt("User.id"));
+				u.setName(rs.getString("User.name"));
+				u.setNick(rs.getString("User.nick"));
+				System.out.println("El usuario/s es/son:"+ u.getNick());
+				u.setWork(rs.getString("User.work"));
+				u.setAge(rs.getString("User.age"));
+				u.setGenre(rs.getString("User.genre"));
+				u.setSurName1(rs.getString("User.surname1"));
+				u.setSurName2(rs.getString("User.surname2"));
+
+				targetUsers.addElement(u);
+				
+			}
+
+			closeConnectionPool(conn);
+					
+			}catch(SQLException ex){
+				System.out.println("SQLException: " + ex.getMessage());
+				System.out.println("SQLState: " + ex.getSQLState());
+				System.out.println("VendorError: " + ex.getErrorCode());
+			}
+		
+		return targetUsers;
+		
+
+	}
+
+
 	/*Obtiene un tablon_id que corresponde a un message_id*/
 
 	public int getTablonIdFromMessageId(int message_id){
