@@ -100,12 +100,12 @@ public class DataBaseManager{
 			Connection conn = openConnectionPool();
 			System.out.println(name+"%");
 
-			/***********************************************PARAMETRIZACIÓN*************************************************/
+
 			PreparedStatement statement = conn.prepareStatement("SELECT * FROM User WHERE name LIKE ? OR surname1 LIKE ? OR surname2 LIKE ?;");
 			statement.setString(1, name+"%");
 			statement.setString(2, name+"%");
 			statement.setString(3, name+"%");
-			/****************************************************************************************************************/
+
 
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
