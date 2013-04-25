@@ -202,17 +202,22 @@ public class Tablon {
 		tablonActivity.mainLayout.removeView(tablonActivity.ratingBar);		
 		tablonActivity.messagesLayout.removeAllViews();
 
-
-
-
-		//tablonSubtitle.setText(this.getSubtitle());
+		byte permission = (byte)tablonActivity.tablonSelected.getPermission();
+		boolean operationBitExample = false;
+		
 		if(this.rate != null){//rate is an configurable element by tablon
-			printRate(tablonActivity.ratingBar, tablonActivity);
-		}
 	
+				printRate(tablonActivity.ratingBar, tablonActivity);
+			
+		}	
 		
-		printSomeMessages(messages, tablonActivity.messagesLayout, tablonActivity.context, tablonActivity);
+		operationBitExample = ((permission & 0x000001) == 1);
 		
+		if(operationBitExample){
+			printSomeMessages(messages, tablonActivity.messagesLayout, tablonActivity.context, tablonActivity);
+		}else{
+			printPermissionMessage("Su usuario no tiene permisos para ver los mensajes.", tablonActivity);
+		}
 	}
 	
 	public void printSomeMessages(Vector<Message> messages, LinearLayout layout,Context context,  TablonActivity tablonActivity){
@@ -220,6 +225,17 @@ public class Tablon {
 		for(int i = 0; i<messages.size(); i++){	
 			this.printMessage(messages.elementAt(i),layout,context, tablonActivity);
 		}
+	}
+	
+	public void printPermissionMessage(String msg,TablonActivity tablonActivity){
+		
+		Message noPermissionRateMessage = new Message();
+		User u = new User();
+		u.setNick("ARC");
+		noPermissionRateMessage.setCreator(u);
+		noPermissionRateMessage.setMsg(msg);
+		printMessage(noPermissionRateMessage, tablonActivity.messagesLayout, tablonActivity.context, tablonActivity);
+		
 	}
 	
 	public void printMessage(Message message, LinearLayout layout, Context context,  final TablonActivity tablonActivity){

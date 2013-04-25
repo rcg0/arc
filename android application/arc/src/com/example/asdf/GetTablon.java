@@ -16,6 +16,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.actionbarsherlock.view.Menu;
 import com.example.asdf.Tablon;
 import com.example.asdf.TablonActivity;
 import com.google.gson.Gson;
@@ -49,9 +50,9 @@ class GetTablon extends AsyncTask<String, Integer, String> {
     			Gson gson = new Gson();
     			
     			activity.tablones = gson.fromJson(result, new TypeToken<Vector<Tablon>>(){}.getType());
+    			
     			activity.printBar(activity.actionBar,activity.listener);
-    			//tablones.elementAt(1).printTablon(actionBar,listener, tablonSubtitle, ratingBar, layout, context);
-    			/**/
+    			
     		}
     		/*MIRAR COMO SE PODRÍA HACER ESTO CON LO NUEVO
     		if(!activity.predefinedMessage.equals("")){//predefinedMessage Exists
@@ -59,6 +60,7 @@ class GetTablon extends AsyncTask<String, Integer, String> {
     			activity.predefinedMessage = "";//lo reseteo para que no lo coja la siguiente vez
     		}*/
     		dialog.dismiss();
+    		
     	}
 
 protected String doInBackground(String... parameter) {

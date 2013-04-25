@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.ClipData.Item;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -110,7 +111,6 @@ public class TablonActivity extends SherlockFragmentActivity{
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(false);
         setSupportProgressBarIndeterminateVisibility(false);
-
         
         ratingBar = new RatingBar(context);
 
@@ -121,6 +121,8 @@ public class TablonActivity extends SherlockFragmentActivity{
     			tablonSelected = tablones.elementAt(tab.getPosition());
     			tablonSelected.printTablon(TablonActivity.this);
     			tablonSelected.sendScroll(TablonActivity.this);
+    			invalidateOptionsMenu();
+
 			}
 
 			@Override
@@ -188,10 +190,44 @@ public class TablonActivity extends SherlockFragmentActivity{
         public void onDestroyActionMode(ActionMode mode) {
         }
     }
-    
+
+    @Override
+   public boolean onPrepareOptionsMenu(Menu menu){
+	
+       if(tablonSelected != null){//nullpointerException if not check that
+    	   
+    	   boolean operationBitExample;
+    	   int permission = tablonSelected.getPermission();
+    	   
+    	   if(permission != -1){//-1 means all permissions.
+    		   
+    		   operationBitExample= ((permission & 0x000001) == 1);
+
+    	       if(!operationBitExample){
+    	    	   menu.getItem(0).setVisible(false);//update messages
+    	       }
+    	   
+    	       operationBitExample = ((permission & 0x000002) == 0x00000002);
+    	   
+    	       if(!operationBitExample){
+    	    	   menu.getItem(1).setVisible(false);
+    	    	   menu.getItem(2).setVisible(false);
+    	    	   menu.getItem(4).setVisible(false);
+    	    	   menu.getItem(5).setVisible(false);
+    	    	   menu.getItem(6).setVisible(false);
+    	       }
+       		}
+       }
+       
+    	
+	   
+	   return true;
+	   
+   }
     
     @Override
- public boolean onCreateOptionsMenu(Menu menu){   // TODO Auto-generated method stub
+ public boolean onCreateOptionsMenu(Menu menu){  
+    	
     	MenuInflater inflater = getSupportMenuInflater();
     	inflater.inflate(R.menu.activity_main, menu);
     	
