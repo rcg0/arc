@@ -27,9 +27,6 @@ public class DataBaseManager{
 			DataSource ds = (DataSource) envCtx.lookup("jdbc/BaseDeDatos");
 			conn = ds.getConnection();
 			
-			//String url= "jdbc:mysql://127.0.0.1:3306/BaseDeDatos";
-			//conn = DriverManager.getConnection(url,"jrafael", "hmspawnn");
-			//conn = DriverManager.getConnection(url,"root","hmspawnn"); //"givyijRod9");
 		}catch(SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
                         System.out.println("SQLState: " + ex.getSQLState());
@@ -103,12 +100,12 @@ public class DataBaseManager{
 			Connection conn = openConnectionPool();
 			System.out.println(name+"%");
 
-			/***********************************************PARAMETRIZACIÓN*************************************************/
+
 			PreparedStatement statement = conn.prepareStatement("SELECT * FROM User WHERE name LIKE ? OR surname1 LIKE ? OR surname2 LIKE ?;");
 			statement.setString(1, name+"%");
 			statement.setString(2, name+"%");
 			statement.setString(3, name+"%");
-			/****************************************************************************************************************/
+
 
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
@@ -163,7 +160,7 @@ public class DataBaseManager{
 				System.out.println("Lo que saca de la bbdd, el nombre de tablon es : "+rs.getString("name"));
 				tablon.setVisibility(rs.getInt("visibility"));
 				tablon.setSpaceId(rs.getString("space"));
-				//tablon.setPermission(rs.getInt("permission"));
+				tablon.setPermission(getPermissionFromTablonAndUser(idTablon, user));
 				tablon.setRate(readRateDDBB(tablon));
 				tablon.setAllMsg(getMessagesFromTablon(idTablon, user));
 				tablon.setAllTargetUser(getTablonTargetUsers(idTablon));
@@ -193,6 +190,40 @@ public class DataBaseManager{
 		
 	}
 
+
+
+	public int getPermissionFromTablonAndUser(int idTablon, User user){
+
+		int permission = -1;
+		
+		try{
+			Connection conn = openConnectionPool();
+			
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM UserPermission WHERE tablon_id = ? AND user_id = ? ;"); 
+			statement.setInt(1, idTablon);
+			statement.setInt(2, user.getId());
+			/****************************************************************************************************************/
+
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+
+
+				permission = rs.getInt("permission");
+				System.out.println("El permiso es: "+permission);
+			}
+
+			closeConnectionPool(conn);
+					
+			}catch(SQLException ex){
+				System.out.println("SQLException: " + ex.getMessage());
+				System.out.println("SQLState: " + ex.getSQLState());
+				System.out.println("VendorError: " + ex.getErrorCode());
+			}
+		
+		return permission;
+	
+
+	}
 
 	/*Obtiene el tablón según su id, muestra los mensajes asociados*/
 	
@@ -363,7 +394,7 @@ public class DataBaseManager{
 
 
 
-/*DEBUG HERE*/
+
 	public Vector<Message> getMessagesFromTablon(int idTablon, User user){
 		
 		Vector<Message> msg = new Vector<Message>();
