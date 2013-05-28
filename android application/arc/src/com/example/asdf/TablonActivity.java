@@ -322,6 +322,11 @@ public class TablonActivity extends SherlockFragmentActivity{
             	startActivityForResult(intent, 6);
 
             	return true;
+            
+            case R.id.social_add_person:
+            	
+            	
+            	return true;
             	
             case R.id.logout:
 

@@ -36,6 +36,10 @@
           android:icon="@drawable/device_access_mic"
           android:showAsAction="ifRoom" />
       
+		<item android:id="@+id/social_add_person"
+          android:title="vCard"
+          android:icon="@drawable/social_add_person"
+          android:showAsAction="ifRoom" />
       
       <item android:id="@+id/logout"
           android:title="Desconectar"

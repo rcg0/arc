@@ -841,17 +841,18 @@ containing a value of this type.
         public static final int send_now=0x7f020070;
         public static final int share_via_barcode=0x7f020071;
         public static final int shopper_icon=0x7f020072;
-        public static final int spinner_ab_default_example=0x7f020073;
-        public static final int spinner_ab_disabled_example=0x7f020074;
-        public static final int spinner_ab_focused_example=0x7f020075;
-        public static final int spinner_ab_pressed_example=0x7f020076;
-        public static final int spinner_background_ab_example=0x7f020077;
-        public static final int tab_indicator_ab_example=0x7f020078;
-        public static final int tab_selected_example=0x7f020079;
-        public static final int tab_selected_focused_example=0x7f02007a;
-        public static final int tab_selected_pressed_example=0x7f02007b;
-        public static final int tab_unselected_focused_example=0x7f02007c;
-        public static final int tab_unselected_pressed_example=0x7f02007d;
+        public static final int social_add_person=0x7f020073;
+        public static final int spinner_ab_default_example=0x7f020074;
+        public static final int spinner_ab_disabled_example=0x7f020075;
+        public static final int spinner_ab_focused_example=0x7f020076;
+        public static final int spinner_ab_pressed_example=0x7f020077;
+        public static final int spinner_background_ab_example=0x7f020078;
+        public static final int tab_indicator_ab_example=0x7f020079;
+        public static final int tab_selected_example=0x7f02007a;
+        public static final int tab_selected_focused_example=0x7f02007b;
+        public static final int tab_selected_pressed_example=0x7f02007c;
+        public static final int tab_unselected_focused_example=0x7f02007d;
+        public static final int tab_unselected_pressed_example=0x7f02007e;
     }
     public static final class id {
         public static final int Spinner01=0x7f060044;
@@ -930,9 +931,9 @@ containing a value of this type.
         public static final int launch_product_query=0x7f060014;
         public static final int lbl_msg=0x7f060032;
         public static final int listMode=0x7f060002;
-        public static final int logout=0x7f06007d;
+        public static final int logout=0x7f06007e;
         public static final int mainLayout=0x7f060048;
-        public static final int menu_settings=0x7f06007e;
+        public static final int menu_settings=0x7f06007f;
         public static final int menu_update=0x7f060076;
         public static final int menu_write=0x7f060077;
         public static final int messageLayout=0x7f06004b;
@@ -965,6 +966,7 @@ containing a value of this type.
         public static final int showHome=0x7f060005;
         public static final int showTitle=0x7f060007;
         public static final int snippet_view=0x7f06006f;
+        public static final int social_add_person=0x7f06007d;
         public static final int spinner1=0x7f060045;
         public static final int status_view=0x7f06005f;
         public static final int subtitle=0x7f06004c;

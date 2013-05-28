@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="/var/autofs/nfs/albinoni/jrafael/workspace/asdf/libs/gson-2.2.2-sources.jar"/>
 	<classpathentry kind="lib" path="/var/autofs/nfs/albinoni/jrafael/workspace/asdf/libs/gson-2.2.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="/var/autofs/nfs/albinoni/jrafael/workspace/asdf/libs/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="/var/autofs/nfs/albinoni/jrafael/workspace/asdf/libs/cardme-v0.2.6.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
