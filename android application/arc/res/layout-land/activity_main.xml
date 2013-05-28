@@ -30,7 +30,7 @@
         android:layout_below="@+id/button1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
-        android:text="¿Todavía no tienes un alias?" />
+        android:text="¿Todavía no te has registrado?" />
 
     <TextView
         android:id="@+id/textView6"
@@ -62,6 +62,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
         android:ems="10"
-        android:hint="Alias" />
+        android:hint="Email" />
 
 </RelativeLayout>

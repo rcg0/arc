@@ -43,7 +43,7 @@
         android1:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="275dp"
-        android1:text="Alias" />
+        android1:text="Email" />
 
     <TextView
         android1:id="@+id/TextView01"

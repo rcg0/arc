@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -35,7 +37,7 @@ import android.widget.Toast;
 public class RegistroActivity extends Activity {
 
 	Button buttonEntrar;
-	EditText alias;
+	EditText email;
 	CheckBox generoMasculino;
 	CheckBox generoFemenino;
 	Spinner edad;
@@ -54,7 +56,7 @@ public class RegistroActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registro);
 		
-		alias = (EditText)findViewById(R.id.editText1);
+		email = (EditText)findViewById(R.id.editText1);
 		buttonEntrar = (Button)findViewById(R.id.button1);
 		generoFemenino = (CheckBox)findViewById(R.id.checkBox2);
 		generoMasculino = (CheckBox)findViewById(R.id.checkBox1);
@@ -69,11 +71,25 @@ public class RegistroActivity extends Activity {
         	callCamera();
         }
 		
-		this.buttonEntrar.setOnClickListener(new View.OnClickListener() {
+        
+        /*[_A-Za-z0-9-]+ debe empezar por alguno de los caracteres entre los corchetes ( _ - mayúscula, minúscula o número), una o más veces (el +)
+    	(\\.[_A-Za-z0-9-]+)* seguido de 0 o más (el * del final) de cualquiera de los caracteres entre paréntesis, que son los mismos de antes más el punto, pero no puede haber dos puntos seguidos (el + detrás de los corchetes indica que después de un punto debe haber al menos una letra o cifra. Es decir, este chorizo representa que puede haber un punto seguido de al una o más letras/dígitos, todas las veces que queramos.
+    	@ este es fácil, una @
+    	[A-Za-z0-9]+ Una o más letras, mayúsculas, minúsculas o dígitos
+    	(\\.[A-Za-z]{2,}) Un punto y al menos dos letras mayúsculas o minúsculas, sin dígitos. */
+   
+        this.buttonEntrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	
-            	if(alias.getText().toString().equals("")){
-            		Toast toast = Toast.makeText(getApplicationContext(), "Es necesario que escribas un alias.", Toast.LENGTH_SHORT);
+            	Pattern regexp = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+            	
+            	Matcher matcher =regexp.matcher(email.getText().toString());
+            	
+            	
+            	if(!matcher.matches()){
+            	//if(alias.getText().toString().equals("")){
+            		Toast toast = Toast.makeText(getApplicationContext(), "Es necesario que escribas un correo electrónico válido.", Toast.LENGTH_SHORT);
             		toast.show();
             	}
             	else{
@@ -126,7 +142,7 @@ public class RegistroActivity extends Activity {
 	
 	protected void onSaveInstanceState(Bundle savedInstanceState){
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putString("alias",alias.getText().toString());
+		savedInstanceState.putString("email",email.getText().toString());
 		savedInstanceState.putBoolean("masculino",generoMasculino.isChecked());
 		savedInstanceState.putBoolean("femenino",generoFemenino.isChecked());
 		savedInstanceState.putInt("edad",edad.getPositionForView(edad));
@@ -136,7 +152,7 @@ public class RegistroActivity extends Activity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState){
 		super.onRestoreInstanceState(savedInstanceState);
 		
-		alias.setText(savedInstanceState.getString("alias"));
+		email.setText(savedInstanceState.getString("alias"));
 		if(savedInstanceState.getBoolean("masculino")==true){
 			generoMasculino.setChecked(true);
 		}

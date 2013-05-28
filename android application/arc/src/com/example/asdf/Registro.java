@@ -73,7 +73,7 @@ protected String doInBackground(String... parameter) {
 		Vector<BasicNameValuePair> l = new Vector<BasicNameValuePair>();
 		//Añadimos todos los parámetros que queramos enviar
 		
-		l.add(new BasicNameValuePair("alias", activity.alias.getText().toString()));
+		l.add(new BasicNameValuePair("alias", activity.email.getText().toString()));
 		
 		Boolean masc = activity.generoMasculino.isChecked();
 		Boolean fem = activity.generoFemenino.isChecked();

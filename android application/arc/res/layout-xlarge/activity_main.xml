@@ -41,7 +41,7 @@
      	android:layout_centerHorizontal="true"
         android:layout_marginBottom="80dp"
         android:ems="10"
-        android:hint="Alias" />
+        android:hint="Email" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -59,7 +59,7 @@
         android:layout_alignBottom="@+id/button2"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="80dp"
-        android:text="¿Todavía no tienes un alias?" />
+        android:text="¿Todavía no te has registrado?" />
 
     <TextView
         android:id="@+id/textView6"

@@ -44,7 +44,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/imageView1"
         android:layout_marginTop="50dp"
-        android1:text="Alias" />
+        android1:text="Email" />
 
     <TextView
         android1:id="@+id/TextView01"

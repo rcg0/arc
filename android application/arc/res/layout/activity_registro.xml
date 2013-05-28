@@ -43,7 +43,7 @@
         android1:layout_below="@+id/textView5"
         android1:layout_marginLeft="36dp"
         android1:layout_marginTop="43dp"
-        android1:text="Alias" />
+        android1:text="Email" />
 
     <CheckBox
         android1:id="@+id/checkBox1"

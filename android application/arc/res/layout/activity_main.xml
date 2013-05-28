@@ -42,7 +42,7 @@
         android:layout_above="@+id/button2"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
-        android:text="¿Todavía no tienes un alias?" />
+        android:text="¿Todavía no te has registrado?" />
 
     <Button
         android:id="@+id/button1"
@@ -60,7 +60,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Alias" >
+        android:hint="Email" >
 
         <requestFocus />
     </EditText>
