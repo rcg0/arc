@@ -1,0 +1,237 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/textViewMensaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="4dp"
+        android:text="Crea tu tarjeta de visita (vCard)"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+    <TextView
+        android1:id="@+id/textViewPais"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_marginLeft="36dp"
+        android1:layout_marginTop="43dp"
+        android1:text="País" />
+
+    <EditText     
+        android1:id="@+id/editTextPais"
+        android:inputType="text"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_toRightOf="@+id/textViewPais"
+        android1:layout_marginTop="43dp"
+        />
+    
+     <TextView
+        android1:id="@+id/textViewCiudad"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_marginLeft="36dp"
+        android1:layout_marginTop="73dp"
+        android1:text="Ciudad" />
+    
+     <EditText     
+        android1:id="@+id/editTextCuidad"
+        android:inputType="text"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+
+        android1:layout_toRightOf="@+id/textViewCiudad"
+        android1:layout_marginTop="73dp"
+        />
+     
+      <TextView
+        android1:id="@+id/textViewLocalidad"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_marginLeft="36dp"
+        android1:layout_marginTop="103dp"
+        android1:text="Localidad" />
+      
+      <EditText     
+        android1:id="@+id/editTextLocalidad"
+        android:inputType="text"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+
+        android1:layout_toRightOf="@+id/textViewLocalidad"
+        android1:layout_marginTop="103dp"
+        />
+      
+       <TextView
+        android1:id="@+id/textViewPostal"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_marginLeft="36dp"
+        android1:layout_marginTop="133dp"
+        android1:text="Código postal" />
+      
+       <EditText     
+        android1:id="@+id/editTextPostal"
+        android:inputType="number"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+
+        android1:layout_toRightOf="@+id/textViewPostal"
+        android1:layout_marginTop="133dp"
+        />
+     
+        <TextView
+        android1:id="@+id/textViewDireccion"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_marginLeft="36dp"
+        android1:layout_marginTop="163dp"
+        android1:text="Dirección" />
+        
+        <EditText     
+        android1:id="@+id/editTextDireccion"
+        android:inputType="text"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+
+        android1:layout_toRightOf="@+id/textViewDireccion"
+        android1:layout_marginTop="163dp"
+        />
+        
+         <TextView
+        android1:id="@+id/textViewNombre"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_marginLeft="36dp"
+        android1:layout_marginTop="193dp"
+        android1:text="Nombre" />
+        
+         <EditText     
+        android1:id="@+id/editTextNombre"
+        android:inputType="text"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+
+        android1:layout_toRightOf="@+id/textViewNombre"
+        android1:layout_marginTop="193dp"
+        />
+         
+         
+          <TextView
+        android1:id="@+id/textViewNombreFormateado"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_marginLeft="36dp"
+        android1:layout_marginTop="223dp"
+        android1:text="Nombre Formateado" />
+        
+         <EditText     
+        android1:id="@+id/editTextNombreFormateado"
+        android:inputType="text"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+
+        android1:layout_toRightOf="@+id/textViewNombreFormateado"
+        android1:layout_marginTop="223dp"
+        />
+         
+        <TextView
+        android1:id="@+id/textViewEmail"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_marginLeft="36dp"
+        android1:layout_marginTop="253dp"
+        android1:text="Email" />
+         
+        <EditText     
+        android1:id="@+id/editTextEmail"
+        android:inputType="text"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+
+        android1:layout_toRightOf="@+id/textViewEmail"
+        android1:layout_marginTop="253dp"
+        />
+        
+    <TextView
+        android1:id="@+id/textViewOrganizacion"
+        android:inputType="text"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_marginLeft="36dp"
+        android1:layout_marginTop="283dp"
+        android1:text="Organización" 
+     />
+
+    
+    
+	<EditText     
+        android1:id="@+id/editTextOrganizacion"
+        android:inputType="text"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+
+        android1:layout_toRightOf="@+id/textViewOrganizacion"
+        android1:layout_marginTop="283dp"
+        />
+
+    <TextView
+        android1:id="@+id/textViewWeb"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_marginTop="313dp"
+        android1:layout_marginLeft="36dp"
+        android1:text="Página web" />
+
+    
+    <EditText     
+        android1:id="@+id/editTextWeb"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+		android:inputType="text"
+        android1:layout_toRightOf="@+id/textViewWeb"
+        android1:layout_marginTop="313dp"
+        />
+    
+    <TextView
+        android1:id="@+id/textViewTelefono"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_marginTop="343dp"
+        android1:layout_marginLeft="36dp"
+        android1:text="Teléfono" />
+
+    <EditText     
+        android1:id="@+id/editTextTelefono"
+        android:inputType="number"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_toRightOf="@+id/textViewTelefono"
+        android1:layout_marginTop="343dp"
+        />
+    
+     <Button
+        android1:id="@+id/buttonCrear"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"      
+        android1:layout_centerHorizontal="true"
+        android1:layout_marginTop="373dp"
+        android1:text="Crear" />
+    
+</RelativeLayout>

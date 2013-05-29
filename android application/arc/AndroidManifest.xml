@@ -45,6 +45,10 @@
             android:name = ".AudioRecorderActivity"
             android:label="@string/app_names"
             ></activity>
+         <activity 
+            android:name = "VCardActivity"
+            android:label="@string/app_names"
+            ></activity>
         <activity
             android:name="com.google.zxing.client.android.CaptureActivity"
             android:clearTaskOnLaunch="true"

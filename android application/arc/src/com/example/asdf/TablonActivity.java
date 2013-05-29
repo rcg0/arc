@@ -325,6 +325,8 @@ public class TablonActivity extends SherlockFragmentActivity{
             
             case R.id.social_add_person:
             	
+            	intent = new Intent(TablonActivity.this, VCardActivity.class);
+            	startActivity(intent);
             	
             	return true;
             	

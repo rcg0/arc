@@ -3,7 +3,7 @@
       <item android:id="@+id/menu_update"
           android:icon="@drawable/navigation_refresh"
           android:title="Actualizar mensajes"
-          android:showAsAction="ifRoom" />
+          android:showAsAction="ifRoom|" />
       
       <item android:id="@+id/menu_write"
           android:title="Escribir"
@@ -37,7 +37,7 @@
           android:showAsAction="ifRoom" />
       
 		<item android:id="@+id/social_add_person"
-          android:title="vCard"
+          android:title="Compartir vCard"
           android:icon="@drawable/social_add_person"
           android:showAsAction="ifRoom" />
       
