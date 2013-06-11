@@ -1,40 +1,49 @@
 package com.example.asdf;
 
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.List;
 
-import info.ineighborhood.cardme.vcard.VCardImpl;
-import info.ineighborhood.cardme.vcard.VCardVersion;
-import info.ineighborhood.cardme.vcard.features.AddressFeature;
-import info.ineighborhood.cardme.vcard.features.EmailFeature;
-import info.ineighborhood.cardme.vcard.features.OrganizationFeature;
-import info.ineighborhood.cardme.vcard.features.TelephoneFeature;
-import info.ineighborhood.cardme.vcard.features.URLFeature;
-import info.ineighborhood.cardme.vcard.features.VersionFeature;
-import info.ineighborhood.cardme.vcard.types.AddressType;
-import info.ineighborhood.cardme.vcard.types.BirthdayType;
-import info.ineighborhood.cardme.vcard.types.EmailType;
-import info.ineighborhood.cardme.vcard.types.FormattedNameType;
-import info.ineighborhood.cardme.vcard.types.NameType;
-import info.ineighborhood.cardme.vcard.types.OrganizationType;
-import info.ineighborhood.cardme.vcard.types.TelephoneType;
-import info.ineighborhood.cardme.vcard.types.URLType;
-import info.ineighborhood.cardme.vcard.types.VersionType;
-import info.ineighborhood.cardme.vcard.types.parameters.AddressParameterType;
-import info.ineighborhood.cardme.vcard.types.parameters.EmailParameterType;
-import info.ineighborhood.cardme.vcard.types.parameters.ParameterTypeStyle;
-import info.ineighborhood.cardme.vcard.types.parameters.TelephoneParameterType;
-import info.ineighborhood.cardme.vcard.types.parameters.XAddressParameterType;
+import net.sourceforge.cardme.vcard.VCardImpl;
+import net.sourceforge.cardme.vcard.arch.VCardVersion;
+import net.sourceforge.cardme.vcard.exceptions.VCardBuildException;
+import net.sourceforge.cardme.vcard.features.AdrFeature;
+import net.sourceforge.cardme.vcard.features.BeginFeature;
+import net.sourceforge.cardme.vcard.features.EmailFeature;
+import net.sourceforge.cardme.vcard.features.VersionFeature;
+import net.sourceforge.cardme.vcard.types.AdrType;
+import net.sourceforge.cardme.vcard.types.BeginType;
+import net.sourceforge.cardme.vcard.types.EmailType;
+import net.sourceforge.cardme.vcard.types.NameType;
+import net.sourceforge.cardme.vcard.types.OrgType;
+import net.sourceforge.cardme.vcard.types.TelType;
+import net.sourceforge.cardme.vcard.types.UrlType;
+import net.sourceforge.cardme.vcard.types.VersionType;
+import net.sourceforge.cardme.vcard.types.params.AdrParamType;
+import net.sourceforge.cardme.vcard.types.params.ExtendedParamType;
+
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class VCardActivity extends Activity {
+	
+	
+	String mFileName;    
 	
 	Button crear;
 	
@@ -50,6 +59,8 @@ public class VCardActivity extends Activity {
 	EditText web;
 	EditText tfn;
 	
+	FileHelper fileHelper = new FileHelper();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,75 +68,72 @@ public class VCardActivity extends Activity {
 		
 		crear = (Button) findViewById(R.id.buttonCrear);
 		
+		pais = (EditText)findViewById(R.id.editTextPais);
+		ciudad = (EditText)findViewById(R.id.editTextCuidad);
+		localidad = (EditText)findViewById(R.id.editTextLocalidad);
+		postal = (EditText)findViewById(R.id.editTextPostal);
+		direccion = (EditText)findViewById(R.id.editTextDireccion);
+		nombre = (EditText)findViewById(R.id.editTextNombre);
+		mail = (EditText)findViewById(R.id.editTextEmail);
+		web = (EditText)findViewById(R.id.editTextWeb);
+		tfn = (EditText)findViewById(R.id.editTextTelefono);
+		
+		
 		this.crear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	
             	VCardImpl vcard = new VCardImpl();
-            	vcard.setVersion((VersionFeature) new VersionType(VCardVersion.V3_0));
+                BeginType begin = new BeginType();
+            	vcard.setBegin(begin);
+            	vcard.setVersion((VersionType) new VersionType(VCardVersion.V3_0));
 
             	/*nombre*/
             	NameType name = new NameType();
-            	name.setGivenName(nombre.getText().toString());
+            	String nombreString = nombre.getText().toString();
+            	name.setName(nombreString);
             	
 
             	vcard.setName(name);
-            	vcard.setFormattedName(new FormattedNameType());
-            	/*direccion*/
             	
-            	AddressFeature address1 = new AddressType();
+            	AdrType address1 = new AdrType();
+				
             	address1.setExtendedAddress("");
             	address1.setCountryName(pais.getText().toString());
             	address1.setLocality(localidad.getText().toString());
             	address1.setPostalCode(postal.getText().toString ());
             	address1.setStreetAddress(direccion.getText().toString());
-            	address1.addAddressParameterType(AddressParameterType.HOME);
-            	address1.addAddressParameterType(AddressParameterType.PARCEL);
-            	address1.addAddressParameterType(AddressParameterType.PREF);
-            	address1.addExtendedAddressParameterType(new XAddressParameterType("CUSTOM-PARAM-TYPE"));
-            	address1.addExtendedAddressParameterType(new XAddressParameterType("CUSTOM-PARAM-TYPE", "WITH-CUSTOM-VALUE"));
-
-            	vcard.addAddress(address1);
             	
-            	/*nacimiento*/
+            	vcard.addAdr(address1);
             	
-            	Calendar birthday = Calendar.getInstance();
-            	birthday.clear();//change for spinner
-            	birthday.set(Calendar.YEAR, 1980);
-            	birthday.set(Calendar.MONTH, 4);
-            	birthday.set(Calendar.DAY_OF_MONTH, 21);
-
-            	vcard.setBirthday(new BirthdayType(birthday));
-
+            	
+         
             	/*email*/
             	
-            	EmailFeature email = new EmailType();
+            	EmailType email = new EmailType();
             	email.setEmail(mail.getText().toString());
-            	email.addEmailParameterType(EmailParameterType.IBMMAIL);
-            	email.addEmailParameterType(EmailParameterType.INTERNET);
-            	email.addEmailParameterType(EmailParameterType.PREF);
+            	
+            	
 
             	vcard.addEmail(email);
             	vcard.addEmail(new EmailType(mail.getText().toString()));
             	
             	/*organization*/
-            	
-            	OrganizationFeature organizations = new OrganizationType();
-            	organizations.addOrganization(organizacion.getText().toString());
-            	vcard.setOrganizations(organizations);
-            	
+            	/*
+            	OrgType organization = new OrgType();
+            	//List<ExtendedParamType> xtendedParams = new List();
+            	organization.addAllExtendedParams(xtendedParams);
+            	organization.addOrgUnit(organizacion.getText().toString());
+            	vcard.setOrg(organization);
+            	*/
             	/*telephone*/
             	
-            	TelephoneFeature telephone = new TelephoneType();
+            	TelType telephone = new TelType();
             	telephone.setTelephone(tfn.getText().toString());
-            	telephone.addTelephoneParameterType(TelephoneParameterType.CELL);
-            	telephone.addTelephoneParameterType(TelephoneParameterType.HOME);
-            	telephone.setParameterTypeStyle(ParameterTypeStyle.PARAMETER_VALUE_LIST);
-            	vcard.addTelephoneNumber(telephone);
+            	vcard.addTel(telephone);
             	 
-            	/*url*/
-            	
+            
             	try {
-					vcard.addURL((URLFeature) new URLType(new URL(web.getText().toString())));
+					vcard.addUrl(new UrlType(new URL(web.getText().toString())));
 				} catch (NullPointerException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -134,12 +142,41 @@ public class VCardActivity extends Activity {
 					e.printStackTrace();
 				}
             	
+            	
+            	
+            	 mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() +
+     			"/ARC/"+ mail.getText().toString()+".vcf";
+            	
+            	 
+            	try {
+					fileHelper.saveVcardToFile(mFileName, vcard);
+				} catch (VCardBuildException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	 
+         		
+            	
+            	if(nombreString.compareTo("") == 0 || mail.getText().toString().compareTo("") == 0){
+            		
+            		Context context = getApplicationContext();
+               	 	int duration = Toast.LENGTH_SHORT;
+               	 	Toast toast = Toast.makeText(context, "Nombre y e-mail son campos obligatorios.", duration);
+               	 	toast.show();
+            		
+            	}else{
+            	
+           	 	Intent returnIntent = new Intent();
+           	 	returnIntent.putExtra("vCardRoute",mFileName);
+           	 	setResult(RESULT_OK,returnIntent);     
+           	 	finish();
+            	}
+            	
             }
       });
 	}
 
-
-	
+	   	
 	
   
 }

@@ -155,6 +155,43 @@ public class TablonActivity extends SherlockFragmentActivity{
     	space = qr[0];
     	if(qr.length == 2){
     		predefinedMessage = qr[1];
+    		//encapsular esto en algún sitio
+    		 mMode = startActionMode(new ActionModeToSendMessage());
+             int doneButtonId = Resources.getSystem().getIdentifier("action_mode_close_button", "id", "android");
+             EditText editTextSend = (EditText)findViewById(R.id.editTextSend);
+             editTextSend.requestFocus();
+             
+             editTextSend.setText(predefinedMessage);
+             View doneButton = findViewById(doneButtonId);
+             if(doneButton == null){
+             	doneButton = findViewById(R.id.abs__action_mode_close_button); 
+             }
+             doneButton.setOnClickListener(new View.OnClickListener() {
+
+                 @Override
+                 public void onClick(View v) {
+
+                 	String higherMessageId = tablonSelected.searchHighMessageId()+"";
+                 	int format = 0;//texto
+                 	EditText editText = (EditText)findViewById(R.id.editTextSend);
+                 	String inputText = editText.getText().toString();
+
+             		AsyncTask<String, Integer, String> sendMessage = new SendMessage(TablonActivity.this);
+             		sendMessage.execute(inputText,format+"", higherMessageId);
+             		
+             		messageSended = new Message();
+
+             		Gson gson = new Gson();
+             		User user = gson.fromJson(jsonUser, User.class);
+             		
+             		messageSended.setCreator(user);
+             		messageSended.setMsg(inputText);
+             		
+             		mMode.finish();
+                 }
+             });
+    		
+    		
     	}
 
     	
@@ -326,7 +363,7 @@ public class TablonActivity extends SherlockFragmentActivity{
             case R.id.social_add_person:
             	
             	intent = new Intent(TablonActivity.this, VCardActivity.class);
-            	startActivity(intent);
+            	startActivityForResult(intent, 7);
             	
             	return true;
             	
@@ -446,6 +483,18 @@ public class TablonActivity extends SherlockFragmentActivity{
 				send.execute(file,format,tablonSelected.searchHighMessageId()+"");
 				
 			}
+		}
+		if(requestCode == 7) {//vCard
+			
+			if(resultCode == RESULT_OK){
+			
+				File file = new File(intent.getStringExtra("vCardRoute"));//incluye la ruta
+				String format = "4" ;
+				AsyncTask<Object, Integer, String> send = new SendMultiMedia(this);
+				send.execute(file,format,tablonSelected.searchHighMessageId()+"");
+				
+			}
+			
 		}
 	}
 	

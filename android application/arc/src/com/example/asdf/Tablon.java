@@ -403,6 +403,44 @@ public class Tablon {
     		    });
 	   		}
 	   					
+		}if(message.getFormat()==4){
+			
+			String name = message.getMsg().substring(lastIndex+1);//el nombre del archivo, necesito ruta + nombre del archivo
+			
+	   		File fileExists = new File(Environment.getExternalStorageDirectory()+"/ARC/"+name);
+
+	   		if(fileExists.exists()){
+			
+	   			button2.setTag(name);
+	   			button2.setText("Abrir tarjeta de visita :"+name);
+			
+	   			button2.setOnClickListener(new View.OnClickListener() {
+	   				public void onClick(View v) {
+		       
+	   					Intent intent = new Intent();
+	   					Intent i = new Intent(android.content.Intent.ACTION_VIEW);
+	   					i.setType("text/x-vcard");
+	   					tablonActivity.startActivity(i);
+		       
+	   				}
+	   			});
+	   		}
+	   		else{
+	   			
+	   			button2.setTag(name);
+	   			button2.setText("Descargar VCard");
+	   			
+	   			button2.setOnClickListener(new View.OnClickListener() {
+	   				public void onClick(View v) {
+		       
+	   					AsyncTask<Object, Void, Void> getVcard = new GetVcard(tablonActivity);
+    					getVcard.execute(button2);	
+		       
+	   				}
+	   			});
+	   			
+	   		}
+			
 		}
 		
 		author.setText(message.getCreator().getNick()+ ": ");
